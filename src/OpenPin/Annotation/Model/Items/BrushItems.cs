@@ -1,0 +1,165 @@
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using OpenPin.Annotation.Common;
+using OpenPin.Annotation.Rendering;
+
+namespace OpenPin.Annotation.Model.Items;
+
+/// <summary>Freehand pencil stroke (ANN-06), rendered as a smooth curve through the points.</summary>
+internal sealed class PencilItem : AnnotationItem
+{
+    public List<Point> Points { get; set; } = new();
+    public Color Color { get; set; } = Colors.Red;
+    public double Width { get; set; } = 4;
+
+    public override AnnotationTool Tool => AnnotationTool.Pencil;
+    protected override void CloneDeep() => Points = new List<Point>(Points);
+
+    public override Rect Bounds => Geo.Inflate(Geo.BoundsOf(Points), Width / 2 + 2);
+
+    public override void Draw(DrawingContext dc, RenderContext ctx)
+    {
+        if (Points.Count == 0) return;
+        dc.DrawGeometry(null, MakePen(Color, Width, LineDash.Solid), Geo.SmoothPath(Points));
+    }
+
+    public override bool HitTest(Point p, double tolerance) => Geo.DistanceToPolyline(p, Points) <= Width / 2 + tolerance;
+
+    public override bool IntersectsRect(Rect r) => Points.Any(r.Contains);
+
+    public override void Offset(Vector v)
+    {
+        for (int i = 0; i < Points.Count; i++) Points[i] += v;
+    }
+
+    public override void ApplyOptions(ToolOptions o) { Color = o.ColorValue; Width = o.Size; }
+    public override void ReadOptions(ToolOptions o) { o.ColorValue = Color; o.Size = Width; }
+}
+
+/// <summary>Base for items covering an area painted with a brush (freehand) or a rectangle: highlighter, mosaic.</summary>
+internal abstract class RegionItem : AnnotationItem
+{
+    private Geometry? _region;
+    private long _regionVersion = -1;
+
+    public DrawMode Mode { get; set; }
+    public List<Point> Points { get; set; } = new();
+    public Rect Rect { get; set; }
+    public double Width { get; set; } = 20;
+
+    protected override void CloneDeep()
+    {
+        Points = new List<Point>(Points);
+        // Geometry is immutable (frozen) and keyed by version: sharing it is fine.
+    }
+
+    /// <summary>Filled area of the item (frozen, cached per version).</summary>
+    public Geometry Region
+    {
+        get
+        {
+            if (_region != null && _regionVersion == Version) return _region;
+            Geometry g;
+            if (Mode == DrawMode.Rect) g = new RectangleGeometry(Rect);
+            else
+            {
+                var path = Geo.SmoothPath(Points);
+                var pen = new Pen(Brushes.Black, Math.Max(1, Width)) { StartLineCap = PenLineCap.Round, EndLineCap = PenLineCap.Round, LineJoin = PenLineJoin.Round };
+                g = path.GetWidenedPathGeometry(pen, 0.25, ToleranceType.Absolute);
+            }
+            g.Freeze();
+            _region = g;
+            _regionVersion = Version;
+            return g;
+        }
+    }
+
+    public override Rect Bounds => Mode == DrawMode.Rect
+        ? Geo.Inflate(Rect, 1)
+        : Geo.Inflate(Geo.BoundsOf(Points), Width / 2 + 2);
+
+    public override bool HitTest(Point p, double tolerance) => Mode == DrawMode.Rect
+        ? Geo.Inflate(Rect, tolerance).Contains(p)
+        : Geo.DistanceToPolyline(p, Points) <= Width / 2 + tolerance;
+
+    public override bool IntersectsRect(Rect r) => Mode == DrawMode.Rect ? Rect.IntersectsWith(r) : Points.Any(r.Contains);
+
+    public override IReadOnlyList<Handle> GetHandles() => Mode == DrawMode.Rect ? RectHandles(Rect, 0, rotate: false) : Array.Empty<Handle>();
+
+    public override void DragHandle(int id, Point p, ModifierKeys mods, AnnotationItem start)
+    {
+        if (Mode == DrawMode.Rect && id < 8) Rect = ResizeRect(((RegionItem)start).Rect, 0, id, p, (mods & ModifierKeys.Shift) != 0);
+    }
+
+    public override void Offset(Vector v)
+    {
+        if (Mode == DrawMode.Rect) { var r = Rect; r.Offset(v); Rect = r; }
+        else for (int i = 0; i < Points.Count; i++) Points[i] += v;
+    }
+
+    protected bool IsEmpty => Mode == DrawMode.Rect ? Rect.Width < 0.5 || Rect.Height < 0.5 : Points.Count == 0;
+}
+
+/// <summary>Highlighter (ANN-07): brush or rectangle; multiply (computed on CPU from the base image) or translucent.</summary>
+internal sealed class HighlighterItem : RegionItem
+{
+    /// <summary>Opacity applied in translucent mode.</summary>
+    public const double TranslucentOpacity = 0.45;
+
+    public Color Color { get; set; } = Color.FromRgb(0xFA, 0xDB, 0x14);
+    public HighlightBlend Blend { get; set; }
+
+    public override AnnotationTool Tool => AnnotationTool.Highlighter;
+    public override int Layer => Blend == HighlightBlend.Multiply ? 0 : 1;
+    public override bool DependsOnBase => Blend == HighlightBlend.Multiply;
+
+    public override void Draw(DrawingContext dc, RenderContext ctx)
+    {
+        if (IsEmpty) return;
+        var region = Region;
+        if (Blend == HighlightBlend.Translucent)
+        {
+            dc.DrawGeometry(Brush(WithAlpha(Color, TranslucentOpacity)), null, region);
+            return;
+        }
+        var fx = ctx.GetMultiply(Color, region.Bounds);
+        dc.PushClip(region);
+        dc.DrawImage(fx.Image, fx.Placement);
+        dc.Pop();
+    }
+
+    public override void ApplyOptions(ToolOptions o) { Color = o.ColorValue; Width = o.Size; Blend = o.Blend; }
+    public override void ReadOptions(ToolOptions o) { o.ColorValue = Color; o.Size = Width; o.Blend = Blend; o.Mode = Mode; }
+}
+
+/// <summary>Mosaic / blur (ANN-08): brush or rectangle, pixels computed from the base image.</summary>
+internal sealed class MosaicItem : RegionItem
+{
+    public MosaicEffect Effect { get; set; }
+    public int Strength { get; set; } = 5;
+
+    public override AnnotationTool Tool => AnnotationTool.Mosaic;
+    public override bool DependsOnBase => true;
+
+    public override void Draw(DrawingContext dc, RenderContext ctx)
+    {
+        if (IsEmpty) return;
+        var region = Region;
+        var fx = Effect == MosaicEffect.Blur ? ctx.GetBlur(Strength, region.Bounds) : ctx.GetMosaic(Strength, region.Bounds);
+        dc.PushClip(region);
+        if (Effect == MosaicEffect.Mosaic)
+        {
+            // Crisp blocks at any zoom.
+            var dg = new DrawingGroup();
+            RenderOptions.SetBitmapScalingMode(dg, BitmapScalingMode.NearestNeighbor);
+            using (var g = dg.Open()) g.DrawImage(fx.Image, fx.Placement);
+            dc.DrawDrawing(dg);
+        }
+        else dc.DrawImage(fx.Image, fx.Placement);
+        dc.Pop();
+    }
+
+    public override void ApplyOptions(ToolOptions o) { Width = o.Size; Effect = o.Effect; Strength = o.Strength; }
+    public override void ReadOptions(ToolOptions o) { o.Size = Width; o.Effect = Effect; o.Strength = Strength; o.Mode = Mode; }
+}

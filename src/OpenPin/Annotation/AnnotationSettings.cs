@@ -15,6 +15,8 @@ public sealed class AnnotationSettings
     public bool AllowSecondaryEdit { get; set; } = true;
     public bool RememberLastToolInCapture { get; set; }
     public bool RememberLastToolInPin { get; set; } = true;
+    /// <summary>After deleting a serial marker, renumber the remaining ones consecutively (ANN-05).</summary>
+    public bool SerialRenumberOnDelete { get; set; } = true;
     /// <summary>Last used tool options (color, sizes, styles…) per tool, serialized by the module.</summary>
     public Dictionary<string, string> ToolState { get; set; } = new();
 }

@@ -2,4 +2,110 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- Annotation module strings (keys: Annotation.*). Owned by the Annotation module. -->
+
+  <!-- Tools -->
+  <sys:String x:Key="Annotation.Tool.Rectangle">矩形 / 椭圆 (Shift+1，再按切换)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Line">直线 / 折线 (Shift+2)&#x0a;拖动画直线，单击逐点画折线，双击或右键结束</sys:String>
+  <sys:String x:Key="Annotation.Tool.Arrow">箭头 (Shift+3)&#x0a;双击箭头添加注释文字</sys:String>
+  <sys:String x:Key="Annotation.Tool.Serial">序号 (Shift+4)&#x0a;拖动生成指向箭头；选中后 +/- 改编号，A 添加说明</sys:String>
+  <sys:String x:Key="Annotation.Tool.Pencil">画笔 (Shift+5)&#x0a;按住 Shift 画直线</sys:String>
+  <sys:String x:Key="Annotation.Tool.Highlighter">荧光笔 (Shift+6)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Mosaic">马赛克 / 模糊 (Shift+7)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Text">文字 (Shift+8)&#x0a;点击已有文字可再次编辑</sys:String>
+  <sys:String x:Key="Annotation.Tool.Eraser">橡皮擦 (Shift+9)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Spotlight">聚光灯 (Shift+0)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Watermark">水印</sys:String>
+  <sys:String x:Key="Annotation.Tool.Magnifier">放大镜</sys:String>
+  <sys:String x:Key="Annotation.More">更多工具</sys:String>
+  <sys:String x:Key="Annotation.Less">收起</sys:String>
+  <sys:String x:Key="Annotation.Undo">撤销 (Ctrl+Z)</sys:String>
+  <sys:String x:Key="Annotation.Redo">重做 (Ctrl+Y)</sys:String>
+
+  <!-- Common options -->
+  <sys:String x:Key="Annotation.Size">大小（滚轮调整）</sys:String>
+  <sys:String x:Key="Annotation.Color.Custom">自定义颜色（Ctrl+滚轮调整透明度）</sys:String>
+  <sys:String x:Key="Annotation.Color.Hex">颜色值</sys:String>
+  <sys:String x:Key="Annotation.Color.Alpha">不透明度</sys:String>
+  <sys:String x:Key="Annotation.Color.Hue">色相</sys:String>
+  <sys:String x:Key="Annotation.Shape.Rectangle">矩形</sys:String>
+  <sys:String x:Key="Annotation.Shape.Ellipse">椭圆</sys:String>
+  <sys:String x:Key="Annotation.Shape.Sector">扇形</sys:String>
+  <sys:String x:Key="Annotation.Shape.Arc">弧形</sys:String>
+  <sys:String x:Key="Annotation.Fill">填充</sys:String>
+  <sys:String x:Key="Annotation.Dash.Solid">实线</sys:String>
+  <sys:String x:Key="Annotation.Dash.Dash">虚线</sys:String>
+  <sys:String x:Key="Annotation.Dash.Dot">点线</sys:String>
+  <sys:String x:Key="Annotation.CornerRadius">圆角</sys:String>
+  <sys:String x:Key="Annotation.Rotate">拖动旋转（Shift 每次 15°）</sys:String>
+
+  <!-- Line / arrow -->
+  <sys:String x:Key="Annotation.Line.Start">起点样式（单击切换）</sys:String>
+  <sys:String x:Key="Annotation.Line.End">终点样式（单击切换）</sys:String>
+  <sys:String x:Key="Annotation.Line.Style">连接 / 端点样式</sys:String>
+  <sys:String x:Key="Annotation.Line.Join">连接</sys:String>
+  <sys:String x:Key="Annotation.Line.Cap">端点</sys:String>
+  <sys:String x:Key="Annotation.Line.JoinRound">圆角</sys:String>
+  <sys:String x:Key="Annotation.Line.JoinMiter">尖角</sys:String>
+  <sys:String x:Key="Annotation.Line.JoinBevel">斜角</sys:String>
+  <sys:String x:Key="Annotation.Line.CapRound">圆头</sys:String>
+  <sys:String x:Key="Annotation.Line.CapFlat">平头</sys:String>
+  <sys:String x:Key="Annotation.Line.CapSquare">方头</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Tapered">实心渐细</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Solid">实心箭头</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Line">线条箭头</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Double">双向箭头</sys:String>
+
+  <!-- Serial -->
+  <sys:String x:Key="Annotation.Serial.Number">数字 1, 2, 3</sys:String>
+  <sys:String x:Key="Annotation.Serial.Letter">字母 A, B, C</sys:String>
+  <sys:String x:Key="Annotation.Serial.Roman">罗马数字 I, II, III</sys:String>
+  <sys:String x:Key="Annotation.Serial.Next">下一个序号</sys:String>
+  <sys:String x:Key="Annotation.Serial.Renumber">删除后自动重新编号</sys:String>
+
+  <!-- Highlighter / mosaic / eraser -->
+  <sys:String x:Key="Annotation.Mode.Brush">画笔</sys:String>
+  <sys:String x:Key="Annotation.Mode.Rect">矩形</sys:String>
+  <sys:String x:Key="Annotation.Mode.Partial">局部擦除（擦掉标注的一部分）</sys:String>
+  <sys:String x:Key="Annotation.Blend.Multiply">正片叠底</sys:String>
+  <sys:String x:Key="Annotation.Blend.Translucent">半透明</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.Mosaic">马赛克</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.Blur">模糊</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.Strength">强度</sys:String>
+  <sys:String x:Key="Annotation.Eraser.ClearAll">清空全部标注</sys:String>
+  <sys:String x:Key="Annotation.Eraser.Clear">清空</sys:String>
+
+  <!-- Text -->
+  <sys:String x:Key="Annotation.Text.Font">字体</sys:String>
+  <sys:String x:Key="Annotation.Text.Bold">粗体</sys:String>
+  <sys:String x:Key="Annotation.Text.Italic">斜体</sys:String>
+  <sys:String x:Key="Annotation.Text.Outline">描边</sys:String>
+  <sys:String x:Key="Annotation.Text.OutlineColor">描边颜色</sys:String>
+  <sys:String x:Key="Annotation.Text.Background">背景</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundColor">背景颜色</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundSettings">背景设置</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundOpacity">不透明度</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundRadius">圆角</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundPadding">内边距</sys:String>
+
+  <!-- Spotlight / watermark / magnifier -->
+  <sys:String x:Key="Annotation.Spotlight.Opacity">遮罩不透明度（滚轮调整）</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Text">水印文字，可用 $yyyy-MM-dd HH:mm:ss$ 插入时间</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Layout">位置</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Tile">平铺</sys:String>
+  <sys:String x:Key="Annotation.Watermark.TopLeft">左上</sys:String>
+  <sys:String x:Key="Annotation.Watermark.TopRight">右上</sys:String>
+  <sys:String x:Key="Annotation.Watermark.BottomLeft">左下</sys:String>
+  <sys:String x:Key="Annotation.Watermark.BottomRight">右下</sys:String>
+  <sys:String x:Key="Annotation.Watermark.TopCenter">上中</sys:String>
+  <sys:String x:Key="Annotation.Watermark.BottomCenter">下中</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Center">居中</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Opacity">不透明度</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Spacing">间距</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Remove">移除水印</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Add">添加水印</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.Zoom">放大倍数（滚轮调整）</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.Border">边框粗细</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.ConnectorNone">无连接线</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.ConnectorSolid">实线连接</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.ConnectorDashed">虚线连接</sys:String>
 </ResourceDictionary>
