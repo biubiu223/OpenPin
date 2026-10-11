@@ -32,6 +32,8 @@
   <SolidColorBrush x:Key="Brush.Hover" Color="{StaticResource Color.Hover}" />
   <SolidColorBrush x:Key="Brush.Pressed" Color="{StaticResource Color.Pressed}" />
   <SolidColorBrush x:Key="Brush.Danger" Color="{StaticResource Color.Danger}" />
+  <!-- Text/icons drawn on top of Brush.Accent (primary buttons, badges) -->
+  <SolidColorBrush x:Key="Brush.OnAccent" Color="White" />
 
   <!-- Typography -->
   <FontFamily x:Key="Font.UI">Microsoft YaHei UI, Segoe UI</FontFamily>
@@ -51,7 +53,7 @@
     <Setter Property="Background" Value="{DynamicResource Brush.Surface}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
     <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="CornerRadius" Value="{StaticResource Radius.Medium}" />
+    <Setter Property="CornerRadius" Value="{StaticResource Radius.Large}" />
     <Setter Property="Padding" Value="4" />
     <Setter Property="Effect" Value="{StaticResource Effect.Shadow}" />
     <Setter Property="TextElement.FontFamily" Value="{DynamicResource Font.UI}" />

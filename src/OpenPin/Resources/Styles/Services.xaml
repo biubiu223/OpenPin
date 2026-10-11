@@ -3,7 +3,6 @@
   <!-- Services module styles (keys: Style.Services.*). Owned by the Services module. Use Theme.xaml tokens. -->
 
   <!-- Tokens missing from Theme.xaml (candidates to move there). -->
-  <SolidColorBrush x:Key="Brush.Services.OnAccent" Color="#FFFFFFFF" />
 
   <!-- Card container: toasts and result windows (Win11: 8px radius, 1px subtle border, soft shadow). -->
   <Style x:Key="Style.Services.Card" TargetType="Border">
@@ -59,7 +58,7 @@
 
   <!-- Win11 accent (primary) button -->
   <Style x:Key="Style.Services.AccentButton" TargetType="ButtonBase" BasedOn="{StaticResource Style.Services.Button}">
-    <Setter Property="Foreground" Value="{DynamicResource Brush.Services.OnAccent}" />
+    <Setter Property="Foreground" Value="{DynamicResource Brush.OnAccent}" />
     <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
   </Style>

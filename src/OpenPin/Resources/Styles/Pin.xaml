@@ -9,8 +9,6 @@
   <SolidColorBrush x:Key="Brush.Pin.Badge" Color="{DynamicResource Color.Text}" Opacity="0.78" />
   <SolidColorBrush x:Key="Brush.Pin.BadgeText" Color="{DynamicResource Color.Surface}" />
   <SolidColorBrush x:Key="Brush.Pin.Selection" Color="{DynamicResource Color.Accent}" Opacity="0.32" />
-  <!-- Text on accent-colored buttons (candidate for a Theme token "Brush.OnAccent") -->
-  <SolidColorBrush x:Key="Brush.Pin.OnAccent" Color="#FFFFFFFF" />
 
   <!-- ===================================================================== pin overlays -->
   <!-- zoom %, "copied" … shown in the middle of a pin -->
@@ -177,7 +175,7 @@
   </Style>
 
   <Style x:Key="Style.Pin.AccentButton" TargetType="Button" BasedOn="{StaticResource Style.Pin.Button}">
-    <Setter Property="Foreground" Value="{DynamicResource Brush.Pin.OnAccent}" />
+    <Setter Property="Foreground" Value="{DynamicResource Brush.OnAccent}" />
     <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
   </Style>
@@ -225,7 +223,7 @@
           <StackPanel Orientation="Horizontal" Background="Transparent">
             <Border x:Name="Box" Width="18" Height="18" CornerRadius="{DynamicResource Radius.Small}" BorderThickness="1"
                     BorderBrush="{DynamicResource Brush.TextSecondary}" Background="{DynamicResource Brush.Surface}" VerticalAlignment="Center">
-              <TextBlock x:Name="Mark" Text="&#xE73E;" FontFamily="{DynamicResource Font.Icon}" FontSize="12" Foreground="{DynamicResource Brush.Pin.OnAccent}"
+              <TextBlock x:Name="Mark" Text="&#xE73E;" FontFamily="{DynamicResource Font.Icon}" FontSize="12" Foreground="{DynamicResource Brush.OnAccent}"
                          HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" />
             </Border>
             <ContentPresenter Margin="8,0,0,0" VerticalAlignment="Center" />
