@@ -3,4 +3,37 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- Services module strings (keys: Services.*). Owned by the Services module. -->
   <sys:String x:Key="Services.Saved">已保存</sys:String>
+  <sys:String x:Key="Services.SaveDialogTitle">保存图片</sys:String>
+  <sys:String x:Key="Services.SaveFailed">保存失败：{0}</sys:String>
+  <sys:String x:Key="Services.OpenFolder">打开文件夹</sys:String>
+  <sys:String x:Key="Services.OpenFolderFailed">无法打开文件夹：{0}</sys:String>
+  <sys:String x:Key="Services.CopyPath">复制路径</sys:String>
+  <sys:String x:Key="Services.CopyFailed">复制到剪贴板失败：{0}</sys:String>
+  <sys:String x:Key="Services.Copied">已复制到剪贴板</sys:String>
+  <sys:String x:Key="Services.Close">关闭</sys:String>
+
+  <!-- OCR -->
+  <sys:String x:Key="Services.OcrNoLanguage">未安装 OCR 语言包。请在 Windows 设置 → 时间和语言 → 语言和区域 中添加语言并安装“光学字符识别”。</sys:String>
+  <sys:String x:Key="Services.OcrNoText">未识别到文字</sys:String>
+  <sys:String x:Key="Services.OcrTitle">文字识别</sys:String>
+  <sys:String x:Key="Services.OcrCopy">复制</sys:String>
+  <sys:String x:Key="Services.OcrLayout">排版</sys:String>
+  <sys:String x:Key="Services.OcrLayoutAuto">自动分段</sys:String>
+  <sys:String x:Key="Services.OcrLayoutSingle">合并为一行</sys:String>
+  <sys:String x:Key="Services.OcrLayoutMulti">保留换行</sys:String>
+  <sys:String x:Key="Services.OcrPunctuation">标点</sys:String>
+  <sys:String x:Key="Services.OcrPunctNone">原样</sys:String>
+  <sys:String x:Key="Services.OcrPunctHalf">转半角</sys:String>
+  <sys:String x:Key="Services.OcrPunctFull">转全角</sys:String>
+  <sys:String x:Key="Services.OcrLanguageLabel">语言：{0}</sys:String>
+  <sys:String x:Key="Services.OcrCharCount">{0} 个字符</sys:String>
+
+  <!-- QR -->
+  <sys:String x:Key="Services.QrTitle">二维码识别</sys:String>
+  <sys:String x:Key="Services.QrNone">未识别到二维码或条码</sys:String>
+  <sys:String x:Key="Services.QrCount">识别到 {0} 个码</sys:String>
+  <sys:String x:Key="Services.QrCopy">复制</sys:String>
+  <sys:String x:Key="Services.QrCopyAll">全部复制</sys:String>
+  <sys:String x:Key="Services.QrOpenLink">打开链接</sys:String>
+  <sys:String x:Key="Services.QrOpenFailed">无法打开链接：{0}</sys:String>
 </ResourceDictionary>
