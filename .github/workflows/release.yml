@@ -38,9 +38,36 @@ jobs:
           Compress-Archive -Path out/fd/* -DestinationPath OpenPin-${{ steps.ver.outputs.version }}-win-x64.zip
           Compress-Archive -Path out/sc/* -DestinationPath OpenPin-${{ steps.ver.outputs.version }}-win-x64-selfcontained.zip
 
+      # MSIX (self-contained). Configure in the repo settings:
+      #   variables: MSIX_IDENTITY_NAME, MSIX_PUBLISHER, MSIX_PUBLISHER_DISPLAY_NAME (from Partner Center → Product identity)
+      #   secrets (optional, for a sideload-installable signed package): MSIX_CERT_BASE64 (.pfx as base64), MSIX_CERT_PASSWORD
+      - name: MSIX
+        shell: pwsh
+        env:
+          CERT_B64: ${{ secrets.MSIX_CERT_BASE64 }}
+          CERT_PWD: ${{ secrets.MSIX_CERT_PASSWORD }}
+        run: |
+          $opts = @{
+            Version = '${{ steps.ver.outputs.version }}'
+            OutDir = "$PWD"
+            IdentityName = '${{ vars.MSIX_IDENTITY_NAME }}'
+            Publisher = '${{ vars.MSIX_PUBLISHER }}'
+            PublisherDisplayName = '${{ vars.MSIX_PUBLISHER_DISPLAY_NAME }}'
+          }
+          if (-not $opts.IdentityName) { $opts.IdentityName = 'OpenPin' }
+          if (-not $opts.Publisher) { $opts.Publisher = 'CN=OpenPin' }
+          if (-not $opts.PublisherDisplayName) { $opts.PublisherDisplayName = 'OpenPin contributors' }
+          if ($env:CERT_B64) {
+            [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\cert.pfx", [Convert]::FromBase64String($env:CERT_B64))
+            $opts.CertPath = "$env:RUNNER_TEMP\cert.pfx"
+            $opts.CertPassword = $env:CERT_PWD
+          }
+          ./packaging/msix/build-msix.ps1 @opts
+
       - uses: softprops/action-gh-release@v2
         with:
           draft: true
           generate_release_notes: true
           files: |
             OpenPin-*.zip
+            OpenPin-*.msix
