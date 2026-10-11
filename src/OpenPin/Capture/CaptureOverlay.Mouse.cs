@@ -7,6 +7,7 @@ namespace OpenPin.Capture;
 internal sealed partial class CaptureOverlay
 {
     private const double DragThresholdDip = 3;
+    private bool _initialToolApplied;
 
     private double HandleTolerancePx => 6 * _dpi;
     private double EdgeTolerancePx => 4 * _dpi;
@@ -333,6 +334,13 @@ internal sealed partial class CaptureOverlay
         {
             ExecuteModeAction();
             return;
+        }
+        if (!_initialToolApplied)
+        {
+            // Honour Annotation's "remember last tool in capture" on the first selection of this session.
+            _initialToolApplied = true;
+            var tool = AnnotationSurface.GetInitialTool(forPin: false);
+            if (tool != AnnotationTool.None) _surface.Tool = tool;
         }
         if (_cfg.QrDetect is QrDetectMode.Auto or QrDetectMode.ShowContent) RunQrDetection(manual: false);
     }

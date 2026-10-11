@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -140,11 +141,12 @@ internal sealed partial class CaptureOverlay
         var bmp = RenderSelection(forPin: false);
         var rect = SelectionScreenPx;
         var ctx = MakeContext();
-        // Hide (not close) so the dialog is not behind the topmost overlay; come back if the user cancels.
+        // The dialog is owned by the (topmost) overlay so it is never hidden behind it; on cancel the user is back
+        // in the overlay with the selection and annotations intact.
         HideFlyouts();
-        Hide();
+        Mouse.OverrideCursor = null;
         string? path = null;
-        try { path = SaveService.SaveWithDialog(bmp, ctx); }
+        try { path = SaveService.SaveWithDialog(bmp, ctx, this); }
         catch (Exception ex)
         {
             Log.Error("Save failed", ex);
@@ -157,15 +159,7 @@ internal sealed partial class CaptureOverlay
             RunOutput("save", () => Remember(bmp, rect));
             return;
         }
-        Show();
-        WindowHelperShowAgain();
-    }
-
-    private void WindowHelperShowAgain()
-    {
-        Core.Native.WindowHelper.SetBoundsPx(this, _snap.VirtualBoundsPx, topmost: true);
         Activate();
-        CaptureNative.ForceForeground(Core.Native.WindowHelper.GetHandle(this));
         _root.Focus();
         MarkDirty();
     }
@@ -284,7 +278,7 @@ internal sealed partial class CaptureOverlay
             int seq = ++_qrSeq;
             var crop = BitmapUtil.Crop(DisplayImage, region);
             if (manual) ShowToast(Loc.Get("Capture.Qr.Detecting"));
-            var results = await Task.Run(() => QrService.Decode(crop));
+            var results = await QrService.DecodeAsync(crop);
             if (_closing || seq != _qrSeq) return;
             _qrRegion = region;
             _qrResults = results

@@ -337,7 +337,7 @@ internal sealed partial class CaptureOverlay : Window, IModalSession
     {
         if (handled || _closing || msg.hwnd != _hwnd) return;
         if (msg.message is not (CaptureNative.WM_KEYDOWN or CaptureNative.WM_SYSKEYDOWN)) return;
-        if (Keyboard.FocusedElement is System.Windows.Controls.Primitives.TextBoxBase) return;
+        if (Keyboard.FocusedElement is System.Windows.Controls.Primitives.TextBoxBase || _surface.IsEditingText) return;
         // Keys the IME itself injects right after one we took (e.g. the caret "Left" after an auto-paired 《》)
         // carry no scan code: drop them.
         if (CaptureNative.ScanCode(msg.lParam) == 0 && Environment.TickCount64 - _imeKeyTick < 200)

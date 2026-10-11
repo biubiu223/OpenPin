@@ -41,6 +41,7 @@
   <sys:String x:Key="Capture.LastRegionCopied">已复制上次区域的截图</sys:String>
   <sys:String x:Key="Capture.NoLastRegion">还没有截图区域记录</sys:String>
   <sys:String x:Key="Capture.OcrCopied">已复制识别的文字（{0} 字）</sys:String>
+  <sys:String x:Key="Capture.OcrShow">查看 / 编辑</sys:String>
   <sys:String x:Key="Capture.OcrNoText">未识别到文字</sys:String>
   <sys:String x:Key="Capture.OcrUnavailable">文字识别不可用：请在 Windows 设置中安装 OCR 语言包</sys:String>
   <sys:String x:Key="Capture.Failed">截图失败：{0}</sys:String>

@@ -28,7 +28,7 @@ internal sealed partial class CaptureOverlay
             return;
         }
         // Typing into a text box (size input, annotation text, toolbar inputs) never triggers overlay shortcuts.
-        if (e.OriginalSource is TextBoxBase || Keyboard.FocusedElement is TextBoxBase) return;
+        if (e.OriginalSource is TextBoxBase || Keyboard.FocusedElement is TextBoxBase || _surface.IsEditingText) return;
 
         if (key is Key.LeftShift or Key.RightShift)
         {

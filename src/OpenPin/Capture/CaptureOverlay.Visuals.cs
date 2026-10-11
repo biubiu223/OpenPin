@@ -206,7 +206,10 @@ internal sealed partial class CaptureOverlay
         var size = PxSize(_toolbar, mon);
         var selRect = new Rect(_sel.X, _sel.Y, _sel.Width, _sel.Height);
         selRect.Inflate(_cfg.SelectionBorderWidth * _dpi, _cfg.SelectionBorderWidth * _dpi);
-        var (pos, _) = Placement.PlaceToolbar(selRect, size, _monitorRects[mon], 8 * s);
+        // The toolbar's drop shadow reaches ~12 px outside its bounds: keep that gap from the selection border.
+        var (pos, side) = Placement.PlaceToolbar(selRect, size, _monitorRects[mon], 12 * s);
+        // Tool options open towards the selection when the toolbar sits above it (or inside it).
+        _toolbar.OptionsAbove = side != ToolbarSide.Below;
         PlaceUi(_toolbar, pos, mon);
         _toolbarRectPx = new Rect(pos, size);
 

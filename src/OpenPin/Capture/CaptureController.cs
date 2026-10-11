@@ -156,17 +156,27 @@ public sealed class CaptureController : ICaptureController
     {
         try
         {
+            // RecognizeAsync never throws: failures come back in result.Error.
             var result = await OcrService.RecognizeAsync(image);
+            if (!string.IsNullOrEmpty(result.Error))
+            {
+                Notify.Error(OcrService.IsAvailable ? result.Error : Loc.Get("Capture.OcrUnavailable"));
+                return;
+            }
             var text = !string.IsNullOrWhiteSpace(result.Text)
                 ? result.Text
                 : string.Join(Environment.NewLine, result.Lines.Select(l => l.Text));
-            if (string.IsNullOrWhiteSpace(text))
+            if (result.IsEmpty || string.IsNullOrWhiteSpace(text))
             {
                 Notify.Info(Loc.Get(OcrService.IsAvailable ? "Capture.OcrNoText" : "Capture.OcrUnavailable"));
                 return;
             }
-            ClipboardService.SetText(text);
-            Notify.Info(Loc.Format("Capture.OcrCopied", text.Length));
+            ClipboardService.SetText(text); // throws after its retries: handled below
+            Notify.Show(new NotifyOptions
+            {
+                Message = Loc.Format("Capture.OcrCopied", text.Length),
+                Actions = new[] { new NotifyAction(Loc.Get("Capture.OcrShow"), () => OcrResultWindow.Show(result, image)) },
+            });
         }
         catch (Exception ex)
         {
