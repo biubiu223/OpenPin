@@ -12,7 +12,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" /></a>
   <img src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6" alt="Windows" />
-  <img src="https://img.shields.io/badge/.NET-8.0-512BD4" alt=".NET 8" />
+  <img src="https://img.shields.io/badge/.NET-10-512BD4" alt=".NET 10" />
 </p>
 
 ---
@@ -38,7 +38,7 @@
 
 ## 从源码构建
 
-需要 Windows 10 1809+ 和 [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)：
+需要 Windows 10 1809+ 和 [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)：
 
 ```bash
 dotnet build

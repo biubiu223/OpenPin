@@ -171,6 +171,8 @@ internal static class NativeMethods
     [DllImport("user32.dll")] public static extern IntPtr MonitorFromPoint(POINT pt, int dwFlags);
     [DllImport("user32.dll")] public static extern uint GetDpiForWindow(IntPtr hwnd);
 
+    [DllImport("user32.dll")] public static extern bool SetWindowDisplayAffinity(IntPtr hWnd, uint dwAffinity);
+
     [DllImport("user32.dll", SetLastError = true)] public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
     [DllImport("user32.dll", SetLastError = true)] public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 

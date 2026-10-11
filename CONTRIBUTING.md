@@ -5,7 +5,7 @@
 ## 环境
 
 - Windows 10 1809+ / Windows 11（x64）
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - 任意编辑器：Visual Studio 2022、Rider 或 VS Code（C# Dev Kit）
 
 ## 构建与运行

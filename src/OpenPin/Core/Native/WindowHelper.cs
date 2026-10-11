@@ -68,6 +68,16 @@ public static class WindowHelper
         SetWindowLongPtr(hwnd, GWL_EXSTYLE, new IntPtr(ex));
     }
 
+    /// <summary>
+    /// Exclude a window from ALL screen captures (our own GDI grabs, other recorders, screenshots) —
+    /// for long-capture / recording frames and control bars. Windows 10 2004+; returns false if unsupported.
+    /// </summary>
+    public static bool SetExcludeFromCapture(Window window, bool exclude)
+    {
+        const uint WDA_NONE = 0x0, WDA_EXCLUDEFROMCAPTURE = 0x11;
+        return SetWindowDisplayAffinity(GetHandle(window), exclude ? WDA_EXCLUDEFROMCAPTURE : WDA_NONE);
+    }
+
     /// <summary>DPI scale of the monitor the window currently lives on (1.0 = 96 DPI).</summary>
     public static double GetDpiScale(Window window)
     {

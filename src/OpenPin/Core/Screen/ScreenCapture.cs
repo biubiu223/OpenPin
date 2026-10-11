@@ -24,7 +24,9 @@ public static class ScreenCapture
             Image = image,
             VirtualBoundsPx = bounds,
             Monitors = Screen.Monitors.GetAll(),
-            Windows = WindowEnumerator.GetTopLevelWindows(),
+            // Include our own visible windows so pins can be picked by window detection.
+            // (The overlay does not exist yet; hidden/cloaked helper windows are filtered out.)
+            Windows = WindowEnumerator.GetTopLevelWindows(includeOwnProcess: true),
             Cursor = cursor,
             Timestamp = DateTime.Now,
         };
@@ -33,12 +35,15 @@ public static class ScreenCapture
     /// <summary>Captures a physical-pixel rectangle of the screen into a frozen Bgr32 bitmap.</summary>
     public static BitmapSource CaptureRegion(Int32Rect rectPx, bool includeCursor = false)
     {
-        int stride = rectPx.Width * 4;
-        var buffer = new byte[stride * rectPx.Height];
-        CaptureRegionInto(rectPx, buffer, includeCursor);
-        var bmp = BitmapSource.Create(rectPx.Width, rectPx.Height, 96, 96, PixelFormats.Bgr32, null, buffer, stride);
-        bmp.Freeze();
-        return bmp;
+        // Build the BitmapSource straight from the DIB section's memory: one copy instead of DIB → byte[] → bitmap.
+        BitmapSource? result = null;
+        WithScreenDib(rectPx, includeCursor, (bits, byteCount) =>
+        {
+            result = BitmapSource.Create(rectPx.Width, rectPx.Height, 96, 96, PixelFormats.Bgr32, null,
+                bits, byteCount, rectPx.Width * 4);
+        });
+        result!.Freeze();
+        return result;
     }
 
     /// <summary>
@@ -47,9 +52,16 @@ public static class ScreenCapture
     /// </summary>
     public static void CaptureRegionInto(Int32Rect rectPx, byte[] buffer, bool includeCursor = false)
     {
+        int needed = rectPx.Width * rectPx.Height * 4;
+        if (buffer.Length < needed) throw new ArgumentException("Buffer too small", nameof(buffer));
+        WithScreenDib(rectPx, includeCursor, (bits, byteCount) => Marshal.Copy(bits, buffer, 0, byteCount));
+    }
+
+    /// <summary>BitBlt the screen rectangle into a temporary top-down 32bpp DIB and hand its memory to <paramref name="consume"/>.</summary>
+    private static void WithScreenDib(Int32Rect rectPx, bool includeCursor, Action<IntPtr, int> consume)
+    {
         if (rectPx.Width <= 0 || rectPx.Height <= 0) throw new ArgumentException("Empty capture rectangle", nameof(rectPx));
         int byteCount = rectPx.Width * rectPx.Height * 4;
-        if (buffer.Length < byteCount) throw new ArgumentException("Buffer too small", nameof(buffer));
 
         IntPtr screenDc = GetDC(IntPtr.Zero);
         IntPtr memDc = CreateCompatibleDC(screenDc);
@@ -76,7 +88,7 @@ public static class ScreenCapture
                 using var cursor = CursorSnapshot.Grab();
                 cursor?.DrawTo(memDc, rectPx.X, rectPx.Y);
             }
-            Marshal.Copy(bits, buffer, 0, byteCount);
+            consume(bits, byteCount);
         }
         finally
         {

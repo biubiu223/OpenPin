@@ -16,7 +16,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 10.0.x
 
       - name: Version from tag
         id: ver
@@ -26,11 +26,11 @@ jobs:
       - name: Test
         run: dotnet test -c Release
 
-      - name: Publish (small, needs .NET 8 Desktop Runtime)
-        run: dotnet publish src/OpenPin/OpenPin.csproj -c Release -r win-x64 --self-contained false -p:Version=${{ steps.ver.outputs.version }} -o out/fd
+      - name: Publish (small, needs .NET 10 Desktop Runtime)
+        run: dotnet publish src/OpenPin/OpenPin.csproj -c Release -r win-x64 --self-contained false -p:PublishReadyToRun=true -p:Version=${{ steps.ver.outputs.version }} -o out/fd
 
       - name: Publish (self-contained, single file)
-        run: dotnet publish src/OpenPin/OpenPin.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.ver.outputs.version }} -o out/sc
+        run: dotnet publish src/OpenPin/OpenPin.csproj -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.ver.outputs.version }} -o out/sc
 
       - name: Zip
         shell: pwsh
