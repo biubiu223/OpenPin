@@ -15,6 +15,8 @@
   <Color x:Key="Color.Hover">#14000000</Color>
   <Color x:Key="Color.Pressed">#26000000</Color>
   <Color x:Key="Color.Danger">#FFE5484D</Color>
+  <Color x:Key="Color.Warning">#FFFA8C16</Color>
+  <Color x:Key="Color.Success">#FF52C41A</Color>
   <Color x:Key="Color.Shadow">#40000000</Color>
 
   <!-- Pin window shadow states (see docs/SPEC.md §3) -->
@@ -32,6 +34,8 @@
   <SolidColorBrush x:Key="Brush.Hover" Color="{StaticResource Color.Hover}" />
   <SolidColorBrush x:Key="Brush.Pressed" Color="{StaticResource Color.Pressed}" />
   <SolidColorBrush x:Key="Brush.Danger" Color="{StaticResource Color.Danger}" />
+  <SolidColorBrush x:Key="Brush.Warning" Color="{StaticResource Color.Warning}" />
+  <SolidColorBrush x:Key="Brush.Success" Color="{StaticResource Color.Success}" />
   <!-- Text/icons drawn on top of Brush.Accent (primary buttons, badges) -->
   <SolidColorBrush x:Key="Brush.OnAccent" Color="White" />
 

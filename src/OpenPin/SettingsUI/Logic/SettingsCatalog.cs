@@ -85,6 +85,7 @@ internal static class SettingsCatalog
             Punctuation = "", Layout = "", Backup = "", Import = "", Export = "", Reset = "",
             Link = "", License = "", Code = "", Data = "", Log = "", Info = "",
             Translate = "", Recognition = "", Keyboard2 = "", Highlight = "", Delay = "", Presets = "", Lock = "";
+        public const string Mic = "\uE720", Camera = "\uE722";
     }
 
     public static readonly IReadOnlyList<ChoiceOption> SaveExtensions = new[]
@@ -100,6 +101,13 @@ internal static class SettingsCatalog
     {
         "Capture.LastCustom",
         "Save.LastFolder",
+        // Runtime state / adjusted live on the recording control bar.
+        "Recording.LastSaveFolder",
+        "Recording.MicrophoneDeviceId",
+        "Recording.MicrophoneVolume",
+        "Recording.SystemAudioVolume",
+        "Recording.WebcamDeviceId",
+        "Recording.WebcamSize",
     };
 
     private static IReadOnlyList<PageDef> BuildPages()
@@ -303,7 +311,16 @@ internal static class SettingsCatalog
             new PageDef("longcapture", "SettingsUI.Page.LongCapture", Icons.LongCapture, L, new Block[]
             {
                 new SettingBlock(E(L, "DefaultDirection", Icons.Direction)),
+                new SettingBlock(T(L, "AutoCrop", Icons.Edit)),
                 new SettingBlock(N(L, "MaxLength", 1000, 200000, px, Icons.Length) with { Step = 1000 }),
+                new SettingBlock(N(L, "FramesPerSecond", 5, 60, null, Icons.Fps)),
+                new SettingBlock(T(L, "ShowPreview", Icons.Image)),
+                new GroupBlock("SettingsUI.Group.AutoScroll", Icons.Wheel, new[]
+                {
+                    N(L, "AutoScrollIntervalMs", 50, 2000, ms) with { Step = 10 },
+                    N(L, "AutoScrollWheelDelta", 30, 1200) with { Step = 30 },
+                    N(L, "AutoScrollStopAfterIdleMs", 300, 10000, ms) with { Step = 100 },
+                }),
             }),
             new PageDef("recording", "SettingsUI.Page.Recording", Icons.Recording, R, new Block[]
             {
@@ -311,14 +328,37 @@ internal static class SettingsCatalog
                 {
                     Choices = new[] { 5, 16, 24, 30, 60 }.Select(f => new ChoiceOption(f, $"{f} FPS")).ToArray(),
                 }),
+                new SettingBlock(N(R, "StartDelaySeconds", 0, 60, sec, Icons.Delay)),
+                new SettingBlock(N(R, "MaxDurationMinutes", 1, 600, "SettingsUI.Unit.Minutes", Icons.Timer)),
+                new SettingBlock(T(R, "ShowCursor", Icons.Cursor)),
+                new SettingBlock(T(R, "ExcludeControlsFromCapture", Icons.Capture)),
+                new GroupBlock("SettingsUI.Group.RecInput", Icons.Mouse, new[]
+                {
+                    T(R, "HighlightClicks"),
+                    N(R, "ClickAnimationMs", 150, 2000, ms) with { Step = 50 },
+                    T(R, "ShowWheel"),
+                    T(R, "ShowKeys"),
+                    E(R, "KeyFilter") with { EnabledBy = "ShowKeys" },
+                }),
+                new GroupBlock("SettingsUI.Group.RecAudio", Icons.Mic, new[]
+                {
+                    T(R, "RecordMicrophone"),
+                    T(R, "RecordSystemAudio"),
+                }),
+                new GroupBlock("SettingsUI.Group.RecWebcam", Icons.Camera, new[]
+                {
+                    E(R, "WebcamShape") with { EnabledBy = "WebcamEnabled" },
+                    E(R, "WebcamCorner") with { EnabledBy = "WebcamEnabled" },
+                }, T(R, "WebcamEnabled")),
+                new HeaderBlock("SettingsUI.Header.Export"),
                 new SettingBlock(new SettingDef(R, "DefaultFormat", SettingKind.Choice, Icons.Format)
                 {
-                    Choices = new[] { new ChoiceOption("gif", "GIF"), new ChoiceOption("mp4", "MP4"), new ChoiceOption("webp", "WebP") },
+                    Choices = new[] { new ChoiceOption("gif", "GIF"), new ChoiceOption("mp4", "MP4") },
                 }),
-                new SettingBlock(N(R, "StartDelaySeconds", 0, 60, sec, Icons.Delay)),
-                new SettingBlock(T(R, "ShowCursor", Icons.Cursor)),
-                new SettingBlock(T(R, "HighlightClicks", Icons.Highlight)),
-                new SettingBlock(T(R, "ShowKeys", Icons.Keyboard2)),
+                new SettingBlock(E(R, "Quality", Icons.Quality)),
+                new SettingBlock(E(R, "GifDither", Icons.Image)),
+                new SettingBlock(new SettingDef(R, "QuickSaveFolder", SettingKind.Folder, Icons.Folder) { DefaultFolder = "pictures" }),
+                new SettingBlock(new SettingDef(R, "FileNameTemplate", SettingKind.Template, Icons.Template) { TemplateMode = TemplateMode.FileName }),
             }),
             // Pages whose content is provided by other modules (embedded at merge time, see Views/ExternalPages.cs).
             new PageDef("translate", "SettingsUI.Page.Translate", Icons.Translate, "Translate", new Block[]
