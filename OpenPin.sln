@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{69E52E9A-8E98-4F72-A0B1-1E80997ABB02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenPin", "src\OpenPin\OpenPin.csproj", "{BF7A1DF3-56E4-469B-90A4-28C06FB26D88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{84780995-B482-48FA-9A17-FF6D901BE01E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenPin.Tests", "tests\OpenPin.Tests\OpenPin.Tests.csproj", "{301E4853-7E4C-43BA-A085-E7C5E7E19A15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF7A1DF3-56E4-469B-90A4-28C06FB26D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7A1DF3-56E4-469B-90A4-28C06FB26D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7A1DF3-56E4-469B-90A4-28C06FB26D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7A1DF3-56E4-469B-90A4-28C06FB26D88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{301E4853-7E4C-43BA-A085-E7C5E7E19A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301E4853-7E4C-43BA-A085-E7C5E7E19A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301E4853-7E4C-43BA-A085-E7C5E7E19A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301E4853-7E4C-43BA-A085-E7C5E7E19A15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BF7A1DF3-56E4-469B-90A4-28C06FB26D88} = {69E52E9A-8E98-4F72-A0B1-1E80997ABB02}
+		{301E4853-7E4C-43BA-A085-E7C5E7E19A15} = {84780995-B482-48FA-9A17-FF6D901BE01E}
+	EndGlobalSection
+EndGlobal

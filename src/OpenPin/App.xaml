@@ -1,0 +1,32 @@
+<Application x:Class="OpenPin.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             ShutdownMode="OnExplicitShutdown">
+  <Application.Resources>
+    <ResourceDictionary>
+      <!--
+        One dictionary per module so parallel work never conflicts.
+        Strings: Resources/Strings/<culture>/<Module>.xaml   Styles: Resources/Styles/<Module>.xaml
+      -->
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Resources/Theme.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Annotation.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Capture.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Pin.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Services.xaml" />
+        <ResourceDictionary Source="Resources/Styles/SettingsUI.xaml" />
+        <ResourceDictionary Source="Resources/Styles/LongCapture.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Recording.xaml" />
+
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Common.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Annotation.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Capture.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Pin.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Services.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/SettingsUI.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/LongCapture.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Recording.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

@@ -1,0 +1,6 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Services module strings (keys: Services.*). Owned by the Services module. -->
+  <sys:String x:Key="Services.Saved">已保存</sys:String>
+</ResourceDictionary>

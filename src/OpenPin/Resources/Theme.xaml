@@ -1,0 +1,106 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    Shared design tokens. Modules must use these keys (DynamicResource) instead of hard-coded colors,
+    so a dark theme / custom accent can be added later by swapping this dictionary.
+  -->
+
+  <!-- Colors -->
+  <Color x:Key="Color.Accent">#1677FF</Color>
+  <Color x:Key="Color.Surface">#FFFFFFFF</Color>
+  <Color x:Key="Color.SurfaceAlt">#FFF5F6F8</Color>
+  <Color x:Key="Color.Border">#FFE3E5E8</Color>
+  <Color x:Key="Color.Text">#FF1F1F1F</Color>
+  <Color x:Key="Color.TextSecondary">#FF6B6F76</Color>
+  <Color x:Key="Color.Hover">#14000000</Color>
+  <Color x:Key="Color.Pressed">#26000000</Color>
+  <Color x:Key="Color.Danger">#FFE5484D</Color>
+  <Color x:Key="Color.Shadow">#40000000</Color>
+
+  <!-- Pin window shadow states (see docs/SPEC.md §3) -->
+  <Color x:Key="Color.PinActive">#FF1677FF</Color>
+  <Color x:Key="Color.PinInactive">#FF8C8C8C</Color>
+  <Color x:Key="Color.PinLocked">#FFFA8C16</Color>
+  <Color x:Key="Color.PinClickThrough">#FF52C41A</Color>
+
+  <SolidColorBrush x:Key="Brush.Accent" Color="{StaticResource Color.Accent}" />
+  <SolidColorBrush x:Key="Brush.Surface" Color="{StaticResource Color.Surface}" />
+  <SolidColorBrush x:Key="Brush.SurfaceAlt" Color="{StaticResource Color.SurfaceAlt}" />
+  <SolidColorBrush x:Key="Brush.Border" Color="{StaticResource Color.Border}" />
+  <SolidColorBrush x:Key="Brush.Text" Color="{StaticResource Color.Text}" />
+  <SolidColorBrush x:Key="Brush.TextSecondary" Color="{StaticResource Color.TextSecondary}" />
+  <SolidColorBrush x:Key="Brush.Hover" Color="{StaticResource Color.Hover}" />
+  <SolidColorBrush x:Key="Brush.Pressed" Color="{StaticResource Color.Pressed}" />
+  <SolidColorBrush x:Key="Brush.Danger" Color="{StaticResource Color.Danger}" />
+
+  <!-- Typography -->
+  <FontFamily x:Key="Font.UI">Microsoft YaHei UI, Segoe UI</FontFamily>
+  <!-- Icons: Windows 11 ships Segoe Fluent Icons, Windows 10 ships Segoe MDL2 Assets (same code points for common glyphs) -->
+  <FontFamily x:Key="Font.Icon">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+  <FontFamily x:Key="Font.Mono">Cascadia Mono, Consolas</FontFamily>
+
+  <!-- Metrics -->
+  <CornerRadius x:Key="Radius.Small">4</CornerRadius>
+  <CornerRadius x:Key="Radius.Medium">6</CornerRadius>
+  <CornerRadius x:Key="Radius.Large">8</CornerRadius>
+
+  <DropShadowEffect x:Key="Effect.Shadow" BlurRadius="12" ShadowDepth="2" Direction="270" Opacity="0.25" Color="Black" />
+
+  <!-- Floating toolbar container (capture toolbar, pin toolbar, long-capture / recording bars) -->
+  <Style x:Key="Style.ToolbarBorder" TargetType="Border">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{StaticResource Radius.Medium}" />
+    <Setter Property="Padding" Value="4" />
+    <Setter Property="Effect" Value="{StaticResource Effect.Shadow}" />
+    <Setter Property="TextElement.FontFamily" Value="{DynamicResource Font.UI}" />
+  </Style>
+
+  <!-- 32×32 icon button: Content is an icon glyph string -->
+  <Style x:Key="Style.IconButton" TargetType="ButtonBase">
+    <Setter Property="Width" Value="32" />
+    <Setter Property="Height" Value="32" />
+    <Setter Property="Margin" Value="1,0" />
+    <Setter Property="FontFamily" Value="{DynamicResource Font.Icon}" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="Foreground" Value="{DynamicResource Brush.Text}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="ToolTipService.InitialShowDelay" Value="400" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ButtonBase">
+          <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource Radius.Small}">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Brush.Hover}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Brush.Pressed}" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Brush.Hover}" />
+              <Setter Property="Foreground" Value="{DynamicResource Brush.Accent}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Opacity" Value="0.35" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Thin vertical separator for toolbars -->
+  <Style x:Key="Style.ToolbarSeparator" TargetType="Rectangle">
+    <Setter Property="Width" Value="1" />
+    <Setter Property="Height" Value="20" />
+    <Setter Property="Margin" Value="4,0" />
+    <Setter Property="Fill" Value="{DynamicResource Brush.Border}" />
+  </Style>
+</ResourceDictionary>

@@ -1,0 +1,15 @@
+* text=auto eol=crlf
+
+*.cs      text diff=csharp
+*.xaml    text
+*.csproj  text
+*.sln     text eol=crlf
+*.md      text
+*.yml     text eol=lf
+*.sh      text eol=lf
+
+*.png     binary
+*.jpg     binary
+*.ico     binary
+*.gif     binary
+*.webp    binary

@@ -1,0 +1,44 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Core / shared strings. Owned by the core (project lead). -->
+  <sys:String x:Key="Common.OK">确定</sys:String>
+  <sys:String x:Key="Common.Cancel">取消</sys:String>
+  <sys:String x:Key="Common.Apply">应用</sys:String>
+  <sys:String x:Key="Common.Close">关闭</sys:String>
+  <sys:String x:Key="Common.Delete">删除</sys:String>
+  <sys:String x:Key="Common.Yes">是</sys:String>
+  <sys:String x:Key="Common.No">否</sys:String>
+  <sys:String x:Key="Common.NotImplemented">该功能正在开发中</sys:String>
+  <sys:String x:Key="Common.ActionFailed">操作失败：{0}</sys:String>
+  <sys:String x:Key="Common.HotkeyConflict">以下快捷键被其他程序占用，请在设置中修改：{0}</sys:String>
+  <sys:String x:Key="Common.StartedHint">OpenPin 已在后台运行。截图 {0}，贴图 {1}</sys:String>
+  <sys:String x:Key="Common.AlreadyRunning">OpenPin 已经在运行了</sys:String>
+
+  <!-- Global actions (tray menu, hotkey settings) -->
+  <sys:String x:Key="Action.Capture">截图</sys:String>
+  <sys:String x:Key="Action.CaptureCustom">自定义/延时截图</sys:String>
+  <sys:String x:Key="Action.CaptureCopy">截图并复制</sys:String>
+  <sys:String x:Key="Action.CapturePin">截图并贴图</sys:String>
+  <sys:String x:Key="Action.CaptureOcr">截图并识别文字</sys:String>
+  <sys:String x:Key="Action.CaptureSave">截图并保存</sys:String>
+  <sys:String x:Key="Action.CaptureQuickSave">截图并快速保存</sys:String>
+  <sys:String x:Key="Action.CaptureFullScreenCopy">截取屏幕并复制</sys:String>
+  <sys:String x:Key="Action.CaptureLastRegionCopy">截取上次区域并复制</sys:String>
+  <sys:String x:Key="Action.CaptureLong">长截图</sys:String>
+  <sys:String x:Key="Action.CaptureRecord">屏幕录制</sys:String>
+  <sys:String x:Key="Action.PinClipboard">贴图</sys:String>
+  <sys:String x:Key="Action.PinFromFile">从文件贴图</sys:String>
+  <sys:String x:Key="Action.PinRestore">恢复上次关闭的贴图</sys:String>
+  <sys:String x:Key="Action.PinCloseAll">关闭所有贴图</sys:String>
+  <sys:String x:Key="Action.PinDestroyAll">销毁所有贴图</sys:String>
+  <sys:String x:Key="Action.PinToggleHideAll">隐藏/显示所有贴图</sys:String>
+  <sys:String x:Key="Action.PinToggleClickThrough">开启/关闭鼠标穿透</sys:String>
+  <sys:String x:Key="Action.PinNextGroup">切换贴图组</sys:String>
+  <sys:String x:Key="Action.ToggleHotkeys">禁用快捷键</sys:String>
+  <sys:String x:Key="Action.OpenSettings">设置</sys:String>
+  <sys:String x:Key="Action.Exit">退出</sys:String>
+
+  <!-- Tray -->
+  <sys:String x:Key="Tray.OpenDataFolder">打开数据目录</sys:String>
+</ResourceDictionary>

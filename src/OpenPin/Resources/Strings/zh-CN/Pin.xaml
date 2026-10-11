@@ -1,0 +1,6 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Pin module strings (keys: Pin.*). Owned by the Pin module. -->
+  <sys:String x:Key="Pin.ClipboardEmpty">剪贴板中没有可以贴图的内容</sys:String>
+</ResourceDictionary>
