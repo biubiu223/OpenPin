@@ -1,4 +1,142 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <!-- Capture module styles (keys: Style.Capture.*). Owned by the Capture module. Use Theme.xaml tokens. -->
+
+  <!--
+    Module tokens missing from Theme.xaml: the magnifier / size label / shortcut hints sit directly on top of
+    arbitrary screen content, so they use a dark translucent "info" surface (like the Win11 snipping overlay).
+  -->
+  <Color x:Key="Color.Capture.Info">#E6202020</Color>
+  <SolidColorBrush x:Key="Brush.Capture.InfoBackground" Color="{StaticResource Color.Capture.Info}" />
+  <SolidColorBrush x:Key="Brush.Capture.InfoBorder" Color="#33FFFFFF" />
+  <SolidColorBrush x:Key="Brush.Capture.InfoText" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="Brush.Capture.InfoTextSecondary" Color="#B3FFFFFF" />
+  <SolidColorBrush x:Key="Brush.Capture.MagnifierGrid" Color="#40FFFFFF" />
+  <SolidColorBrush x:Key="Brush.Capture.MagnifierCross" Color="#5C1677FF" />
+
+  <!-- Dark info panel: magnifier, size label, shortcut hints, history label -->
+  <Style x:Key="Style.Capture.InfoPanel" TargetType="Border">
+    <Setter Property="Background" Value="{DynamicResource Brush.Capture.InfoBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Capture.InfoBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.Large}" />
+    <Setter Property="Padding" Value="8,6" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource Brush.Capture.InfoText}" />
+    <Setter Property="TextElement.FontFamily" Value="{DynamicResource Font.UI}" />
+    <Setter Property="TextElement.FontSize" Value="12" />
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+  </Style>
+
+  <!-- Light Win11 flyout: style panel, QR results -->
+  <Style x:Key="Style.Capture.Flyout" TargetType="Border">
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Effect" Value="{DynamicResource Effect.Shadow}" />
+    <Setter Property="TextElement.FontFamily" Value="{DynamicResource Font.UI}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius.Large}" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource Brush.Text}" />
+    <Setter Property="TextElement.FontSize" Value="13" />
+  </Style>
+
+  <!-- Text button (4px radius) -->
+  <Style x:Key="Style.Capture.TextButton" TargetType="ButtonBase">
+    <Setter Property="MinWidth" Value="56" />
+    <Setter Property="Height" Value="28" />
+    <Setter Property="Padding" Value="12,0" />
+    <Setter Property="Margin" Value="0,0,6,0" />
+    <Setter Property="FontFamily" Value="{DynamicResource Font.UI}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource Brush.Text}" />
+    <Setter Property="Background" Value="{DynamicResource Brush.SurfaceAlt}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ButtonBase">
+          <Grid>
+            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{DynamicResource Radius.Small}" />
+            <Border x:Name="Overlay" Background="Transparent" CornerRadius="{DynamicResource Radius.Small}" />
+            <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Overlay" Property="Background" Value="{DynamicResource Brush.Hover}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Overlay" Property="Background" Value="{DynamicResource Brush.Pressed}" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Brush.Accent}" />
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
+              <Setter Property="Foreground" Value="{DynamicResource Brush.Surface}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Opacity" Value="0.4" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Primary (accent) button -->
+  <Style x:Key="Style.Capture.AccentButton" TargetType="ButtonBase" BasedOn="{StaticResource Style.Capture.TextButton}">
+    <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
+    <Setter Property="Foreground" Value="{DynamicResource Brush.Surface}" />
+  </Style>
+
+  <!-- Small chip toggle (aspect ratio choices) -->
+  <Style x:Key="Style.Capture.Chip" TargetType="ButtonBase" BasedOn="{StaticResource Style.Capture.TextButton}">
+    <Setter Property="MinWidth" Value="44" />
+    <Setter Property="Height" Value="26" />
+    <Setter Property="Padding" Value="8,0" />
+    <Setter Property="Margin" Value="0,0,4,4" />
+  </Style>
+
+  <!-- Input box (4px radius) -->
+  <Style x:Key="Style.Capture.TextBox" TargetType="TextBox">
+    <Setter Property="Height" Value="28" />
+    <Setter Property="MinWidth" Value="56" />
+    <Setter Property="Padding" Value="6,0" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="FontFamily" Value="{DynamicResource Font.UI}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource Brush.Text}" />
+    <Setter Property="Background" Value="{DynamicResource Brush.Surface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CaretBrush" Value="{DynamicResource Brush.Text}" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource Brush.Accent}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="TextBox">
+          <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{DynamicResource Radius.Small}">
+            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center"
+                          Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
+              <Setter TargetName="Bd" Property="BorderThickness" Value="1,1,1,2" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Section caption inside flyouts / dialogs -->
+  <Style x:Key="Style.Capture.Caption" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{DynamicResource Font.UI}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
 </ResourceDictionary>

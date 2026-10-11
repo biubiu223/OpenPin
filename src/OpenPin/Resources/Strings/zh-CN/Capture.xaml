@@ -2,4 +2,84 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- Capture module strings (keys: Capture.*). Owned by the Capture module. -->
+
+  <!-- Toolbar host actions -->
+  <sys:String x:Key="Capture.Action.Style">样式（圆角 / 阴影 / 边框 / 比例）</sys:String>
+  <sys:String x:Key="Capture.Action.LongCapture">长截图</sys:String>
+  <sys:String x:Key="Capture.Action.Record">录屏</sys:String>
+  <sys:String x:Key="Capture.Action.Ocr">文字识别 (Shift+C)</sys:String>
+  <sys:String x:Key="Capture.Action.Pin">贴图 (Ctrl+T)</sys:String>
+  <sys:String x:Key="Capture.Action.Save">保存 (Ctrl+S)</sys:String>
+  <sys:String x:Key="Capture.Action.Copy">复制 (Enter / Ctrl+C)</sys:String>
+  <sys:String x:Key="Capture.Action.Close">关闭 (Esc)</sys:String>
+
+  <!-- Magnifier -->
+  <sys:String x:Key="Capture.Magnifier.Position">坐标 {0}, {1}</sys:String>
+  <sys:String x:Key="Capture.Magnifier.Size">选区 {0} × {1}</sys:String>
+  <sys:String x:Key="Capture.Magnifier.Hint">C 复制颜色 · Shift 切换格式</sys:String>
+  <sys:String x:Key="Capture.ColorCopied">已复制颜色 {0}</sys:String>
+
+  <!-- Size label / exact size input (CAP-07) -->
+  <sys:String x:Key="Capture.Size.EditTip">单击输入精确宽高</sys:String>
+  <sys:String x:Key="Capture.Size.Width">宽</sys:String>
+  <sys:String x:Key="Capture.Size.Height">高</sys:String>
+
+  <!-- Shortcut hints (CAP-16) -->
+  <sys:String x:Key="Capture.Hints.Title">快捷键</sys:String>
+  <sys:String x:Key="Capture.Hints.Select">拖拽框选 · 单击选择窗口 · 双击复制</sys:String>
+  <sys:String x:Key="Capture.Hints.Wheel">滚轮 切换父 / 子元素</sys:String>
+  <sys:String x:Key="Capture.Hints.Copy">Enter / Ctrl+C 复制 · Ctrl+T 贴图</sys:String>
+  <sys:String x:Key="Capture.Hints.Save">Ctrl+S 保存 · Ctrl+Shift+S 快速保存</sys:String>
+  <sys:String x:Key="Capture.Hints.Arrows">方向键 移动 1px · Shift/Ctrl+方向键 收缩/扩展</sys:String>
+  <sys:String x:Key="Capture.Hints.Misc">Shift+C 识别文字 · Ctrl+A 全屏 · ` 显示光标</sys:String>
+  <sys:String x:Key="Capture.Hints.History">R / Shift+R 历史选区 · &lt; / &gt; 历史截图 · Q 二维码</sys:String>
+  <sys:String x:Key="Capture.Hints.Exit">Alt 辅助线 · 右键 / Esc 取消或退出</sys:String>
+
+  <!-- Results / notifications -->
+  <sys:String x:Key="Capture.Copied">截图已复制到剪贴板</sys:String>
+  <sys:String x:Key="Capture.FullScreenCopied">已复制屏幕截图</sys:String>
+  <sys:String x:Key="Capture.LastRegionCopied">已复制上次区域的截图</sys:String>
+  <sys:String x:Key="Capture.NoLastRegion">还没有截图区域记录</sys:String>
+  <sys:String x:Key="Capture.OcrCopied">已复制识别的文字（{0} 字）</sys:String>
+  <sys:String x:Key="Capture.OcrNoText">未识别到文字</sys:String>
+  <sys:String x:Key="Capture.OcrUnavailable">文字识别不可用：请在 Windows 设置中安装 OCR 语言包</sys:String>
+  <sys:String x:Key="Capture.Failed">截图失败：{0}</sys:String>
+  <sys:String x:Key="Capture.ConfirmExit">确定退出截图吗？</sys:String>
+  <sys:String x:Key="Capture.HistoryEmpty">没有历史记录</sys:String>
+  <sys:String x:Key="Capture.HistoryImage">历史截图 {0}/{1} · {2:yyyy-MM-dd HH:mm:ss}</sys:String>
+  <sys:String x:Key="Capture.HistoryRegion">历史选区 {0}/{1}</sys:String>
+  <sys:String x:Key="Capture.CursorShown">显示光标</sys:String>
+  <sys:String x:Key="Capture.CursorHidden">隐藏光标</sys:String>
+
+  <!-- QR (CAP-12) -->
+  <sys:String x:Key="Capture.Qr.Found">检测到 {0} 个二维码 / 条码，按 Q 查看</sys:String>
+  <sys:String x:Key="Capture.Qr.None">未检测到二维码</sys:String>
+  <sys:String x:Key="Capture.Qr.Disabled">二维码识别已在设置中禁用</sys:String>
+  <sys:String x:Key="Capture.Qr.Detecting">正在识别二维码…</sys:String>
+  <sys:String x:Key="Capture.Qr.Copy">复制</sys:String>
+  <sys:String x:Key="Capture.Qr.Open">打开链接</sys:String>
+  <sys:String x:Key="Capture.Qr.Copied">已复制二维码内容</sys:String>
+
+  <!-- Output style flyout (CAP-11) -->
+  <sys:String x:Key="Capture.Style.Corner">圆角</sys:String>
+  <sys:String x:Key="Capture.Style.Shadow">阴影</sys:String>
+  <sys:String x:Key="Capture.Style.Border">边框</sys:String>
+  <sys:String x:Key="Capture.Style.Ratio">宽高比</sys:String>
+  <sys:String x:Key="Capture.Style.Free">自由</sys:String>
+  <sys:String x:Key="Capture.Style.Note">圆角 / 边框作用于复制、保存和贴图；阴影不作用于贴图</sys:String>
+
+  <!-- Custom / delayed capture dialog (CAP-14) -->
+  <sys:String x:Key="Capture.Custom.Title">自定义 / 延时截图</sys:String>
+  <sys:String x:Key="Capture.Custom.Region">区域（物理像素）</sys:String>
+  <sys:String x:Key="Capture.Custom.Delay">延时（秒）</sys:String>
+  <sys:String x:Key="Capture.Custom.Preset">预设</sys:String>
+  <sys:String x:Key="Capture.Custom.SavePreset">保存为预设</sys:String>
+  <sys:String x:Key="Capture.Custom.DeletePreset">删除预设</sys:String>
+  <sys:String x:Key="Capture.Custom.PresetName">预设 {0}</sys:String>
+  <sys:String x:Key="Capture.Custom.UseLast">上次区域</sys:String>
+  <sys:String x:Key="Capture.Custom.UseScreen">当前屏幕</sys:String>
+  <sys:String x:Key="Capture.Custom.DirectCopy">直接复制（不打开截图界面）</sys:String>
+  <sys:String x:Key="Capture.Custom.Start">开始截图</sys:String>
+  <sys:String x:Key="Capture.Custom.Invalid">区域无效：宽高必须大于 0，且与屏幕有重叠</sys:String>
+  <sys:String x:Key="Capture.Custom.Countdown">{0} 秒后截图</sys:String>
 </ResourceDictionary>
