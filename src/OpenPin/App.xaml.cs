@@ -137,6 +137,7 @@ public partial class App : Application
     {
         try { AppServices.Pins?.Shutdown(); } catch (Exception ex) { Log.Error("Pins shutdown failed", ex); }
         try { AppServices.Settings?.Save(); } catch (Exception ex) { Log.Error("Settings save failed", ex); }
+        try { Notify.DismissAll(); } catch { /* ignore */ }
         AppServices.Hotkeys?.Dispose();
         _tray?.Dispose();
         _single?.Dispose();
