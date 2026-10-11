@@ -321,11 +321,11 @@ internal static class SettingsCatalog
                 new SettingBlock(T(R, "ShowKeys", Icons.Keyboard2)),
             }),
             // Pages whose content is provided by other modules (embedded at merge time, see Views/ExternalPages.cs).
-            new PageDef("translate", "SettingsUI.Page.Translate", Icons.Translate, null, new Block[]
+            new PageDef("translate", "SettingsUI.Page.Translate", Icons.Translate, "Translate", new Block[]
             {
                 new CustomBlock("translate"),
             }),
-            new PageDef("recognition", "SettingsUI.Page.Recognition", Icons.Recognition, null, new Block[]
+            new PageDef("recognition", "SettingsUI.Page.Recognition", Icons.Recognition, "Recognition", new Block[]
             {
                 new CustomBlock("recognition"),
             }),

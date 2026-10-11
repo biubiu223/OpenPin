@@ -49,6 +49,9 @@ public sealed class HotkeyService : IDisposable
         }
     }
 
+    /// <summary>Action ids whose hotkey failed to register at the last (re)registration (startup or ApplyBindings).</summary>
+    public IReadOnlyList<string> LastFailed { get; private set; } = Array.Empty<string>();
+
     /// <summary>Replaces all bindings. Returns the action ids whose hotkey could not be registered (conflict).</summary>
     public IReadOnlyList<string> ApplyBindings(IReadOnlyDictionary<string, string> bindings)
     {
@@ -62,7 +65,8 @@ public sealed class HotkeyService : IDisposable
     /// <summary>Checks whether a hotkey is currently free (not used by another app). Does not keep it registered.</summary>
     public bool IsAvailable(Hotkey hk)
     {
-        if (_bindings.ContainsValue(hk)) return true; // ours
+        // One of ours and actually registered → available to us.
+        if (_bindings.Any(b => b.Value == hk && _idToAction.ContainsValue(b.Key))) return true;
         const int probeId = 0x0FFF;
         if (!RegisterHotKey(_source.Handle, probeId, ToNative(hk.Modifiers), (uint)KeyInterop.VirtualKeyFromKey(hk.Key)))
             return false;
@@ -85,6 +89,7 @@ public sealed class HotkeyService : IDisposable
                 Log.Warn($"Hotkey {hk} for '{action}' could not be registered (in use by another program?)");
             }
         }
+        LastFailed = failed;
         return failed;
     }
 

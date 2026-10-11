@@ -108,7 +108,9 @@ internal sealed class HotkeysView : StackPanel
     {
         var bindings = _rows.Keys.ToDictionary(id => id, id => _session.Draft.Hotkeys.Bindings.GetValueOrDefault(id, ""));
         Func<Hotkey, bool>? probe = AppServices.Hotkeys is { } hs ? hs.IsAvailable : null;
-        var issues = HotkeyConflicts.Analyze(bindings, probe, _session.FailedHotkeys.ToHashSet());
+        // Failures from the last registration (also those at app startup) + failures of this window's last apply.
+        var failed = _session.FailedHotkeys.Concat(AppServices.Hotkeys?.LastFailed ?? Array.Empty<string>()).ToHashSet();
+        var issues = HotkeyConflicts.Analyze(bindings, probe, failed);
         foreach (var (id, (_, text)) in _rows)
         {
             var issue = issues.GetValueOrDefault(id, HotkeyIssue.None);
