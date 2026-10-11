@@ -336,6 +336,18 @@
   <sys:String x:Key="SettingsUI.LongCapture.DefaultDirection.Desc">长截图的滚动拼接方向</sys:String>
   <sys:String x:Key="SettingsUI.LongCapture.MaxLength">最大长度</sys:String>
   <sys:String x:Key="SettingsUI.LongCapture.MaxLength.Desc">拼接结果超过此长度时自动停止</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoCrop">反向滚动自动裁剪</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoCrop.Desc">往回滚动时自动裁掉多余部分，让结果停在当前可见内容</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.FramesPerSecond">采样帧率</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.FramesPerSecond.Desc">每秒抓取的画面数（5–60），越高越不容易漏拼，但更耗 CPU</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.ShowPreview">显示实时预览</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.ShowPreview.Desc">在选区旁显示拼接结果的缩略图</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoScrollIntervalMs">自动滚动间隔（毫秒）</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoScrollIntervalMs.Desc">自动滚动时每次滚动之间的间隔</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoScrollWheelDelta">自动滚动步长</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoScrollWheelDelta.Desc">每次模拟滚轮的距离（120 = 滚轮一格）</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoScrollStopAfterIdleMs">无变化自动停止（毫秒）</sys:String>
+  <sys:String x:Key="SettingsUI.LongCapture.AutoScrollStopAfterIdleMs.Desc">画面持续这么久没有移动时停止自动滚动（通常表示已到页面底部）</sys:String>
   <sys:String x:Key="SettingsUI.Recording.Fps">帧率</sys:String>
   <sys:String x:Key="SettingsUI.Recording.Fps.Desc">帧率越高越流畅，文件也越大</sys:String>
   <sys:String x:Key="SettingsUI.Recording.DefaultFormat">默认格式</sys:String>
