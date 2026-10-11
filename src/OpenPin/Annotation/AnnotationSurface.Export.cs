@@ -28,7 +28,11 @@ public partial class AnnotationSurface
         {
             dc.PushTransform(new TranslateTransform(-r.X, -r.Y));
             if (_editBounds is { } eb) dc.PushClip(new RectangleGeometry(eb));
-            AnnotationLayer.DrawAll(dc, _doc.Items, _ctx);
+            // Pending background effects (smart erase) are computed inline, with the same code as on screen.
+            bool sync = _ctx.SynchronousEffects;
+            _ctx.SynchronousEffects = true;
+            try { AnnotationLayer.DrawAll(dc, _doc.Items, _ctx); }
+            finally { _ctx.SynchronousEffects = sync; }
             if (_editBounds != null) dc.Pop();
             dc.Pop();
         }

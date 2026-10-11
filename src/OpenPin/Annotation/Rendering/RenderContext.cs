@@ -14,7 +14,7 @@ internal readonly record struct EffectImage(BitmapSource Image, Rect Placement);
 /// (EditBounds or whole image) and a cache of base-derived effect bitmaps (mosaic, blur, multiply).
 /// The same context is used for on-screen rendering and <c>Render()</c>, so the output is identical.
 /// </summary>
-internal sealed class RenderContext
+internal sealed partial class RenderContext
 {
     private const int MaxEntries = 6;
     private BitmapSource _base;
@@ -52,6 +52,7 @@ internal sealed class RenderContext
         _base = image;
         _bgra = null;
         _cache.Clear();
+        ClearSmartErase();
         Generation++;
     }
 

@@ -133,18 +133,43 @@ internal sealed class HighlighterItem : RegionItem
     public override void ReadOptions(ToolOptions o) { o.ColorValue = Color; o.Size = Width; o.Blend = Blend; o.Mode = Mode; }
 }
 
-/// <summary>Mosaic / blur (ANN-08): brush or rectangle, pixels computed from the base image.</summary>
+/// <summary>
+/// Mosaic / blur (ANN-08) / smart erase (PRO-06): brush or rectangle, pixels computed from the base image.
+/// Smart erase edits the picture itself, so it is painted under the other annotations (layer 0); its result is
+/// computed in the background (<see cref="RenderContext.GetSmartErase"/>) and drawn pixel-exact when ready.
+/// </summary>
 internal sealed class MosaicItem : RegionItem
 {
+    /// <summary>Translucent fill shown while a smart erase is being drawn / computed.</summary>
+    private static readonly SolidColorBrush PendingBrush = MakePending();
+
     public MosaicEffect Effect { get; set; }
     public int Strength { get; set; } = 5;
 
     public override AnnotationTool Tool => AnnotationTool.Mosaic;
     public override bool DependsOnBase => true;
+    public override int Layer => Effect == MosaicEffect.SmartErase ? 0 : 1;
+
+    private static SolidColorBrush MakePending()
+    {
+        var b = new SolidColorBrush(Color.FromArgb(0x73, 0x8F, 0x6B, 0xFF));
+        b.Freeze();
+        return b;
+    }
+
+    /// <summary>Thread-safe copy of the area for the smart-erase worker.</summary>
+    public SmartEraseShape ToShape() => new(Mode, Rect, Points.ToArray(), Width);
+
+    public override long RenderStamp(RenderContext ctx) => Effect == MosaicEffect.SmartErase ? ctx.SmartEraseStamp(this) : 0;
 
     public override void Draw(DrawingContext dc, RenderContext ctx)
     {
         if (IsEmpty) return;
+        if (Effect == MosaicEffect.SmartErase)
+        {
+            DrawSmartErase(dc, ctx);
+            return;
+        }
         var region = Region;
         var fx = Effect == MosaicEffect.Blur ? ctx.GetBlur(Strength, region.Bounds) : ctx.GetMosaic(Strength, region.Bounds);
         dc.PushClip(region);
@@ -158,6 +183,24 @@ internal sealed class MosaicItem : RegionItem
         }
         else dc.DrawImage(fx.Image, fx.Placement);
         dc.Pop();
+    }
+
+    private void DrawSmartErase(DrawingContext dc, RenderContext ctx)
+    {
+        var patch = ctx.GetSmartErase(this);
+        if (patch == null)
+        {
+            // Being drawn (not in the document yet) or computing: show the area.
+            dc.DrawGeometry(PendingBrush, null, Region);
+            return;
+        }
+        if (patch.Image == null) return; // nothing to fill / failed: the original stays visible
+        var b = patch.Bounds;
+        // Pixel-exact: the patch carries its own mask (alpha), nearest-neighbour so no smoothing at any zoom.
+        var dg = new DrawingGroup();
+        RenderOptions.SetBitmapScalingMode(dg, BitmapScalingMode.NearestNeighbor);
+        using (var g = dg.Open()) g.DrawImage(patch.Image, new Rect(b.X, b.Y, b.Width, b.Height));
+        dc.DrawDrawing(dg);
     }
 
     public override void ApplyOptions(ToolOptions o) { Width = o.Size; Effect = o.Effect; Strength = o.Strength; }

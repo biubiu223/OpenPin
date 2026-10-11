@@ -34,7 +34,8 @@ internal enum DrawMode
 
 internal enum HighlightBlend { Multiply, Translucent }
 
-internal enum MosaicEffect { Mosaic, Blur }
+/// <summary>Mosaic tool effect. SmartErase (PRO-06) removes the content and fills it from the surrounding background.</summary>
+internal enum MosaicEffect { Mosaic, Blur, SmartErase }
 
 internal enum ShapeKind { Rectangle, Ellipse }
 

@@ -21,6 +21,7 @@ internal sealed class AnnotationLayer : FrameworkElement
     {
         public required DrawingVisual Visual;
         public long Version = -1;
+        public long Stamp;
         public int Generation = -1;
         public Rect Content = Rect.Empty;
     }
@@ -54,7 +55,9 @@ internal sealed class AnnotationLayer : FrameworkElement
                 e = new Entry { Visual = new DrawingVisual() };
                 _entries[item.Id] = e;
             }
+            long stamp = item.RenderStamp(ctx);
             bool stale = e.Version != item.Version
+                         || e.Stamp != stamp
                          || (item.DependsOnBase && e.Generation != ctx.Generation)
                          || (item.DependsOnContent && e.Content != ctx.ContentBounds);
             if (stale)
@@ -64,6 +67,7 @@ internal sealed class AnnotationLayer : FrameworkElement
                     if (skip != item.Id) SafeDraw(item, dc, ctx);
                 }
                 e.Version = skip == item.Id ? -1 : item.Version;
+                e.Stamp = stamp;
                 e.Generation = ctx.Generation;
                 e.Content = ctx.ContentBounds;
             }

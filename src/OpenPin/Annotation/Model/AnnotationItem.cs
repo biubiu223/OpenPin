@@ -83,6 +83,12 @@ internal abstract class AnnotationItem
     /// <summary>Re-render when the content bounds (EditBounds) change.</summary>
     public virtual bool DependsOnContent => false;
 
+    /// <summary>
+    /// Extra render-cache key besides <see cref="Version"/>: the visual is redrawn when it changes (e.g. a smart erase
+    /// whose background result became ready, or whose underlying earlier erases changed).
+    /// </summary>
+    public virtual long RenderStamp(RenderContext ctx) => 0;
+
     /// <summary>Visual bounds (image px), including stroke width.</summary>
     public abstract Rect Bounds { get; }
 

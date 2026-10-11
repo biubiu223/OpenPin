@@ -73,7 +73,9 @@ public partial class AnnotationSurface : Canvas
     public AnnotationSurface(BitmapSource baseImage)
     {
         ArgumentNullException.ThrowIfNull(baseImage);
-        _ctx = new RenderContext(baseImage);
+        _ctx = new RenderContext(baseImage) { ItemsProvider = () => _doc.Items };
+        // Smart erase results arrive from a worker thread: redraw the affected visuals.
+        _ctx.AsyncEffectReady += SyncVisuals;
         Width = baseImage.PixelWidth;
         Height = baseImage.PixelHeight;
         Background = Brushes.Transparent;

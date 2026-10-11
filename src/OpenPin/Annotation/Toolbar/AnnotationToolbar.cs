@@ -384,10 +384,15 @@ public class AnnotationToolbar : UserControl
                 AddModeChoice(o, tool);
                 Add(Segmented(
                     (TextFace(Loc.Get("Annotation.Mosaic.Mosaic")), "Annotation.Mosaic.Mosaic", o.Effect == MosaicEffect.Mosaic, () => { o.Effect = MosaicEffect.Mosaic; Commit(tool); }),
-                    (TextFace(Loc.Get("Annotation.Mosaic.Blur")), "Annotation.Mosaic.Blur", o.Effect == MosaicEffect.Blur, () => { o.Effect = MosaicEffect.Blur; Commit(tool); })));
-                AddSep();
-                Add(Label("Annotation.Mosaic.Strength"));
-                Add(Slider(1, 10, o.Strength, 1, "Annotation.Mosaic.Strength", v => { o.Strength = (int)Math.Round(v); Commit(tool, rebuild: false); }));
+                    (TextFace(Loc.Get("Annotation.Mosaic.Blur")), "Annotation.Mosaic.Blur", o.Effect == MosaicEffect.Blur, () => { o.Effect = MosaicEffect.Blur; Commit(tool); }),
+                    (TextFace(Loc.Get("Annotation.Mosaic.SmartErase")), "Annotation.Mosaic.SmartEraseTip", o.Effect == MosaicEffect.SmartErase, () => { o.Effect = MosaicEffect.SmartErase; Commit(tool); })));
+                if (o.Effect != MosaicEffect.SmartErase)
+                {
+                    // Strength does not apply to smart erase (PRO-06).
+                    AddSep();
+                    Add(Label("Annotation.Mosaic.Strength"));
+                    Add(Slider(1, 10, o.Strength, 1, "Annotation.Mosaic.Strength", v => { o.Strength = (int)Math.Round(v); Commit(tool, rebuild: false); }));
+                }
                 if (o.Mode == DrawMode.Brush) { AddSep(); AddSize(s, tool, o); }
                 break;
 

@@ -358,7 +358,8 @@ public partial class AnnotationSurface
                     o.Zoom = Math.Clamp(o.Zoom + dir, 1, 8);
                     break;
                 case AnnotationTool.Mosaic when o.Mode == DrawMode.Rect:
-                    o.Strength = Math.Clamp(o.Strength + dir, 1, 10);
+                    // Smart erase has no strength (PRO-06).
+                    if (o.Effect != MosaicEffect.SmartErase) o.Strength = Math.Clamp(o.Strength + dir, 1, 10);
                     break;
                 default:
                 {

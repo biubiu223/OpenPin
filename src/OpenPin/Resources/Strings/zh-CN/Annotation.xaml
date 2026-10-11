@@ -10,7 +10,7 @@
   <sys:String x:Key="Annotation.Tool.Serial">序号 (Shift+4)&#x0a;拖动生成指向箭头；选中后 +/- 改编号，A 添加说明</sys:String>
   <sys:String x:Key="Annotation.Tool.Pencil">画笔 (Shift+5)&#x0a;按住 Shift 画直线</sys:String>
   <sys:String x:Key="Annotation.Tool.Highlighter">荧光笔 (Shift+6)</sys:String>
-  <sys:String x:Key="Annotation.Tool.Mosaic">马赛克 / 模糊 (Shift+7)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Mosaic">马赛克 / 模糊 / 智能擦除 (Shift+7)</sys:String>
   <sys:String x:Key="Annotation.Tool.Text">文字 (Shift+8)&#x0a;点击已有文字可再次编辑</sys:String>
   <sys:String x:Key="Annotation.Tool.Eraser">橡皮擦 (Shift+9)</sys:String>
   <sys:String x:Key="Annotation.Tool.Spotlight">聚光灯 (Shift+0)</sys:String>
@@ -71,6 +71,8 @@
   <sys:String x:Key="Annotation.Mosaic.Mosaic">马赛克</sys:String>
   <sys:String x:Key="Annotation.Mosaic.Blur">模糊</sys:String>
   <sys:String x:Key="Annotation.Mosaic.Strength">强度</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.SmartErase">智能擦除</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.SmartEraseTip">智能擦除：去掉涂抹 / 框选区域的内容，用周围背景自然填充（离线处理）</sys:String>
   <sys:String x:Key="Annotation.Eraser.ClearAll">清空全部标注</sys:String>
   <sys:String x:Key="Annotation.Eraser.Clear">清空</sys:String>
 
