@@ -157,7 +157,7 @@ public sealed class CaptureController : ICaptureController
         try
         {
             // RecognizeAsync never throws: failures come back in result.Error.
-            var result = await OcrService.RecognizeAsync(image);
+            var result = await OcrService.RecognizeAsync(image, Recognition.OcrLanguageChoice.CurrentOrNull);
             if (!string.IsNullOrEmpty(result.Error))
             {
                 Notify.Error(OcrService.IsAvailable ? result.Error : Loc.Get("Capture.OcrUnavailable"));

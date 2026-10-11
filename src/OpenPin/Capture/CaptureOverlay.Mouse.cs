@@ -390,6 +390,7 @@ internal sealed partial class CaptureOverlay
     private void HideFlyouts()
     {
         if (_stylePanel != null) _stylePanel.Visibility = Visibility.Collapsed;
+        if (_recognizePanel != null) _recognizePanel.Visibility = Visibility.Collapsed;
         if (_qrPanel.IsExpanded) _qrPanel.Hide();
     }
 }

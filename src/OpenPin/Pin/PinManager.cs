@@ -181,6 +181,19 @@ public sealed class PinManager : IPinManager, IPinGroupHost
         return CreatePin(m, body, rect, activate: true, offset);
     }
 
+    /// <summary>
+    /// Pin an image derived from <paramref name="source"/> (same pixel size as its image, e.g. a translated copy, PRO-01)
+    /// exactly over it: same content origin and zoom.
+    /// </summary>
+    internal void PinImageOver(PinWindow source, BitmapSource image)
+    {
+        var rect = new Int32Rect(source.M.OriginX, source.M.OriginY, image.PixelWidth, image.PixelHeight);
+        var win = PinImageCore(image, rect, null, null, null);
+        if (win == null) return;
+        double scale = source.Scale;
+        if (Math.Abs(scale - 1) > 1e-6) win.SetZoom(scale / win.M.BaseScale, new Point(win.M.OriginX, win.M.OriginY));
+    }
+
     public void PinContent(PinContent content, Int32Rect? screenRectPx = null)
     {
         try

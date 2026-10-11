@@ -141,7 +141,7 @@ internal sealed class ShortcutHints : Border
         IsHitTestVisible = false;
         var stack = new StackPanel();
         stack.Children.Add(new TextBlock { Text = Loc.Get("Capture.Hints.Title"), FontWeight = FontWeights.SemiBold, Margin = new Thickness(0, 0, 0, 4) });
-        foreach (var key in new[] { "Select", "Wheel", "Copy", "Save", "Arrows", "Misc", "History", "Exit" })
+        foreach (var key in new[] { "Select", "Wheel", "Copy", "Save", "Arrows", "Misc", "Recognize", "History", "Exit" })
         {
             var t = new TextBlock { Text = Loc.Get("Capture.Hints." + key), Margin = new Thickness(0, 1, 0, 1) };
             t.SetResourceReference(TextBlock.ForegroundProperty, "Brush.Capture.InfoTextSecondary");

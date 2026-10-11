@@ -190,6 +190,7 @@ internal sealed partial class CaptureOverlay
         {
             if (_toolbar != null) _toolbar.Visibility = Visibility.Collapsed;
             if (_stylePanel != null) _stylePanel.Visibility = Visibility.Collapsed;
+            if (_recognizePanel != null) _recognizePanel.Visibility = Visibility.Collapsed;
             _toolbarRectPx = Rect.Empty;
             return;
         }
@@ -213,8 +214,9 @@ internal sealed partial class CaptureOverlay
         PlaceUi(_toolbar, pos, mon);
         _toolbarRectPx = new Rect(pos, size);
 
-        if (_stylePanel is { Visibility: Visibility.Visible } panel)
+        foreach (var panel in new FrameworkElement?[] { _stylePanel, _recognizePanel })
         {
+            if (panel is not { Visibility: Visibility.Visible }) continue;
             var psize = PxSize(panel, mon);
             var (ppos, _) = Placement.PlaceToolbar(_toolbarRectPx, psize, _monitorRects[mon], 6 * s);
             PlaceUi(panel, ppos, mon);
@@ -230,7 +232,8 @@ internal sealed partial class CaptureOverlay
         Add("capture.style", "", "Capture.Action.Style", ToggleStylePanel);
         Add("capture.long", "", "Capture.Action.LongCapture", DoLongCapture);
         Add("capture.record", "", "Capture.Action.Record", DoRecord);
-        Add("capture.ocr", "", "Capture.Action.Ocr", DoOcr);
+        Add("capture.recognize", "", "Capture.Action.Recognize", ToggleRecognizePanel);
+        Add("capture.translate", "", "Capture.Action.Translate", DoTranslate);
         Add("capture.pin", "", "Capture.Action.Pin", DoPin);
         Add("capture.save", "", "Capture.Action.Save", DoSave);
         Add("capture.copy", "", "Capture.Action.Copy", DoCopy);
@@ -239,6 +242,30 @@ internal sealed partial class CaptureOverlay
         tb.SizeChanged += (_, _) => Guard(PlaceToolbar);
         _ui.Children.Add(tb);
         return tb;
+    }
+
+    /// <summary>"识别" flyout: OCR (+ language, PRO-09), translate, table, QR / barcode.</summary>
+    private void ToggleRecognizePanel()
+    {
+        if (_recognizePanel == null)
+        {
+            _recognizePanel = new RecognizePanel();
+            _recognizePanel.OcrRequested += () => Guard(DoOcr);
+            _recognizePanel.TranslateRequested += () => Guard(DoTranslate);
+            _recognizePanel.TableRequested += () => Guard(DoTable);
+            _recognizePanel.QrRequested += () => Guard(() => { _recognizePanel.Visibility = Visibility.Collapsed; ToggleQr(); });
+            _recognizePanel.SizeChanged += (_, _) => Guard(PlaceToolbar);
+            _ui.Children.Add(_recognizePanel);
+        }
+        bool show = _recognizePanel.Visibility != Visibility.Visible;
+        if (show)
+        {
+            if (_qrPanel.IsExpanded) _qrPanel.Hide();
+            if (_stylePanel != null) _stylePanel.Visibility = Visibility.Collapsed;
+            _recognizePanel.RefreshLanguages();
+        }
+        _recognizePanel.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+        PlaceToolbar();
     }
 
     private void ToggleStylePanel()
@@ -261,6 +288,7 @@ internal sealed partial class CaptureOverlay
         }
         bool show = _stylePanel.Visibility != Visibility.Visible;
         if (show && _qrPanel.IsExpanded) _qrPanel.Hide();
+        if (show && _recognizePanel != null) _recognizePanel.Visibility = Visibility.Collapsed;
         _stylePanel.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         PlaceToolbar();
     }

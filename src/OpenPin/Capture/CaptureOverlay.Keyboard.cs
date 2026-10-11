@@ -61,7 +61,11 @@ internal sealed partial class CaptureOverlay
         switch (key)
         {
             case Key.Escape:
-                if (_stylePanel?.Visibility == Visibility.Visible || _qrPanel.IsExpanded) { HideFlyouts(); return; }
+                if (_stylePanel?.Visibility == Visibility.Visible || _recognizePanel?.Visibility == Visibility.Visible || _qrPanel.IsExpanded)
+                {
+                    HideFlyouts();
+                    return;
+                }
                 if (_drag != DragKind.None) { CancelDrag(); return; }
                 RequestExit();
                 return;
@@ -104,6 +108,12 @@ internal sealed partial class CaptureOverlay
                 return;
             case Key.OemPeriod when !ctrl:
                 BrowseImageHistory(older: false);
+                return;
+            case Key.Q when ctrl && !shift && !alt: // PRO-01 translate
+                if (EnsureSelection()) DoTranslate();
+                return;
+            case Key.Q when shift && !ctrl && !alt: // PRO-02 table recognition
+                if (EnsureSelection()) DoTable();
                 return;
             case Key.Q when plain:
                 ToggleQr();

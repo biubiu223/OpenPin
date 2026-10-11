@@ -16,7 +16,9 @@ using OpenPin.Core.Screen;
 using OpenPin.Pin.Logic;
 using OpenPin.Pin.Model;
 using OpenPin.Pin.Native;
+using OpenPin.Recognition;
 using OpenPin.Services;
+using OpenPin.Translate;
 
 namespace OpenPin.Pin.Views;
 
@@ -724,6 +726,9 @@ internal sealed class PinWindow : Window
         try
         {
             _surface = new AnnotationSurface(ib.Display) { HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top, FocusVisualStyle = null };
+            // PRO-12: right-click fits rectangle / highlighter / mosaic… to the OCR text line (Ctrl: word) under the cursor.
+            _surface.SnapRectProvider = SnapToText;
+            EnsureOcr();
             _content.Children.Add(_surface);
             var toolbar = new AnnotationToolbar { Surface = _surface };
             toolbar.HostActions.Add(new ToolbarAction("pin.annotate.done", "", Loc.Get("Pin.Annotate.Done"), () => EndAnnotation(true)));
@@ -804,16 +809,114 @@ internal sealed class PinWindow : Window
         var cts = _ocrCts = new CancellationTokenSource();
         int version = _imageVersion;
         var image = ib.Display;
+        _ocrRunning = true;
         try
         {
             await Task.Delay(400, cts.Token);
-            var result = await OcrService.RecognizeAsync(image, null, cts.Token);
+            var result = await OcrService.RecognizeAsync(image, OcrLanguageChoice.CurrentOrNull, cts.Token);
             if (cts.IsCancellationRequested || version != _imageVersion) return;
             _ocr = result;
             _words = OcrTextSelection.Flatten(result);
         }
         catch (OperationCanceledException) { /* superseded */ }
         catch (Exception ex) { Log.Error("Background OCR failed", ex); }
+        finally
+        {
+            if (ReferenceEquals(_ocrCts, cts)) _ocrRunning = false;
+        }
+    }
+
+    private bool _ocrRunning;
+
+    /// <summary>Start background OCR unless a result exists or a recognition is already running (lazy, for PRO-12).</summary>
+    private void EnsureOcr()
+    {
+        if (_ocr == null && !_ocrRunning) ScheduleOcr();
+    }
+
+    /// <summary>PRO-12 snap provider: the OCR line (Ctrl: word) under <paramref name="p"/> (image px), or null.</summary>
+    private Rect? SnapToText(Point p)
+    {
+        if (_ocr == null)
+        {
+            if (!OcrService.IsAvailable) return null;
+            EnsureOcr();
+            ShowBadgeText(Loc.Get("Pin.Recognize.OcrPending"));
+            return null;
+        }
+        return TextSnap.Find(_ocr, p, wholeLine: !Keyboard.Modifiers.HasFlag(ModifierKeys.Control));
+    }
+
+    // ================================================================================ recognize / translate (PRO-01/02/09/10)
+
+    /// <summary>Ctrl+Q: translate the image (window or translated pin over this one) or the text of a text pin.</summary>
+    public void TranslateContent()
+    {
+        switch (_body)
+        {
+            case TextBody tb:
+                TranslateWorkflow.TranslateText(tb.PlainText);
+                break;
+            case ImageBody ib:
+                _ = TranslateWorkflow.TranslateImageAsync(ib.Display, img => _mgr.PinImageOver(this, img), OcrLanguageChoice.CurrentOrNull);
+                break;
+        }
+    }
+
+    private void RecognizeTable()
+    {
+        if (_body is ImageBody ib) _ = TableRecognition.RecognizeAndShowAsync(ib.Display, OcrLanguageChoice.CurrentOrNull);
+    }
+
+    private async void DecodeCodes()
+    {
+        if (_body is not ImageBody ib) return;
+        try
+        {
+            var results = await QrService.DecodeAsync(ib.Display);
+            if (results.Count == 0) { Notify.Info(Loc.Get("Pin.Recognize.QrNone")); return; }
+            QrResultWindow.Show(results);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("QR / barcode recognition failed", ex);
+            Notify.Error(Loc.Format("Common.ActionFailed", ex.Message));
+        }
+    }
+
+    private void SetOcrLanguage(string tag)
+    {
+        if (OcrLanguageChoice.IsCurrent(tag)) return;
+        OcrLanguageChoice.Set(tag);
+        InvalidateOcr();
+    }
+
+    /// <summary>"识别" submenu: text (OCR copy), table, QR / barcode, translate, OCR language (PRO-09).</summary>
+    private MenuItem BuildRecognizeMenu(PinMenuFactory f)
+    {
+        var menu = f.Sub("Pin.Menu.Recognize", "");
+        menu.Items.Add(f.Item("Pin.Menu.OcrCopy", "", "Shift+C", OcrCopyAll));
+        menu.Items.Add(f.Item("Pin.Menu.Table", "", null, RecognizeTable));
+        menu.Items.Add(f.Item("Pin.Menu.Qr", "", null, DecodeCodes));
+        menu.Items.Add(f.Item("Pin.Menu.Translate", "", "Ctrl+Q", TranslateContent));
+        menu.Items.Add(PinMenuFactory.Sep());
+
+        var lang = f.Sub("Pin.Menu.OcrLanguage", null);
+        var auto = PinMenuFactory.Make(Loc.Get("Recognition.OcrLang.Auto"), null, () => SetOcrLanguage(""));
+        var available = OcrLanguageChoice.Available;
+        auto.IsChecked = OcrLanguageChoice.IsCurrent("") || !available.Any(l => OcrLanguageChoice.IsCurrent(l.Tag));
+        lang.Items.Add(auto);
+        foreach (var l in available)
+        {
+            var tag = l.Tag;
+            var mi = PinMenuFactory.Make(l.DisplayName, null, () => SetOcrLanguage(tag));
+            mi.IsChecked = OcrLanguageChoice.IsCurrent(tag);
+            lang.Items.Add(mi);
+        }
+        lang.Items.Add(PinMenuFactory.Sep());
+        lang.Items.Add(PinMenuFactory.Make(Loc.Get("Recognition.OcrLang.Add"), "", OcrLanguageChoice.OpenLanguageSettings));
+        menu.Items.Add(lang);
+        return menu;
     }
 
     public async void OcrCopyAll()
@@ -831,7 +934,7 @@ internal sealed class PinWindow : Window
         try
         {
             int version = _imageVersion;
-            var result = _ocr ?? await OcrService.RecognizeAsync(ib.Display);
+            var result = _ocr ?? await OcrService.RecognizeAsync(ib.Display, OcrLanguageChoice.CurrentOrNull);
             if (version == _imageVersion && _ocr == null)
             {
                 _ocr = result;
@@ -1240,6 +1343,7 @@ internal sealed class PinWindow : Window
             case Key.S when ctrl && shift: QuickSave(); return;
             case Key.S when ctrl: SaveAs(); return;
             case Key.V when ctrl: _mgr.PasteFromClipboardOnto(this); return;
+            case Key.Q when ctrl && !shift: TranslateContent(); return;
             case Key.L when !ctrl: ToggleLock(); return;
             case Key.T when !ctrl: ToggleTopmost(); return;
             case Key.R when !ctrl: ToggleThumbnail(); return;
@@ -1315,6 +1419,7 @@ internal sealed class PinWindow : Window
         {
             foreach (var extra in _body.MenuItems(contentPos, f)) items.Add(extra);
             items.Add(f.Item("Pin.Menu.CopyAsImage", null, "Ctrl+Shift+C", () => Copy(true)));
+            if (_body is TextBody) items.Add(f.Item("Pin.Menu.Translate", "", "Ctrl+Q", TranslateContent));
         }
         items.Add(f.Item("Pin.Menu.SaveAs", "", "Ctrl+S", SaveAs));
         items.Add(f.Item("Pin.Menu.QuickSave", "", "Ctrl+Shift+S", QuickSave));
@@ -1323,7 +1428,7 @@ internal sealed class PinWindow : Window
         if (image)
         {
             items.Add(f.Item("Pin.Menu.Annotate", "", "Space", ToggleAnnotation, !M.ClickThrough));
-            items.Add(f.Item("Pin.Menu.OcrCopy", "", "Shift+C", OcrCopyAll));
+            items.Add(BuildRecognizeMenu(f));
             items.Add(PinMenuFactory.Sep());
         }
 

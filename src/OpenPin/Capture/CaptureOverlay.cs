@@ -65,6 +65,7 @@ internal sealed partial class CaptureOverlay : Window, IModalSession
     private readonly ToastLabel _toast = new();
     private readonly QrPanel _qrPanel = new();
     private StylePanel? _stylePanel;
+    private RecognizePanel? _recognizePanel;
     private AnnotationToolbar? _toolbar;
     private Rect _toolbarRectPx = Rect.Empty;
 
@@ -157,7 +158,12 @@ internal sealed partial class CaptureOverlay : Window, IModalSession
         _surface = new AnnotationSurface(snap.Image);
         _surface.EditBounds = new Rect(0, 0, 0, 0);
         _surface.SnapRectProvider = SnapRect;
-        _surface.ToolChanged += (_, _) => Guard(() => { _stylePanel?.SetCurrentValue(VisibilityProperty, Visibility.Collapsed); MarkDirty(); });
+        _surface.ToolChanged += (_, _) => Guard(() =>
+        {
+            _stylePanel?.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+            _recognizePanel?.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+            MarkDirty();
+        });
         _pixel.Children.Add(_surface);
 
         _pixel.Children.Add(_qrMarks);

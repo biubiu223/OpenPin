@@ -8,6 +8,8 @@
   <sys:String x:Key="Capture.Action.LongCapture">长截图</sys:String>
   <sys:String x:Key="Capture.Action.Record">录屏</sys:String>
   <sys:String x:Key="Capture.Action.Ocr">文字识别 (Shift+C)</sys:String>
+  <sys:String x:Key="Capture.Action.Recognize">识别：文字 / 翻译 / 表格 / 二维码与条码</sys:String>
+  <sys:String x:Key="Capture.Action.Translate">翻译 (Ctrl+Q)</sys:String>
   <sys:String x:Key="Capture.Action.Pin">贴图 (Ctrl+T)</sys:String>
   <sys:String x:Key="Capture.Action.Save">保存 (Ctrl+S)</sys:String>
   <sys:String x:Key="Capture.Action.Copy">复制 (Enter / Ctrl+C)</sys:String>
@@ -32,7 +34,8 @@
   <sys:String x:Key="Capture.Hints.Save">Ctrl+S 保存 · Ctrl+Shift+S 快速保存</sys:String>
   <sys:String x:Key="Capture.Hints.Arrows">方向键 移动 1px · Shift/Ctrl+方向键 收缩/扩展</sys:String>
   <sys:String x:Key="Capture.Hints.Misc">Shift+C 识别文字 · Ctrl+A 全屏 · ` 显示光标</sys:String>
-  <sys:String x:Key="Capture.Hints.History">R / Shift+R 历史选区 · &lt; / &gt; 历史截图 · Q 二维码</sys:String>
+  <sys:String x:Key="Capture.Hints.Recognize">Ctrl+Q 翻译 · Shift+Q 表格识别 · Q 二维码 / 条码</sys:String>
+  <sys:String x:Key="Capture.Hints.History">R / Shift+R 历史选区 · &lt; / &gt; 历史截图</sys:String>
   <sys:String x:Key="Capture.Hints.Exit">Alt 辅助线 · 右键 / Esc 取消或退出</sys:String>
 
   <!-- Results / notifications -->
@@ -54,12 +57,19 @@
 
   <!-- QR (CAP-12) -->
   <sys:String x:Key="Capture.Qr.Found">检测到 {0} 个二维码 / 条码，按 Q 查看</sys:String>
-  <sys:String x:Key="Capture.Qr.None">未检测到二维码</sys:String>
-  <sys:String x:Key="Capture.Qr.Disabled">二维码识别已在设置中禁用</sys:String>
-  <sys:String x:Key="Capture.Qr.Detecting">正在识别二维码…</sys:String>
+  <sys:String x:Key="Capture.Qr.None">未检测到二维码 / 条码</sys:String>
+  <sys:String x:Key="Capture.Qr.Disabled">二维码 / 条码识别已在设置中禁用</sys:String>
+  <sys:String x:Key="Capture.Qr.Detecting">正在识别二维码 / 条码…</sys:String>
   <sys:String x:Key="Capture.Qr.Copy">复制</sys:String>
   <sys:String x:Key="Capture.Qr.Open">打开链接</sys:String>
-  <sys:String x:Key="Capture.Qr.Copied">已复制二维码内容</sys:String>
+  <sys:String x:Key="Capture.Qr.Copied">已复制二维码 / 条码内容</sys:String>
+
+  <!-- "识别" flyout (PRO-01 / PRO-02 / PRO-09 / PRO-10) -->
+  <sys:String x:Key="Capture.Recognize.Ocr">文字识别</sys:String>
+  <sys:String x:Key="Capture.Recognize.Translate">翻译</sys:String>
+  <sys:String x:Key="Capture.Recognize.Table">表格识别</sys:String>
+  <sys:String x:Key="Capture.Recognize.Qr">二维码 / 条码</sys:String>
+  <sys:String x:Key="Capture.Recognize.OcrLanguage">文字识别语言</sys:String>
 
   <!-- Output style flyout (CAP-11) -->
   <sys:String x:Key="Capture.Style.Corner">圆角</sys:String>

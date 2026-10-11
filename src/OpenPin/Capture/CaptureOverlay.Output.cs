@@ -189,6 +189,30 @@ internal sealed partial class CaptureOverlay
         _ = CaptureController.OcrAndCopyAsync(bmp);
     }
 
+    /// <summary>PRO-01 (Ctrl+Q): translate the selection — result window, or a translated pin over the selection.</summary>
+    private void DoTranslate()
+    {
+        if (!HasSel) return;
+        _surface.CommitPendingEdits();
+        var bmp = _surface.Render(_sel);
+        var rect = SelectionScreenPx;
+        CloseOverlay();
+        CaptureController.RememberRegion(rect);
+        _ = Translate.TranslateWorkflow.TranslateImageAsync(bmp, img => AppServices.Pins.PinImage(img, rect), Recognition.OcrLanguageChoice.CurrentOrNull);
+    }
+
+    /// <summary>PRO-02 (Shift+Q): recognize a table in the selection.</summary>
+    private void DoTable()
+    {
+        if (!HasSel) return;
+        _surface.CommitPendingEdits();
+        var bmp = _surface.Render(_sel);
+        var rect = SelectionScreenPx;
+        CloseOverlay();
+        CaptureController.RememberRegion(rect);
+        _ = Recognition.TableRecognition.RecognizeAndShowAsync(bmp);
+    }
+
     private void DoLongCapture()
     {
         if (!HasSel) return;
@@ -302,6 +326,7 @@ internal sealed partial class CaptureOverlay
     {
         if (_qrResults is not { Count: > 0 } results) return;
         if (_stylePanel != null) _stylePanel.Visibility = Visibility.Collapsed;
+        if (_recognizePanel != null) _recognizePanel.Visibility = Visibility.Collapsed;
         if (expanded) _qrPanel.ShowFull(results);
         else _qrPanel.ShowCompact(results.Count);
 
