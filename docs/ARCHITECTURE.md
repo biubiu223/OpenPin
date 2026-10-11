@@ -2,7 +2,8 @@
 
 ## 技术栈
 
-- **C# 12 / .NET 8 / WPF**，目标框架 `net8.0-windows10.0.19041.0`（可直接调用 WinRT：`Windows.Media.Ocr`、`Windows.Media.Transcoding` 等）。
+- **C# / WPF**，目标框架 `net8.0-windows10.0.19041.0`（可直接调用 WinRT：`Windows.Media.Ocr`、`Windows.Media.Transcoding` 等）。**计划升级到 .NET 10（LTS）**，见 SPEC PKG-01。
+- 为什么用 WPF 而不是 WinUI 3：截图遮罩、贴图、浮动工具栏都是大量**透明、置顶、无边框**的小窗口，WPF 对分层透明窗口支持成熟、开销小；WinUI 3 不正式支持透明窗口。外观上统一做成 **Windows 11 Fluent 风格**（SPEC UI-01），发布用 **MSIX** + 便携 zip（PKG-02/03）。
 - 最低系统：Windows 10 1809（`SupportedOSPlatformVersion 10.0.17763.0`），x64。
 - 第三方依赖尽量少，且必须是宽松开源许可（MIT / Apache-2.0 / BSD）：
   - `Hardcodet.NotifyIcon.Wpf`（MIT）— 托盘图标
