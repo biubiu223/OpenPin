@@ -2,4 +2,44 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- LongCapture module strings (keys: LongCapture.*). Owned by the LongCapture module. -->
+
+  <!-- Control bar -->
+  <sys:String x:Key="LongCapture.Start">开始（截图快捷键）</sys:String>
+  <sys:String x:Key="LongCapture.Stop">停止（截图快捷键）</sys:String>
+  <sys:String x:Key="LongCapture.DirectionVertical">方向：纵向（点击切换为横向）</sys:String>
+  <sys:String x:Key="LongCapture.DirectionHorizontal">方向：横向（点击切换为纵向）</sys:String>
+  <sys:String x:Key="LongCapture.AutoCrop">自动裁剪</sys:String>
+  <sys:String x:Key="LongCapture.AutoCropTip">向回滚动时自动裁掉末尾多余的部分，使结果停在当前可见的内容</sys:String>
+  <sys:String x:Key="LongCapture.AutoScroll">自动滚动（鼠标移出选区即停止）</sys:String>
+  <sys:String x:Key="LongCapture.Crop">裁剪首尾</sys:String>
+  <sys:String x:Key="LongCapture.Pin">贴图</sys:String>
+  <sys:String x:Key="LongCapture.Save">保存</sys:String>
+  <sys:String x:Key="LongCapture.QuickSave">快速保存</sys:String>
+  <sys:String x:Key="LongCapture.Copy">复制并关闭</sys:String>
+  <sys:String x:Key="LongCapture.Close">关闭 (Esc)</sys:String>
+
+  <!-- Status text -->
+  <sys:String x:Key="LongCapture.Status.Ready">可拖动调整选区，点击开始后滚动内容</sys:String>
+  <sys:String x:Key="LongCapture.Status.Capturing">请滚动内容</sys:String>
+  <sys:String x:Key="LongCapture.Status.Failed">匹配失败，请向回滚动一点</sys:String>
+  <sys:String x:Key="LongCapture.Status.Limit">已达到最大长度</sys:String>
+  <sys:String x:Key="LongCapture.Status.Stopped">已停止</sys:String>
+  <sys:String x:Key="LongCapture.Status.Working">正在生成图片…</sys:String>
+  <!-- {0} × {1}: result size in pixels -->
+  <sys:String x:Key="LongCapture.Size">{0} × {1}</sys:String>
+
+  <!-- Trim (crop) on the preview -->
+  <sys:String x:Key="LongCapture.CropHintVertical">拖动上下手柄裁剪（滚轮微调，Shift ×10）</sys:String>
+  <sys:String x:Key="LongCapture.CropHintHorizontal">拖动左右手柄裁剪（滚轮微调，Shift ×10）</sys:String>
+  <!-- {0}: trimmed at the start, {1}: trimmed at the end (pixels) -->
+  <sys:String x:Key="LongCapture.CropInfo">裁掉 {0} / {1} px</sys:String>
+  <sys:String x:Key="LongCapture.CropReset">重置</sys:String>
+  <sys:String x:Key="LongCapture.CropDone">完成</sys:String>
+
+  <!-- Messages -->
+  <sys:String x:Key="LongCapture.ConfirmClose">放弃已拼接的长截图并关闭？</sys:String>
+  <sys:String x:Key="LongCapture.TooSmall">选区太小，无法进行长截图</sys:String>
+  <!-- {0}: error message -->
+  <sys:String x:Key="LongCapture.Failed">长截图失败：{0}</sys:String>
+  <sys:String x:Key="LongCapture.Copied">长截图已复制到剪贴板</sys:String>
 </ResourceDictionary>
