@@ -2,4 +2,95 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- Recording module strings (keys: Recording.*). Owned by the Recording module. -->
+
+  <!-- control bar -->
+  <sys:String x:Key="Recording.Start">开始录制</sys:String>
+  <sys:String x:Key="Recording.StartHint">开始录制（{0}）</sys:String>
+  <sys:String x:Key="Recording.Stop">停止录制</sys:String>
+  <sys:String x:Key="Recording.StopHint">停止录制（{0}）</sys:String>
+  <sys:String x:Key="Recording.Pause">暂停</sys:String>
+  <sys:String x:Key="Recording.Resume">继续</sys:String>
+  <sys:String x:Key="Recording.Restart">重新录制</sys:String>
+  <sys:String x:Key="Recording.Close">关闭（Esc）</sys:String>
+  <sys:String x:Key="Recording.Move">拖动移动控制条</sys:String>
+  <sys:String x:Key="Recording.Fps">帧率</sys:String>
+  <sys:String x:Key="Recording.FpsValue">{0} FPS</sys:String>
+  <sys:String x:Key="Recording.Delay">延时开始</sys:String>
+  <sys:String x:Key="Recording.DelayNone">不延时</sys:String>
+  <sys:String x:Key="Recording.DelaySeconds">{0} 秒</sys:String>
+  <sys:String x:Key="Recording.Paused">已暂停</sys:String>
+  <sys:String x:Key="Recording.Starting">准备中…</sys:String>
+
+  <sys:String x:Key="Recording.Audio">声音</sys:String>
+  <sys:String x:Key="Recording.Microphone">麦克风</sys:String>
+  <sys:String x:Key="Recording.SystemAudio">系统声音</sys:String>
+  <sys:String x:Key="Recording.AudioMp4Only">声音只会保存到 MP4，GIF 没有声音</sys:String>
+
+  <sys:String x:Key="Recording.Webcam">摄像头</sys:String>
+  <sys:String x:Key="Recording.WebcamOn">显示摄像头画面</sys:String>
+  <sys:String x:Key="Recording.WebcamCircle">圆形</sys:String>
+  <sys:String x:Key="Recording.WebcamRoundedRect">圆角矩形</sys:String>
+  <sys:String x:Key="Recording.WebcamSize">大小</sys:String>
+  <sys:String x:Key="Recording.CornerTopLeft">左上</sys:String>
+  <sys:String x:Key="Recording.CornerTopRight">右上</sys:String>
+  <sys:String x:Key="Recording.CornerBottomLeft">左下</sys:String>
+  <sys:String x:Key="Recording.CornerBottomRight">右下</sys:String>
+  <sys:String x:Key="Recording.NoCamera">没有找到可用的摄像头</sys:String>
+  <sys:String x:Key="Recording.CameraFailed">无法打开摄像头：{0}</sys:String>
+
+  <sys:String x:Key="Recording.Keys">按键显示</sys:String>
+  <sys:String x:Key="Recording.KeysOff">不显示</sys:String>
+  <sys:String x:Key="Recording.KeysAll">所有按键</sys:String>
+  <sys:String x:Key="Recording.KeysCombos">仅组合键</sys:String>
+
+  <sys:String x:Key="Recording.Mouse">鼠标</sys:String>
+  <sys:String x:Key="Recording.ShowCursor">显示光标</sys:String>
+  <sys:String x:Key="Recording.ClickHighlight">点击高亮</sys:String>
+  <sys:String x:Key="Recording.ShowWheel">滚轮指示</sys:String>
+  <sys:String x:Key="Recording.ClickSpeed">动画速度</sys:String>
+  <sys:String x:Key="Recording.SpeedSlow">慢</sys:String>
+  <sys:String x:Key="Recording.SpeedNormal">中</sys:String>
+  <sys:String x:Key="Recording.SpeedFast">快</sys:String>
+
+  <!-- session messages -->
+  <sys:String x:Key="Recording.ConfirmDiscard">放弃已录制的内容？</sys:String>
+  <sys:String x:Key="Recording.Discard">放弃</sys:String>
+  <sys:String x:Key="Recording.LimitReached">已达到最长录制时长（{0} 分钟），录制已停止</sys:String>
+  <sys:String x:Key="Recording.Failed">录制失败：{0}</sys:String>
+  <sys:String x:Key="Recording.WarnMicrophone">麦克风不可用，本次不录制麦克风声音</sys:String>
+  <sys:String x:Key="Recording.WarnSystem">系统声音不可用，本次不录制系统声音</sys:String>
+  <sys:String x:Key="Recording.WarnKeyboard">无法记录按键，本次不显示按键</sys:String>
+  <sys:String x:Key="Recording.AlreadyActive">正在录屏</sys:String>
+  <sys:String x:Key="Recording.TooSmall">录制区域太小</sys:String>
+  <sys:String x:Key="Recording.NothingRecorded">没有录到任何画面</sys:String>
+
+  <!-- playback window -->
+  <sys:String x:Key="Recording.PlaybackTitle">录屏 - OpenPin</sys:String>
+  <sys:String x:Key="Recording.Play">播放（空格）</sys:String>
+  <sys:String x:Key="Recording.PausePlayback">暂停（空格）</sys:String>
+  <sys:String x:Key="Recording.TrimHint">拖动时间轴两端的手柄剪掉开头和结尾（[ / ] 设为当前位置）</sys:String>
+  <sys:String x:Key="Recording.Format">格式</sys:String>
+  <sys:String x:Key="Recording.Quality">质量</sys:String>
+  <sys:String x:Key="Recording.QualityLight">轻量</sys:String>
+  <sys:String x:Key="Recording.QualityStandard">标准</sys:String>
+  <sys:String x:Key="Recording.QualityOriginal">原始</sys:String>
+  <sys:String x:Key="Recording.Show">显示</sys:String>
+  <sys:String x:Key="Recording.Cursor">光标</sys:String>
+  <sys:String x:Key="Recording.Clicks">点击</sys:String>
+  <sys:String x:Key="Recording.Wheel">滚轮</sys:String>
+  <sys:String x:Key="Recording.KeysShort">按键</sys:String>
+  <sys:String x:Key="Recording.Save">保存</sys:String>
+  <sys:String x:Key="Recording.QuickSave">快速保存</sys:String>
+  <sys:String x:Key="Recording.Copy">复制</sys:String>
+  <sys:String x:Key="Recording.CloseWindow">关闭</sys:String>
+  <sys:String x:Key="Recording.Cancel">取消</sys:String>
+  <sys:String x:Key="Recording.OutputInfo">{0} × {1} · {2} fps · {3}</sys:String>
+  <sys:String x:Key="Recording.Exporting">正在导出 {0}…</sys:String>
+  <sys:String x:Key="Recording.Saved">录屏已保存</sys:String>
+  <sys:String x:Key="Recording.Copied">录屏文件已复制，可直接粘贴到聊天窗口或文件夹</sys:String>
+  <sys:String x:Key="Recording.ExportFailed">导出失败：{0}</sys:String>
+  <sys:String x:Key="Recording.OpenFolder">打开文件夹</sys:String>
+  <sys:String x:Key="Recording.SaveDialogTitle">保存录屏</sys:String>
+  <sys:String x:Key="Recording.ConfirmCloseUnsaved">录制内容还没有保存，确定关闭吗？</sys:String>
+  <sys:String x:Key="Recording.ConfirmRerecord">放弃当前录制内容并重新录制？</sys:String>
 </ResourceDictionary>

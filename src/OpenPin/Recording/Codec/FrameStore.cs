@@ -99,6 +99,7 @@ internal sealed class FrameStoreWriter : IDisposable
         BitConverter.TryWriteBytes(header[8..], width);
         BitConverter.TryWriteBytes(header[12..], height);
         _file.Write(header);
+        BytesWritten = header.Length;
     }
 
     public string Path { get; }
@@ -109,7 +110,7 @@ internal sealed class FrameStoreWriter : IDisposable
     public CompressionLevel Level { get; init; } = CompressionLevel.Fastest;
 
     public int FrameCount => _frames.Count;
-    public long BytesWritten => _file.Length;
+    public long BytesWritten { get; private set; }
 
     public int RegisterCursor(CursorShape shape)
     {
@@ -222,6 +223,7 @@ internal sealed class FrameStoreWriter : IDisposable
             z.Write(_packed, 0, count);
         int len = (int)_compressed.Length;
         _file.Write(_compressed.GetBuffer(), 0, len);
+        BytesWritten += len;
         return len;
     }
 
