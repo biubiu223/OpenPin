@@ -3,4 +3,146 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- Pin module strings (keys: Pin.*). Owned by the Pin module. -->
   <sys:String x:Key="Pin.ClipboardEmpty">剪贴板中没有可以贴图的内容</sys:String>
+  <sys:String x:Key="Pin.WindowTitle">OpenPin 贴图</sys:String>
+  <sys:String x:Key="Pin.NothingToRestore">没有可以恢复的贴图</sys:String>
+  <sys:String x:Key="Pin.RestoreFailed">贴图文件已损坏或丢失，无法恢复</sys:String>
+  <sys:String x:Key="Pin.NoPinUnderCursor">鼠标下方没有贴图</sys:String>
+  <sys:String x:Key="Pin.Wheel">滚轮</sys:String>
+  <sys:String x:Key="Pin.MiddleClick">中键</sys:String>
+
+  <!-- Badges shown briefly on the pin -->
+  <sys:String x:Key="Pin.CopiedBadge">已复制</sys:String>
+  <sys:String x:Key="Pin.OpacityBadge">不透明度 {0}%</sys:String>
+  <sys:String x:Key="Pin.LockedBadge">已锁定</sys:String>
+  <sys:String x:Key="Pin.UnlockedBadge">已解锁</sys:String>
+  <sys:String x:Key="Pin.TopmostOnBadge">已置顶</sys:String>
+  <sys:String x:Key="Pin.TopmostOffBadge">已取消置顶</sys:String>
+
+  <!-- Context menu -->
+  <sys:String x:Key="Pin.Menu.CopySelectedText">复制选中的文字</sys:String>
+  <sys:String x:Key="Pin.Menu.CopyCurrent">复制当前图像</sys:String>
+  <sys:String x:Key="Pin.Menu.CopyOriginal">复制原始图像</sys:String>
+  <sys:String x:Key="Pin.Menu.CopyAsImage">复制为图像</sys:String>
+  <sys:String x:Key="Pin.Menu.SaveAs">另存为…</sys:String>
+  <sys:String x:Key="Pin.Menu.QuickSave">快速保存</sys:String>
+  <sys:String x:Key="Pin.Menu.Annotate">标注</sys:String>
+  <sys:String x:Key="Pin.Menu.OcrCopy">识别文字并复制</sys:String>
+  <sys:String x:Key="Pin.Menu.Lock">锁定</sys:String>
+  <sys:String x:Key="Pin.Menu.Topmost">置顶</sys:String>
+  <sys:String x:Key="Pin.Menu.ClickThrough">鼠标穿透</sys:String>
+  <sys:String x:Key="Pin.Menu.Shadow">显示阴影</sys:String>
+  <sys:String x:Key="Pin.Menu.Opacity">透明度</sys:String>
+  <sys:String x:Key="Pin.Menu.OpacityUp">增加不透明度</sys:String>
+  <sys:String x:Key="Pin.Menu.OpacityDown">降低不透明度</sys:String>
+  <sys:String x:Key="Pin.Menu.Zoom">缩放</sys:String>
+  <sys:String x:Key="Pin.Menu.ZoomIn">放大</sys:String>
+  <sys:String x:Key="Pin.Menu.ZoomOut">缩小</sys:String>
+  <sys:String x:Key="Pin.Menu.ZoomReset">重置大小和透明度</sys:String>
+  <sys:String x:Key="Pin.Menu.ImageProcessing">图像处理</sys:String>
+  <sys:String x:Key="Pin.Menu.Thumbnail">缩略图</sys:String>
+  <sys:String x:Key="Pin.Menu.SetTitle">设置标题…</sys:String>
+  <sys:String x:Key="Pin.Menu.MoveToGroup">移动到贴图组</sys:String>
+  <sys:String x:Key="Pin.Menu.Close">关闭</sys:String>
+  <sys:String x:Key="Pin.Menu.Destroy">销毁</sys:String>
+
+  <!-- Image processing -->
+  <sys:String x:Key="Pin.Image.RotateRight">向右旋转</sys:String>
+  <sys:String x:Key="Pin.Image.RotateLeft">向左旋转</sys:String>
+  <sys:String x:Key="Pin.Image.FlipH">水平翻转</sys:String>
+  <sys:String x:Key="Pin.Image.FlipV">垂直翻转</sys:String>
+  <sys:String x:Key="Pin.Image.Grayscale">灰度</sys:String>
+  <sys:String x:Key="Pin.Image.Invert">反色</sys:String>
+  <sys:String x:Key="Pin.Image.BrightnessUp">增加亮度</sys:String>
+  <sys:String x:Key="Pin.Image.BrightnessDown">降低亮度</sys:String>
+  <sys:String x:Key="Pin.Image.OpacityUp">增加不透明度</sys:String>
+  <sys:String x:Key="Pin.Image.OpacityDown">降低不透明度</sys:String>
+  <sys:String x:Key="Pin.Image.Reset">重置图像处理</sys:String>
+  <sys:String x:Key="Pin.Image.RestoreOriginal">还原为原始图像（撤销标注和裁切）</sys:String>
+  <sys:String x:Key="Pin.Image.CropHint">按住右键拖动可裁切</sys:String>
+
+  <!-- Annotation toolbar host buttons -->
+  <sys:String x:Key="Pin.Annotate.Done">完成标注 (Space)</sys:String>
+  <sys:String x:Key="Pin.Annotate.Copy">复制 (Ctrl+C)</sys:String>
+  <sys:String x:Key="Pin.Annotate.Save">保存 (Ctrl+S)</sys:String>
+  <sys:String x:Key="Pin.Annotate.Cancel">放弃标注</sys:String>
+
+  <!-- OCR -->
+  <sys:String x:Key="Pin.Ocr.Copied">已复制识别的文字</sys:String>
+  <sys:String x:Key="Pin.Ocr.NoText">没有识别到文字</sys:String>
+  <sys:String x:Key="Pin.Ocr.Unavailable">文字识别不可用：请在 Windows 设置中安装 OCR 语言包</sys:String>
+
+  <!-- Content kinds -->
+  <sys:String x:Key="Pin.Text.Copy">复制文本</sys:String>
+  <sys:String x:Key="Pin.Text.IgnoreFormat">忽略格式</sys:String>
+  <sys:String x:Key="Pin.Files.Open">打开</sys:String>
+  <sys:String x:Key="Pin.Files.CopyFiles">复制文件</sys:String>
+  <sys:String x:Key="Pin.Files.CopyPath">复制路径</sys:String>
+  <sys:String x:Key="Pin.Files.Reveal">在资源管理器中显示</sys:String>
+  <sys:String x:Key="Pin.Files.Missing">（文件不存在）</sys:String>
+  <sys:String x:Key="Pin.Files.OpenFailed">无法打开：{0}</sys:String>
+  <sys:String x:Key="Pin.Color.CopyAs">复制为 {0}</sys:String>
+
+  <!-- Close / destroy -->
+  <sys:String x:Key="Pin.Close.ConfirmTitle">关闭贴图</sys:String>
+  <sys:String x:Key="Pin.Close.ConfirmMessage">确定要关闭这个贴图吗？关闭后可以用「恢复上次关闭的贴图」找回。</sys:String>
+  <sys:String x:Key="Pin.DestroyAll.Title">销毁全部贴图</sys:String>
+  <sys:String x:Key="Pin.DestroyAll.Message">将销毁当前贴图组的 {0} 个贴图，销毁后无法恢复。确定吗？</sys:String>
+
+  <!-- Title (F2) -->
+  <sys:String x:Key="Pin.Title.DialogTitle">设置贴图标题</sys:String>
+  <sys:String x:Key="Pin.Title.Prompt">标题（留空则不显示）</sys:String>
+
+  <!-- From file -->
+  <sys:String x:Key="Pin.FromFile.Title">选择要贴到屏幕上的图片</sys:String>
+  <sys:String x:Key="Pin.FromFile.Filter">图片</sys:String>
+  <sys:String x:Key="Pin.FromFile.All">所有文件</sys:String>
+  <sys:String x:Key="Pin.FromFile.Failed">无法贴图 {0}：{1}</sys:String>
+
+  <!-- Save all -->
+  <sys:String x:Key="Pin.SaveAll.Title">选择保存贴图的文件夹</sys:String>
+  <sys:String x:Key="Pin.SaveAll.Done">已保存 {0} 个贴图到 {1}</sys:String>
+
+  <!-- Tray section -->
+  <sys:String x:Key="Pin.Tray.Count">屏幕上的贴图：{0} / {1}</sys:String>
+  <sys:String x:Key="Pin.Tray.Groups">贴图组：{0}</sys:String>
+  <sys:String x:Key="Pin.Tray.NextGroup">切换到下一个贴图组</sys:String>
+  <sys:String x:Key="Pin.Tray.BringIntoView">全部调回可视区域</sys:String>
+  <sys:String x:Key="Pin.Tray.AllThumbnails">全部缩略图</sys:String>
+  <sys:String x:Key="Pin.Tray.CancelThumbnails">取消全部缩略图</sys:String>
+  <sys:String x:Key="Pin.Tray.SaveAll">全部保存到文件夹…</sys:String>
+  <sys:String x:Key="Pin.Tray.HideAll">隐藏全部贴图</sys:String>
+  <sys:String x:Key="Pin.Tray.ShowAll">显示全部贴图</sys:String>
+  <sys:String x:Key="Pin.Tray.CloseAll">关闭全部贴图</sys:String>
+  <sys:String x:Key="Pin.Tray.DestroyAll">销毁全部贴图</sys:String>
+
+  <!-- Pin groups -->
+  <sys:String x:Key="Pin.Group.DefaultName">默认组</sys:String>
+  <sys:String x:Key="Pin.Group.DefaultNewName">新贴图组</sys:String>
+  <sys:String x:Key="Pin.Group.NewTitle">新建贴图组</sys:String>
+  <sys:String x:Key="Pin.Group.NewEllipsis">新建贴图组…</sys:String>
+  <sys:String x:Key="Pin.Group.ManageEllipsis">管理贴图组…</sys:String>
+  <sys:String x:Key="Pin.Group.ManageTitle">管理贴图组</sys:String>
+  <sys:String x:Key="Pin.Group.Name">名称</sys:String>
+  <sys:String x:Key="Pin.Group.Color">颜色（贴图未激活时的边框颜色）</sys:String>
+  <sys:String x:Key="Pin.Group.NoColor">无颜色</sys:String>
+  <sys:String x:Key="Pin.Group.SwitchNow">立即切换到这个贴图组</sys:String>
+  <sys:String x:Key="Pin.Group.Create">创建</sys:String>
+  <sys:String x:Key="Pin.Group.NameEmpty">请输入名称</sys:String>
+  <sys:String x:Key="Pin.Group.NameTaken">已经有同名的贴图组了</sys:String>
+  <sys:String x:Key="Pin.Group.New">新建</sys:String>
+  <sys:String x:Key="Pin.Group.SwitchTo">切换到此组</sys:String>
+  <sys:String x:Key="Pin.Group.Rename">重命名</sys:String>
+  <sys:String x:Key="Pin.Group.ChangeColor">更改颜色</sys:String>
+  <sys:String x:Key="Pin.Group.MoveUp">上移</sys:String>
+  <sys:String x:Key="Pin.Group.MoveDown">下移</sys:String>
+  <sys:String x:Key="Pin.Group.Clear">清空</sys:String>
+  <sys:String x:Key="Pin.Group.ClearConfirm">将销毁贴图组「{0}」中的所有贴图（包括历史记录），无法恢复。确定吗？</sys:String>
+  <sys:String x:Key="Pin.Group.Delete">删除</sys:String>
+  <sys:String x:Key="Pin.Group.DeleteTitle">删除贴图组</sys:String>
+  <sys:String x:Key="Pin.Group.DeletePrompt">贴图组「{0}」中有 {1} 个贴图，删除后这些贴图：</sys:String>
+  <sys:String x:Key="Pin.Group.DeletePins">一并销毁</sys:String>
+  <sys:String x:Key="Pin.Group.MoveTo">移动到「{0}」</sys:String>
+  <sys:String x:Key="Pin.Group.CurrentMark">当前</sys:String>
+  <sys:String x:Key="Pin.Group.CountTip">屏幕上 {0} 个，共 {1} 个</sys:String>
+  <sys:String x:Key="Pin.Group.SwitchOverlayTitle">贴图组（屏幕上 / 总数）</sys:String>
 </ResourceDictionary>
