@@ -2,4 +2,113 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- Translate module strings (keys: Translate.*). Owned by the Translate module. -->
+  <sys:String x:Key="Translate.Title">翻译</sys:String>
+  <sys:String x:Key="Translate.NotConfigured">还没有配置翻译服务。OpenPin 不会联网，请先在设置中选择翻译服务并填写 API Key。</sys:String>
+  <sys:String x:Key="Translate.OpenSettings">去设置</sys:String>
+  <sys:String x:Key="Translate.OcrUnavailable">翻译需要文字识别：请在 Windows 设置中安装 OCR 语言包</sys:String>
+  <sys:String x:Key="Translate.NoText">没有识别到可以翻译的文字</sys:String>
+  <sys:String x:Key="Translate.Working">正在翻译…</sys:String>
+  <sys:String x:Key="Translate.Failed">翻译失败：{0}</sys:String>
+
+  <!-- Languages -->
+  <sys:String x:Key="Translate.Lang.FollowApp">跟随软件语言</sys:String>
+  <sys:String x:Key="Translate.Lang.zh-Hans">简体中文</sys:String>
+  <sys:String x:Key="Translate.Lang.zh-Hant">繁體中文</sys:String>
+  <sys:String x:Key="Translate.Lang.en">英语</sys:String>
+  <sys:String x:Key="Translate.Lang.ja">日语</sys:String>
+  <sys:String x:Key="Translate.Lang.ko">韩语</sys:String>
+  <sys:String x:Key="Translate.Lang.fr">法语</sys:String>
+  <sys:String x:Key="Translate.Lang.de">德语</sys:String>
+  <sys:String x:Key="Translate.Lang.es">西班牙语</sys:String>
+  <sys:String x:Key="Translate.Lang.pt">葡萄牙语</sys:String>
+  <sys:String x:Key="Translate.Lang.id">印尼语</sys:String>
+  <sys:String x:Key="Translate.Lang.ms">马来语</sys:String>
+  <sys:String x:Key="Translate.Lang.it">意大利语</sys:String>
+  <sys:String x:Key="Translate.Lang.ru">俄语</sys:String>
+  <sys:String x:Key="Translate.Lang.th">泰语</sys:String>
+  <sys:String x:Key="Translate.Lang.vi">越南语</sys:String>
+  <sys:String x:Key="Translate.Lang.ar">阿拉伯语</sys:String>
+  <sys:String x:Key="Translate.Lang.tr">土耳其语</sys:String>
+
+  <!-- Providers -->
+  <sys:String x:Key="Translate.Provider.none">未配置（不联网）</sys:String>
+  <sys:String x:Key="Translate.Provider.openai">OpenAI 兼容接口</sys:String>
+  <sys:String x:Key="Translate.Provider.baidu">百度翻译</sys:String>
+  <sys:String x:Key="Translate.Provider.youdao">有道智云</sys:String>
+  <sys:String x:Key="Translate.Provider.deepl">DeepL</sys:String>
+
+  <!-- Errors -->
+  <sys:String x:Key="Translate.Error.Count">译文数量与原文不一致（原文 {0} 段，译文 {1} 段）</sys:String>
+  <sys:String x:Key="Translate.Error.ProxyAddress">代理地址无效，请填写 主机:端口，例如 127.0.0.1:7890</sys:String>
+  <sys:String x:Key="Translate.Error.Http">{0} 返回错误 {1}：{2}</sys:String>
+  <sys:String x:Key="Translate.Error.Timeout">{0} 请求超时，请检查网络或代理设置</sys:String>
+  <sys:String x:Key="Translate.Error.Network">无法连接 {0}：{1}</sys:String>
+  <sys:String x:Key="Translate.Error.NoModel">请填写模型名称</sys:String>
+  <sys:String x:Key="Translate.Error.NoBaseUrl">请填写有效的接口地址（http:// 或 https://）</sys:String>
+  <sys:String x:Key="Translate.Error.BadResponse">{0} 返回了无法识别的内容：{1}</sys:String>
+  <sys:String x:Key="Translate.Error.NoKey">请先在设置中填写 {0} 的密钥</sys:String>
+  <sys:String x:Key="Translate.Error.Provider">{0}：{1}</sys:String>
+  <sys:String x:Key="Translate.Error.BadCredentials">ID 或密钥不正确</sys:String>
+  <sys:String x:Key="Translate.Error.RateLimited">请求太频繁，请稍后再试</sys:String>
+  <sys:String x:Key="Translate.Error.NoBalance">账户余额或额度不足</sys:String>
+  <sys:String x:Key="Translate.Error.LanguageUnsupported">不支持该语言</sys:String>
+  <sys:String x:Key="Translate.Error.TargetUnsupported">{0} 不支持翻译成{1}，请换一个目标语言或翻译服务</sys:String>
+
+  <!-- Result window -->
+  <sys:String x:Key="Translate.Window.Title">翻译</sys:String>
+  <sys:String x:Key="Translate.Window.Retranslate">翻译</sys:String>
+  <sys:String x:Key="Translate.Window.Provider">翻译服务：{0}</sys:String>
+  <sys:String x:Key="Translate.Window.TargetLabel">翻译为</sys:String>
+  <sys:String x:Key="Translate.Window.Source">原文</sys:String>
+  <sys:String x:Key="Translate.Window.Translation">译文</sys:String>
+  <sys:String x:Key="Translate.Window.Copy">复制</sys:String>
+  <sys:String x:Key="Translate.Window.Copied">已复制</sys:String>
+  <sys:String x:Key="Translate.Window.Working">正在翻译…</sys:String>
+  <sys:String x:Key="Translate.Window.Detected">（检测为{0}）</sys:String>
+  <sys:String x:Key="Translate.Window.Done">已翻译 {0} 段 · {1:0.0} 秒 · 修改原文后按 Ctrl+Enter 重新翻译</sys:String>
+
+  <!-- Settings view -->
+  <sys:String x:Key="Translate.Settings.SectionService">翻译服务</sys:String>
+  <sys:String x:Key="Translate.Settings.Provider">服务</sys:String>
+  <sys:String x:Key="Translate.Settings.ProviderHint">未配置时 OpenPin 不会发起任何网络请求。API Key 使用 Windows DPAPI 加密保存，仅当前用户可以解密。</sys:String>
+  <sys:String x:Key="Translate.Settings.ProviderLong.openai">OpenAI 兼容接口（DeepSeek、通义千问、Kimi、智谱、Ollama…）</sys:String>
+  <sys:String x:Key="Translate.Settings.ProviderLong.baidu">百度翻译</sys:String>
+  <sys:String x:Key="Translate.Settings.ProviderLong.youdao">有道智云</sys:String>
+  <sys:String x:Key="Translate.Settings.ProviderLong.deepl">DeepL</sys:String>
+  <sys:String x:Key="Translate.Settings.Preset">预设</sys:String>
+  <sys:String x:Key="Translate.Settings.PresetCustom">自定义</sys:String>
+  <sys:String x:Key="Translate.Settings.BaseUrl">接口地址</sys:String>
+  <sys:String x:Key="Translate.Settings.Model">模型</sys:String>
+  <sys:String x:Key="Translate.Settings.ApiKey">API Key</sys:String>
+  <sys:String x:Key="Translate.Settings.OpenAiHint">接口地址填到 /v1 这一级即可（会自动拼接 /chat/completions）。本地 Ollama / LM Studio 不需要 Key。</sys:String>
+  <sys:String x:Key="Translate.Settings.BaiduAppId">APP ID</sys:String>
+  <sys:String x:Key="Translate.Settings.BaiduSecret">密钥</sys:String>
+  <sys:String x:Key="Translate.Settings.BaiduHint">在百度翻译开放平台（fanyi-api.baidu.com）开通「通用文本翻译」后获取。</sys:String>
+  <sys:String x:Key="Translate.Settings.YoudaoAppKey">应用 ID</sys:String>
+  <sys:String x:Key="Translate.Settings.YoudaoSecret">应用密钥</sys:String>
+  <sys:String x:Key="Translate.Settings.YoudaoHint">在有道智云（ai.youdao.com）创建「文本翻译」应用后获取。</sys:String>
+  <sys:String x:Key="Translate.Settings.DeepLKey">API Key</sys:String>
+  <sys:String x:Key="Translate.Settings.DeepLHint">以 :fx 结尾的是免费版 Key，会自动使用免费版接口（api-free.deepl.com）。</sys:String>
+  <sys:String x:Key="Translate.Settings.ShowKey">显示 / 隐藏</sys:String>
+  <sys:String x:Key="Translate.Settings.SectionLanguage">语言</sys:String>
+  <sys:String x:Key="Translate.Settings.Target">目标语言</sys:String>
+  <sys:String x:Key="Translate.Settings.Fallback">备用语言</sys:String>
+  <sys:String x:Key="Translate.Settings.FallbackHint">原文已经是目标语言时，改为翻译成备用语言。</sys:String>
+  <sys:String x:Key="Translate.Settings.SectionImage">图片翻译</sys:String>
+  <sys:String x:Key="Translate.Settings.Mode">翻译结果</sys:String>
+  <sys:String x:Key="Translate.Settings.ModeText">图片 → 文本（原文与译文对照窗口）</sys:String>
+  <sys:String x:Key="Translate.Settings.ModeImage">图片 → 图片（译文覆盖原文，生成新贴图）</sys:String>
+  <sys:String x:Key="Translate.Settings.SectionNetwork">网络</sys:String>
+  <sys:String x:Key="Translate.Settings.Proxy">代理</sys:String>
+  <sys:String x:Key="Translate.Settings.Proxy.None">不使用代理</sys:String>
+  <sys:String x:Key="Translate.Settings.Proxy.System">系统代理</sys:String>
+  <sys:String x:Key="Translate.Settings.Proxy.Http">HTTP 代理</sys:String>
+  <sys:String x:Key="Translate.Settings.Proxy.Socks5">SOCKS5 代理</sys:String>
+  <sys:String x:Key="Translate.Settings.ProxyAddressTip">主机:端口，例如 127.0.0.1:7890</sys:String>
+  <sys:String x:Key="Translate.Settings.Timeout">超时（秒）</sys:String>
+  <sys:String x:Key="Translate.Settings.Test">测试连接</sys:String>
+  <sys:String x:Key="Translate.Settings.Testing">正在测试…</sys:String>
+  <sys:String x:Key="Translate.Settings.TestChooseProvider">请先选择翻译服务</sys:String>
+  <sys:String x:Key="Translate.Settings.TestOk">连接成功：{0} → {1}（{2:0.0} 秒）</sys:String>
+  <sys:String x:Key="Translate.Settings.TestFailed">连接失败：{0}</sys:String>
 </ResourceDictionary>
