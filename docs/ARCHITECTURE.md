@@ -56,7 +56,7 @@ assets/                      # README 用图片、logo
 | Annotation | `src/OpenPin/Annotation/**`、对应 Styles / Strings / tests |
 | Pin | `src/OpenPin/Pin/**`、对应 Styles / Strings / tests |
 | Services | `src/OpenPin/Services/**`、对应 Styles / Strings / tests；**可以**在 `OpenPin.csproj` 中添加 NuGet 包 |
-| SettingsUI / LongCapture / Recording | 同上 |
+| SettingsUI / LongCapture / Recording / Translate / Recognition | 同上 |
 | Core（主管） | `Core/**`、`App.xaml(.cs)`、`OpenPin.csproj`、`Resources/Theme.xaml`、`Resources/Strings/zh-CN/Common.xaml`、docs、CI |
 
 - **不要修改** `Core/`、`App.xaml(.cs)`、`Contracts.cs`、别的模块的文件。需要改契约或 Core 时，在交付报告里写「契约变更请求」，由主管统一修改。

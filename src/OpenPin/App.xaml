@@ -17,6 +17,8 @@
         <ResourceDictionary Source="Resources/Styles/SettingsUI.xaml" />
         <ResourceDictionary Source="Resources/Styles/LongCapture.xaml" />
         <ResourceDictionary Source="Resources/Styles/Recording.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Translate.xaml" />
+        <ResourceDictionary Source="Resources/Styles/Recognition.xaml" />
 
         <ResourceDictionary Source="Resources/Strings/zh-CN/Common.xaml" />
         <ResourceDictionary Source="Resources/Strings/zh-CN/Annotation.xaml" />
@@ -26,6 +28,8 @@
         <ResourceDictionary Source="Resources/Strings/zh-CN/SettingsUI.xaml" />
         <ResourceDictionary Source="Resources/Strings/zh-CN/LongCapture.xaml" />
         <ResourceDictionary Source="Resources/Strings/zh-CN/Recording.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Translate.xaml" />
+        <ResourceDictionary Source="Resources/Strings/zh-CN/Recognition.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

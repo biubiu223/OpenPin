@@ -2,8 +2,10 @@ using OpenPin.Annotation;
 using OpenPin.Capture;
 using OpenPin.LongCapture;
 using OpenPin.Pin;
+using OpenPin.Recognition;
 using OpenPin.Recording;
 using OpenPin.Services;
+using OpenPin.Translate;
 
 namespace OpenPin.Core.Settings;
 
@@ -25,6 +27,8 @@ public sealed class AppSettings
     public OcrSettings Ocr { get; set; } = new();
     public LongCaptureSettings LongCapture { get; set; } = new();
     public RecordingSettings Recording { get; set; } = new();
+    public TranslateSettings Translate { get; set; } = new();
+    public RecognitionSettings Recognition { get; set; } = new();
 }
 
 public enum ThemeMode { System, Light, Dark }
