@@ -2,4 +2,29 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <!-- Recognition module strings (keys: Recognition.*). Owned by the Recognition module. -->
+  <sys:String x:Key="Recognition.OcrUnavailable">表格识别需要文字识别：请在 Windows 设置中安装 OCR 语言包</sys:String>
+
+  <!-- Table recognition (PRO-02) -->
+  <sys:String x:Key="Recognition.Table.Title">表格识别</sys:String>
+  <sys:String x:Key="Recognition.Table.Copy">复制</sys:String>
+  <sys:String x:Key="Recognition.Table.CopyTip">复制为制表符分隔的文本，可以直接粘贴到 Excel / WPS</sys:String>
+  <sys:String x:Key="Recognition.Table.ExportXlsx">导出 Excel</sys:String>
+  <sys:String x:Key="Recognition.Table.ExportCsv">导出 CSV</sys:String>
+  <sys:String x:Key="Recognition.Table.FilterXlsx">Excel 工作簿 (*.xlsx)</sys:String>
+  <sys:String x:Key="Recognition.Table.FilterCsv">CSV 文件 (*.csv)</sys:String>
+  <sys:String x:Key="Recognition.Table.FileName">表格</sys:String>
+  <sys:String x:Key="Recognition.Table.Copied">已复制，可以直接粘贴到 Excel</sys:String>
+  <sys:String x:Key="Recognition.Table.Exported">已导出：{0}</sys:String>
+  <sys:String x:Key="Recognition.Table.ExportFailed">导出失败：{0}</sys:String>
+  <sys:String x:Key="Recognition.Table.Open">打开</sys:String>
+  <sys:String x:Key="Recognition.Table.ShowInFolder">在文件夹中显示</sys:String>
+  <sys:String x:Key="Recognition.Table.Summary">{0} 行 × {1} 列</sys:String>
+  <sys:String x:Key="Recognition.Table.Merged">，含 {0} 个合并单元格</sys:String>
+  <sys:String x:Key="Recognition.Table.EditHint">· 双击单元格可修改</sys:String>
+  <sys:String x:Key="Recognition.Table.NoText">没有识别到表格内容</sys:String>
+  <sys:String x:Key="Recognition.Table.Failed">表格识别失败：{0}</sys:String>
+
+  <!-- OCR language quick switch (PRO-09) -->
+  <sys:String x:Key="Recognition.OcrLang.Auto">自动（跟随系统）</sys:String>
+  <sys:String x:Key="Recognition.OcrLang.Add">添加语言…</sys:String>
 </ResourceDictionary>
