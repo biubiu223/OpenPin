@@ -35,21 +35,55 @@ public static class SaveService
     /// <summary>Show a save dialog. Returns the saved path or null if cancelled / failed.</summary>
     public static string? SaveWithDialog(BitmapSource image, SaveContext? context = null) => SaveWithDialog(image, context, null);
 
-    /// <summary>Show a save dialog owned by <paramref name="owner"/> (pass the topmost overlay/pin so the dialog is not hidden behind it).</summary>
+    /// <summary>
+    /// Show a save dialog owned by <paramref name="owner"/> (pass the topmost overlay/pin so the dialog is not hidden behind it).
+    /// By default this is OpenPin's save window with a live preview of the encoded result, size estimate, scaling and PDF
+    /// page options (PRO-08); <see cref="SaveSettings.SaveDialogStyle"/> = Classic shows the system dialog instead.
+    /// Returns the saved path, or null if cancelled / failed (the user has been notified of failures).
+    /// </summary>
     public static string? SaveWithDialog(BitmapSource image, SaveContext? context, Window? owner)
     {
         context ??= new SaveContext();
-        var s = ServicesConfig.Save;
+        if (ServicesConfig.Save.SaveDialogStyle == SaveDialogStyle.Modern)
+        {
+            try
+            {
+                return SaveWindow.ShowSave(image, context, owner);
+            }
+            catch (Exception ex)
+            {
+                // Never leave the user without a way to save: fall back to the system dialog.
+                Log.Error("Modern save window failed; falling back to the system dialog", ex);
+            }
+        }
+        return SaveWithSystemDialog(image, context, owner);
+    }
 
-        string folder = ResolveFolder(s.RememberLastFolder && Directory.Exists(s.LastFolder) ? s.LastFolder : s.ManualSaveFolder,
-            AppPaths.DefaultPicturesDir);
+    /// <summary>Default folder of the save dialogs (last folder or the configured one).</summary>
+    internal static string DialogFolder(SaveSettings s) =>
+        ResolveFolder(s.RememberLastFolder && Directory.Exists(s.LastFolder) ? s.LastFolder : s.ManualSaveFolder, AppPaths.DefaultPicturesDir);
+
+    /// <summary>File name (without extension) of the save dialogs, from <see cref="SaveSettings.FileNameTemplate"/>.</summary>
+    internal static string DialogFileName(SaveSettings s, SaveContext context, int width, int height)
+    {
         var name = Path.GetFileName(PathTemplate.Expand(
             string.IsNullOrWhiteSpace(s.FileNameTemplate) ? "OpenPin_$yyyy-MM-dd_HH-mm-ss$" : s.FileNameTemplate,
-            context, image.PixelWidth, image.PixelHeight).TrimEnd('\\'));
-        if (string.IsNullOrWhiteSpace(name)) name = "OpenPin";
+            context, width, height).TrimEnd('\\'));
+        if (IsSupportedExtension(Path.GetExtension(name))) name = Path.GetFileNameWithoutExtension(name);
+        return string.IsNullOrWhiteSpace(name) ? "OpenPin" : name;
+    }
 
-        var ext = s.RememberLastExtension && IsSupportedExtension(s.LastExtension) ? s.LastExtension.ToLowerInvariant() : ".png";
-        var format = ImageEncoding.FormatFromExtension(ext);
+    /// <summary>The format the save dialogs start with (last used one if remembered, else PNG).</summary>
+    internal static ImageFileFormat DialogFormat(SaveSettings s) =>
+        ImageEncoding.FormatFromExtension(s.RememberLastExtension && IsSupportedExtension(s.LastExtension) ? s.LastExtension : ".png");
+
+    /// <summary>The classic system "Save as" dialog (<see cref="SaveDialogStyle.Classic"/>).</summary>
+    private static string? SaveWithSystemDialog(BitmapSource image, SaveContext context, Window? owner)
+    {
+        var s = ServicesConfig.Save;
+        string folder = DialogFolder(s);
+        var name = DialogFileName(s, context, image.PixelWidth, image.PixelHeight);
+        var format = DialogFormat(s);
         // Filter order must match ImageFileFormat order (FilterIndex is 1-based).
         var dlg = new SaveFileDialog
         {
@@ -175,20 +209,12 @@ public static class SaveService
     public static void SaveToFile(BitmapSource image, string path, int quality, bool pdfUseJpeg = false)
     {
         var format = ImageEncoding.FormatFromExtension(Path.GetExtension(path));
-        var dir = Path.GetDirectoryName(Path.GetFullPath(path));
-        if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
-        var tmp = path + ".openpin-tmp";
-        try
-        {
-            using (var fs = new FileStream(tmp, FileMode.Create, FileAccess.Write, FileShare.None))
-                ImageEncoding.Encode(image, format, fs, quality, pdfUseJpeg);
-            File.Move(tmp, path, overwrite: true);
-        }
-        finally
-        {
-            try { if (File.Exists(tmp)) File.Delete(tmp); } catch { /* best effort */ }
-        }
+        WriteAtomic(path, fs => ImageEncoding.Encode(image, format, fs, quality, pdfUseJpeg));
     }
+
+    /// <summary>ADDED (PRO-08): save as PDF with explicit page options (paper, orientation, margins, pagination…).</summary>
+    public static void SavePdf(BitmapSource image, string path, PdfOptions options) =>
+        WriteAtomic(path, fs => PdfImageWriter.Write(fs, image, options));
 
     /// <summary>Encode to bytes in memory (e.g. for drag &amp; drop or uploads by other modules).</summary>
     public static byte[] Encode(BitmapSource image, ImageFileFormat format, int? quality = null)
@@ -197,6 +223,32 @@ public static class SaveService
         using var ms = new MemoryStream();
         ImageEncoding.Encode(image, format, ms, quality ?? s.Quality, s.PdfUseJpeg);
         return ms.ToArray();
+    }
+
+    /// <summary>ADDED (PRO-08): encode to bytes with explicit PDF page options (ignored for raster formats).</summary>
+    public static byte[] Encode(BitmapSource image, ImageFileFormat format, int? quality, PdfOptions pdf)
+    {
+        using var ms = new MemoryStream();
+        ImageEncoding.Encode(image, format, ms, quality ?? pdf.JpegQuality, pdf);
+        return ms.ToArray();
+    }
+
+    /// <summary>Write via a temp file in the same folder, then replace the target (no half-written files).</summary>
+    internal static void WriteAtomic(string path, Action<Stream> write)
+    {
+        var dir = Path.GetDirectoryName(Path.GetFullPath(path));
+        if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
+        var tmp = path + ".openpin-tmp";
+        try
+        {
+            using (var fs = new FileStream(tmp, FileMode.Create, FileAccess.Write, FileShare.None))
+                write(fs);
+            File.Move(tmp, path, overwrite: true);
+        }
+        finally
+        {
+            try { if (File.Exists(tmp)) File.Delete(tmp); } catch { /* best effort */ }
+        }
     }
 
     /// <summary>Open Explorer with the file selected.</summary>

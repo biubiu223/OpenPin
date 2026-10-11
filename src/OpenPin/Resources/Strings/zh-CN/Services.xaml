@@ -12,6 +12,56 @@
   <sys:String x:Key="Services.Copied">已复制到剪贴板</sys:String>
   <sys:String x:Key="Services.Close">关闭</sys:String>
 
+  <!-- Save window (PRO-08) -->
+  <sys:String x:Key="Services.SaveWin.Format">格式(_F)</sys:String>
+  <sys:String x:Key="Services.SaveWin.Quality">质量(_Q)</sys:String>
+  <sys:String x:Key="Services.SaveWin.QualityTip">JPEG 质量 1–100：越高越清晰，文件越大</sys:String>
+  <sys:String x:Key="Services.SaveWin.Size">尺寸(_Z)</sys:String>
+  <sys:String x:Key="Services.SaveWin.Custom">自定义</sys:String>
+  <sys:String x:Key="Services.SaveWin.CustomTip">宽 × 高（像素），保持原图比例</sys:String>
+  <sys:String x:Key="Services.SaveWin.Width">宽</sys:String>
+  <sys:String x:Key="Services.SaveWin.Height">高</sys:String>
+  <sys:String x:Key="Services.SaveWin.Pdf">PDF 页面</sys:String>
+  <sys:String x:Key="Services.SaveWin.Paper">纸张(_P)</sys:String>
+  <sys:String x:Key="Services.SaveWin.PaperOriginal">原图尺寸</sys:String>
+  <sys:String x:Key="Services.SaveWin.Orientation">方向</sys:String>
+  <sys:String x:Key="Services.SaveWin.OrientationAuto">自动</sys:String>
+  <sys:String x:Key="Services.SaveWin.Portrait">纵向</sys:String>
+  <sys:String x:Key="Services.SaveWin.Landscape">横向</sys:String>
+  <sys:String x:Key="Services.SaveWin.Margin">页边距（毫米）</sys:String>
+  <sys:String x:Key="Services.SaveWin.Placement">图片大小</sys:String>
+  <sys:String x:Key="Services.SaveWin.FitToPage">适应页面</sys:String>
+  <sys:String x:Key="Services.SaveWin.ActualSize">实际大小</sys:String>
+  <sys:String x:Key="Services.SaveWin.Paginate">长图自动分页</sys:String>
+  <sys:String x:Key="Services.SaveWin.Overlap">页间重叠（毫米）</sys:String>
+  <sys:String x:Key="Services.SaveWin.PdfJpeg">使用 JPEG 压缩（文件更小）</sys:String>
+  <sys:String x:Key="Services.SaveWin.Info">信息</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoFormat">格式</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoDimensions">尺寸</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoDimensionsValue">{0} × {1} 像素</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoPages">页面</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoPagesValue">{0} 页 · {1}</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoEstimate">预计大小</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoOriginal">原始 → 编码后</sys:String>
+  <sys:String x:Key="Services.SaveWin.InfoOriginalValue">{0} → {1}（{2}）</sys:String>
+  <sys:String x:Key="Services.SaveWin.Encoding">正在编码…</sys:String>
+  <sys:String x:Key="Services.SaveWin.EncodeFailed">无法预览：{0}</sys:String>
+  <sys:String x:Key="Services.SaveWin.PreviewFit">适应</sys:String>
+  <sys:String x:Key="Services.SaveWin.PreviewFitTip">适应窗口（Ctrl+0，双击预览切换）</sys:String>
+  <sys:String x:Key="Services.SaveWin.PreviewActual">100%</sys:String>
+  <sys:String x:Key="Services.SaveWin.PreviewActualTip">实际像素（Ctrl+1），拖动或方向键平移</sys:String>
+  <sys:String x:Key="Services.SaveWin.FileName">文件名(_N)</sys:String>
+  <sys:String x:Key="Services.SaveWin.Folder">保存到(_D)</sys:String>
+  <sys:String x:Key="Services.SaveWin.Browse">浏览(_B)…</sys:String>
+  <sys:String x:Key="Services.SaveWin.BrowseTitle">选择保存位置</sys:String>
+  <sys:String x:Key="Services.SaveWin.CopyAfterSave">保存后复制到剪贴板(_C)</sys:String>
+  <sys:String x:Key="Services.SaveWin.Save">保存(_S)</sys:String>
+  <sys:String x:Key="Services.SaveWin.Cancel">取消</sys:String>
+  <sys:String x:Key="Services.SaveWin.Replace">替换(_R)</sys:String>
+  <sys:String x:Key="Services.SaveWin.Overwrite">“{0}”已存在，要替换它吗？</sys:String>
+  <sys:String x:Key="Services.SaveWin.ErrorName">请输入文件名</sys:String>
+  <sys:String x:Key="Services.SaveWin.ErrorFolder">请输入有效的文件夹路径（例如 D:\图片）</sys:String>
+
   <!-- OCR -->
   <sys:String x:Key="Services.OcrNoLanguage">未安装 OCR 语言包。请在 Windows 设置 → 时间和语言 → 语言和区域 中添加语言并安装“光学字符识别”。</sys:String>
   <sys:String x:Key="Services.OcrNoText">未识别到文字</sys:String>

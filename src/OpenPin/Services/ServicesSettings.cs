@@ -37,7 +37,43 @@ public sealed class SaveSettings
 
     /// <summary>Clipboard: put images on the clipboard also as a file (for terminals / AI tools). Disabled | Auto | Png | Jpg | Bmp.</summary>
     public string CopyImageAsFile { get; set; } = "Auto";
+
+    /// <summary>PRO-08: "Save as" window. Modern = OpenPin's window with live preview / size estimate / PDF options; Classic = the system dialog.</summary>
+    public SaveDialogStyle SaveDialogStyle { get; set; } = SaveDialogStyle.Modern;
+
+    /// <summary>PDF page size. Original = the page is the image (plus margins).</summary>
+    public PdfPaperSize PdfPaper { get; set; } = PdfPaperSize.Original;
+    /// <summary>PDF page orientation for A4 / Letter. Auto = landscape for wide images.</summary>
+    public PdfOrientation PdfOrientation { get; set; } = PdfOrientation.Auto;
+    /// <summary>PDF page margins (mm, all sides).</summary>
+    public double PdfMarginMm { get; set; }
+    /// <summary>A4 / Letter: scale the image to the page (true) or print it at its actual size (96 DPI, shrunk only if wider than the page).</summary>
+    public bool PdfFitToPage { get; set; } = true;
+    /// <summary>Split long images over several pages instead of shrinking them onto one.</summary>
+    public bool PdfAutoPaginate { get; set; } = true;
+    /// <summary>Overlap between consecutive pages of a split long image (mm), so no line is cut in half.</summary>
+    public double PdfPageOverlapMm { get; set; }
+
+    /// <summary>The PDF layout options stored in these settings.</summary>
+    public PdfOptions ToPdfOptions() => new()
+    {
+        Paper = PdfPaper,
+        Orientation = PdfOrientation,
+        MarginMm = PdfMarginMm,
+        FitToPage = PdfFitToPage,
+        AutoPaginate = PdfAutoPaginate,
+        OverlapMm = PdfPageOverlapMm,
+        UseJpeg = PdfUseJpeg,
+        JpegQuality = Quality,
+    };
 }
+
+/// <summary>Which "save as" window <see cref="SaveService.SaveWithDialog(System.Windows.Media.Imaging.BitmapSource, SaveContext?, System.Windows.Window?)"/> shows.</summary>
+public enum SaveDialogStyle { Modern, Classic }
+
+public enum PdfPaperSize { Original, A4, Letter }
+
+public enum PdfOrientation { Auto, Portrait, Landscape }
 
 public enum OcrTextLayout { Auto, SingleLine, MultiLine }
 public enum OcrPunctuation { None, ToHalfWidth, ToFullWidth }

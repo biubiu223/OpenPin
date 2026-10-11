@@ -29,11 +29,16 @@ internal static class ImageEncoding
         _ => ".png",
     };
 
-    public static void Encode(BitmapSource image, ImageFileFormat format, Stream output, int quality, bool pdfJpeg = false)
+    /// <summary>Encode; PDFs use the page layout stored in the settings (default: one page the size of the image).</summary>
+    public static void Encode(BitmapSource image, ImageFileFormat format, Stream output, int quality, bool pdfJpeg = false) =>
+        Encode(image, format, output, quality, ServicesConfig.Save.ToPdfOptions() with { UseJpeg = pdfJpeg, JpegQuality = quality });
+
+    /// <summary>Encode with explicit PDF options (<paramref name="pdf"/> is ignored for raster formats).</summary>
+    public static void Encode(BitmapSource image, ImageFileFormat format, Stream output, int quality, PdfOptions pdf)
     {
         if (format == ImageFileFormat.Pdf)
         {
-            PdfImageWriter.Write(output, image, pdfJpeg, quality);
+            PdfImageWriter.Write(output, image, pdf);
             return;
         }
         BitmapEncoder enc;
