@@ -263,6 +263,7 @@ internal static class SettingsCatalog
             new PageDef("save", "SettingsUI.Page.Save", Icons.Save, S, new Block[]
             {
                 new HeaderBlock("SettingsUI.Header.SaveDialog"),
+                new SettingBlock(E(S, "SaveDialogStyle", Icons.Save)),
                 new SettingBlock(new SettingDef(S, "ManualSaveFolder", SettingKind.Folder, Icons.Folder) { DefaultFolder = "pictures" }),
                 new SettingBlock(new SettingDef(S, "FileNameTemplate", SettingKind.Template, Icons.Template)
                     { TemplateMode = TemplateMode.FileName, ExtensionProperty = "LastExtension" }),
@@ -290,7 +291,16 @@ internal static class SettingsCatalog
                 new CustomBlock("save.variables"),
                 new HeaderBlock("SettingsUI.Header.Format"),
                 new SettingBlock(Sl(S, "Quality", 1, 100, null, Icons.Quality)),
-                new SettingBlock(T(S, "PdfUseJpeg", Icons.Pdf)),
+                new GroupBlock("SettingsUI.Group.Pdf", Icons.Pdf, new[]
+                {
+                    E(S, "PdfPaper"),
+                    E(S, "PdfOrientation"),
+                    N(S, "PdfMarginMm", 0, 50, "SettingsUI.Unit.Mm"),
+                    T(S, "PdfFitToPage"),
+                    T(S, "PdfAutoPaginate"),
+                    N(S, "PdfPageOverlapMm", 0, 50, "SettingsUI.Unit.Mm") with { EnabledBy = "PdfAutoPaginate" },
+                    T(S, "PdfUseJpeg"),
+                }),
                 new SettingBlock(new SettingDef(S, "CopyImageAsFile", SettingKind.Choice, Icons.File)
                 {
                     Choices = new[]
