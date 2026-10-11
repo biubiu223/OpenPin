@@ -1,0 +1,46 @@
+name: release
+
+# Push a tag like v0.1.0 to build and publish a GitHub Release.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Version from tag
+        id: ver
+        shell: pwsh
+        run: echo "version=$('${{ github.ref_name }}'.TrimStart('v'))" >> $env:GITHUB_OUTPUT
+
+      - name: Test
+        run: dotnet test -c Release
+
+      - name: Publish (small, needs .NET 8 Desktop Runtime)
+        run: dotnet publish src/OpenPin/OpenPin.csproj -c Release -r win-x64 --self-contained false -p:Version=${{ steps.ver.outputs.version }} -o out/fd
+
+      - name: Publish (self-contained, single file)
+        run: dotnet publish src/OpenPin/OpenPin.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.ver.outputs.version }} -o out/sc
+
+      - name: Zip
+        shell: pwsh
+        run: |
+          Compress-Archive -Path out/fd/* -DestinationPath OpenPin-${{ steps.ver.outputs.version }}-win-x64.zip
+          Compress-Archive -Path out/sc/* -DestinationPath OpenPin-${{ steps.ver.outputs.version }}-win-x64-selfcontained.zip
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: |
+            OpenPin-*.zip

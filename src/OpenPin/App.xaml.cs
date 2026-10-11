@@ -44,6 +44,8 @@ public partial class App : Application
         // Settings
         AppServices.Settings = new SettingsService(AppPaths.SettingsFile);
         AppServices.Settings.Load();
+        if (Environment.GetEnvironmentVariable("OPENPIN_DATA_DIR") is not { Length: > 0 }) // don't touch the registry from dev/test runs
+            AutoStart.Sync(AppServices.Config.General.AutoStart);
 
         // Modules
         AppServices.Actions = new ActionRegistry();
