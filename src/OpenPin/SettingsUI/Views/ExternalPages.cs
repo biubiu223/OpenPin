@@ -17,7 +17,13 @@ internal static class ExternalPages
 {
     /// <summary>Content of the "翻译" page (id "translate").</summary>
     public static FrameworkElement CreateTranslateContent(SettingsSession session, SettingsWindow window) =>
-        Host(session, () => Placeholder("SettingsUI.Translate.Placeholder"));
+        Host(session, () =>
+        {
+            var view = new OpenPin.Translate.TranslateSettingsView(session.Draft.Translate);
+            view.Changed += (_, _) => session.NotifyEdited();
+            UseWindowControlStyles(view, window);
+            return view;
+        });
 
     /// <summary>Content of the "识别" page (id "recognition": table / formula recognition).</summary>
     public static FrameworkElement CreateRecognitionContent(SettingsSession session, SettingsWindow window) =>
@@ -31,6 +37,27 @@ internal static class ExternalPages
         host.Loaded += (_, _) => { session.DraftReplaced -= handler; session.DraftReplaced += handler; };
         host.Unloaded += (_, _) => session.DraftReplaced -= handler;
         return host;
+    }
+
+    /// <summary>
+    /// Embedded module views style their controls with their own keyed styles (made for standalone popups).
+    /// Inside the settings window we want the window's Fluent controls instead, so map those keys to the
+    /// Fluent implicit styles available here.
+    /// </summary>
+    private static void UseWindowControlStyles(FrameworkElement view, FrameworkElement window)
+    {
+        var map = new (string Key, Type Control)[]
+        {
+            ("Style.Translate.ComboBox", typeof(ComboBox)),
+            ("Style.Translate.TextBox", typeof(TextBox)),
+            ("Style.Translate.TextArea", typeof(TextBox)),
+            ("Style.Translate.PasswordBox", typeof(PasswordBox)),
+            ("Style.Translate.RadioButton", typeof(RadioButton)),
+            ("Style.Translate.Button", typeof(Button)),
+        };
+        foreach (var (key, type) in map)
+            if (window.TryFindResource(type) is Style fluent)
+                view.Resources[key] = fluent;
     }
 
     private static FrameworkElement Placeholder(string key) =>

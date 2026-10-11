@@ -388,6 +388,11 @@
   <sys:String x:Key="SettingsUI.Group.RecWebcam.Desc">把摄像头画面一起录进视频，大小可在控制条上调节</sys:String>
   <sys:String x:Key="SettingsUI.Header.Export">导出</sys:String>
   <sys:String x:Key="SettingsUI.Unit.Minutes">分钟</sys:String>
+  <sys:String x:Key="SettingsUI.Header.Table">表格识别</sys:String>
+  <sys:String x:Key="SettingsUI.Recognition.TableExportFormat">默认导出格式</sys:String>
+  <sys:String x:Key="SettingsUI.Recognition.TableExportFormat.Desc">表格识别结果窗口中「导出」默认使用的格式</sys:String>
+  <sys:String x:Key="SettingsUI.Recognition.DetectTableLines">检测表格线</sys:String>
+  <sys:String x:Key="SettingsUI.Recognition.DetectTableLines.Desc">利用图片中的表格线确定行列和合并单元格；无边框表格可关闭</sys:String>
   <sys:String x:Key="SettingsUI.Enum.RecordingQuality.Light">轻量</sys:String>
   <sys:String x:Key="SettingsUI.Enum.RecordingQuality.Standard">标准</sys:String>
   <sys:String x:Key="SettingsUI.Enum.RecordingQuality.Original">原始</sys:String>

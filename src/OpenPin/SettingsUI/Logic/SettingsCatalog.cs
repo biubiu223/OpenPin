@@ -108,6 +108,7 @@ internal static class SettingsCatalog
         "Recording.SystemAudioVolume",
         "Recording.WebcamDeviceId",
         "Recording.WebcamSize",
+        "Recognition.LastExportFolder",
     };
 
     private static IReadOnlyList<PageDef> BuildPages()
@@ -363,11 +364,18 @@ internal static class SettingsCatalog
             // Pages whose content is provided by other modules (embedded at merge time, see Views/ExternalPages.cs).
             new PageDef("translate", "SettingsUI.Page.Translate", Icons.Translate, "Translate", new Block[]
             {
-                new CustomBlock("translate"),
+                new CustomBlock("translate", "Translate.Provider", "Translate.TargetLanguage", "Translate.FallbackLanguage", "Translate.Mode",
+                    "Translate.Proxy", "Translate.ProxyAddress", "Translate.TimeoutSeconds", "Translate.OpenAi", "Translate.Baidu",
+                    "Translate.Youdao", "Translate.DeepL"),
             }),
             new PageDef("recognition", "SettingsUI.Page.Recognition", Icons.Recognition, "Recognition", new Block[]
             {
-                new CustomBlock("recognition"),
+                new HeaderBlock("SettingsUI.Header.Table"),
+                new SettingBlock(new SettingDef("Recognition", "TableExportFormat", SettingKind.Choice, Icons.Format)
+                {
+                    Choices = new[] { new ChoiceOption("xlsx", "Excel (.xlsx)"), new ChoiceOption("csv", "CSV") },
+                }),
+                new SettingBlock(T("Recognition", "DetectTableLines", Icons.Grid)),
             }),
             new PageDef("about", "SettingsUI.Page.About", Icons.About, null, new Block[]
             {
