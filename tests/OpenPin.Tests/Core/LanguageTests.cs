@@ -159,12 +159,35 @@ public class LanguageDictionaryIntegrityTests
 
 public class LanguageManagerSwitchingTests
 {
+    private static readonly object SyncLock = new();
+    private static bool _appInitialized;
+
+    private static void EnsureApplication()
+    {
+        lock (SyncLock)
+        {
+            if (!_appInitialized && Application.Current == null)
+            {
+                try
+                {
+                    _ = new Application();
+                    _appInitialized = true;
+                }
+                catch { }
+            }
+        }
+    }
+
     private static void RunSta(Action action)
     {
         Exception? error = null;
         var t = new Thread(() =>
         {
-            try { action(); }
+            try
+            {
+                EnsureApplication();
+                action();
+            }
             catch (Exception ex) { error = ex; }
         });
         t.SetApartmentState(ApartmentState.STA);
