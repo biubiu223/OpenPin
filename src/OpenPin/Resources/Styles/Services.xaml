@@ -324,15 +324,7 @@
     <Setter Property="Margin" Value="0,14,0,8" />
   </Style>
 
-  <!-- Transparency checkerboard behind the preview -->
-  <DrawingBrush x:Key="Brush.Services.PreviewBackdrop" TileMode="Tile" Viewport="0,0,16,16" ViewportUnits="Absolute">
-    <DrawingBrush.Drawing>
-      <DrawingGroup>
-        <GeometryDrawing Brush="{DynamicResource Brush.SurfaceAlt}" Geometry="M0,0 H16 V16 H0 Z" />
-        <GeometryDrawing Brush="{DynamicResource Brush.Border}" Geometry="M0,0 H8 V8 H0 Z M8,8 H16 V16 H8 Z" />
-      </DrawingGroup>
-    </DrawingBrush.Drawing>
-  </DrawingBrush>
+  <!-- Transparency checkerboard behind the preview: Brush.Services.PreviewBackdrop in Theme.Light/Dark.xaml. -->
 
   <!-- Result windows: plain text box -->
   <Style x:Key="Style.Services.TextBox" TargetType="TextBox">
@@ -343,6 +335,7 @@
     <Setter Property="BorderBrush" Value="{DynamicResource Brush.Border}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Padding" Value="8,6" />
+    <Setter Property="CaretBrush" Value="{DynamicResource Brush.Text}" />
     <Setter Property="SelectionBrush" Value="{DynamicResource Brush.Accent}" />
     <Setter Property="Template">
       <Setter.Value>

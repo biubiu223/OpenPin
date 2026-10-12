@@ -6,8 +6,7 @@
   <SolidColorBrush x:Key="Brush.LongCapture.MatchOk" Color="#FF52C41A" />
   <!-- Part of the result removed by the trim (crop) handles. -->
   <SolidColorBrush x:Key="Brush.LongCapture.Trimmed" Color="#99000000" />
-  <!-- Viewport marker fill on the preview. -->
-  <SolidColorBrush x:Key="Brush.LongCapture.ViewportFill" Color="#261677FF" />
+  <!-- Viewport marker fill on the preview (accent dependent): Brush.LongCapture.ViewportFill in Theme.Light/Dark.xaml. -->
 
   <!-- Text toggle on the control bar (e.g. 自动裁剪): same metrics / states as Style.IconButton, but with a label. -->
   <Style x:Key="Style.LongCapture.TextToggle" TargetType="ToggleButton">

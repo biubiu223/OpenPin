@@ -1,0 +1,73 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--
+    DARK theme tokens (UI-03), Windows 11 Fluent dark values. Same keys as Theme.Light.xaml (a unit test checks it).
+    Accent-derived tokens are overridden at runtime by Core/Theme/ThemeManager.
+  -->
+
+  <!-- ===================================================================== base colors -->
+  <Color x:Key="Color.Accent">#FF1677FF</Color>
+  <Color x:Key="Color.Surface">#FF2B2B2B</Color>
+  <Color x:Key="Color.SurfaceAlt">#FF202020</Color>
+  <Color x:Key="Color.Border">#FF3F3F3F</Color>
+  <Color x:Key="Color.Text">#FFFFFFFF</Color>
+  <Color x:Key="Color.TextSecondary">#FFC5C5C5</Color>
+  <Color x:Key="Color.Hover">#17FFFFFF</Color>
+  <Color x:Key="Color.Pressed">#0FFFFFFF</Color>
+  <Color x:Key="Color.Danger">#FFFF6B70</Color>
+  <Color x:Key="Color.Warning">#FFFCB040</Color>
+  <Color x:Key="Color.Success">#FF6CCB5F</Color>
+  <Color x:Key="Color.Shadow">#80000000</Color>
+
+  <!-- Pin window shadow states: drawn on top of arbitrary screen content, so they stay the same as in light -->
+  <Color x:Key="Color.PinActive">#FF1677FF</Color>
+  <Color x:Key="Color.PinInactive">#FF8C8C8C</Color>
+  <Color x:Key="Color.PinLocked">#FFFA8C16</Color>
+  <Color x:Key="Color.PinClickThrough">#FF52C41A</Color>
+
+  <!-- ===================================================================== base brushes -->
+  <SolidColorBrush x:Key="Brush.Accent" Color="#FF1677FF" />
+  <SolidColorBrush x:Key="Brush.Surface" Color="#FF2B2B2B" />
+  <SolidColorBrush x:Key="Brush.SurfaceAlt" Color="#FF202020" />
+  <SolidColorBrush x:Key="Brush.Border" Color="#FF3F3F3F" />
+  <SolidColorBrush x:Key="Brush.Text" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="Brush.TextSecondary" Color="#FFC5C5C5" />
+  <SolidColorBrush x:Key="Brush.Hover" Color="#17FFFFFF" />
+  <SolidColorBrush x:Key="Brush.Pressed" Color="#0FFFFFFF" />
+  <SolidColorBrush x:Key="Brush.Danger" Color="#FFFF6B70" />
+  <SolidColorBrush x:Key="Brush.Warning" Color="#FFFCB040" />
+  <SolidColorBrush x:Key="Brush.Success" Color="#FF6CCB5F" />
+  <SolidColorBrush x:Key="Brush.OnAccent" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="Brush.ScrollThumb" Color="#66FFFFFF" />
+  <SolidColorBrush x:Key="Brush.ScrollThumbHover" Color="#99FFFFFF" />
+  <SolidColorBrush x:Key="Brush.ToolTip" Color="#FF2B2B2B" />
+
+  <!-- Dark surfaces need a denser shadow to read as elevated -->
+  <DropShadowEffect x:Key="Effect.Shadow" BlurRadius="14" ShadowDepth="2" Direction="270" Opacity="0.5" Color="Black" />
+
+  <!-- ===================================================================== module tokens that depend on the theme / accent -->
+  <SolidColorBrush x:Key="Brush.Pin.Badge" Color="#FF202020" Opacity="0.85" />
+  <SolidColorBrush x:Key="Brush.Pin.BadgeText" Color="#FFFFFFFF" />
+  <SolidColorBrush x:Key="Brush.Pin.Selection" Color="#FF1677FF" Opacity="0.4" />
+
+  <SolidColorBrush x:Key="Brush.Recording.Ready" Color="#FF1677FF" />
+  <SolidColorBrush x:Key="Brush.Recording.Active" Color="#FFE5484D" />
+  <SolidColorBrush x:Key="Brush.Recording.Paused" Color="#FFFA8C16" />
+  <SolidColorBrush x:Key="Brush.Recording.Countdown" Color="#FF202020" Opacity="0.8" />
+  <SolidColorBrush x:Key="Brush.Recording.PreviewBackground" Color="#FF000000" Opacity="0.25" />
+  <SolidColorBrush x:Key="Brush.Recording.TrimShade" Color="#FF000000" Opacity="0.4" />
+  <SolidColorBrush x:Key="Brush.Recording.TrimRange" Color="#FF1677FF" Opacity="0.3" />
+
+  <SolidColorBrush x:Key="Brush.LongCapture.ViewportFill" Color="#331677FF" />
+
+  <SolidColorBrush x:Key="Brush.Capture.MagnifierCross" Color="#5C1677FF" />
+
+  <DrawingBrush x:Key="Brush.Services.PreviewBackdrop" TileMode="Tile" Viewport="0,0,16,16" ViewportUnits="Absolute">
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing Brush="#FF2B2B2B" Geometry="M0,0 H16 V16 H0 Z" />
+        <GeometryDrawing Brush="#FF353535" Geometry="M0,0 H8 V8 H0 Z M8,8 H16 V16 H8 Z" />
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+</ResourceDictionary>

@@ -25,6 +25,7 @@ public sealed class TrayIconHost : IDisposable
             ContextMenu = _menu,
             MenuActivation = PopupActivationMode.RightClick,
         };
+        _menu.SetResourceReference(FrameworkElement.StyleProperty, "Style.ContextMenu"); // light / dark (Theme.xaml)
         _icon.TrayLeftMouseUp += (_, _) => OnLeftClick();
         _icon.PreviewTrayContextMenuOpen += (_, _) => BuildMenu();
         BuildMenu();

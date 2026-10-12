@@ -10,12 +10,8 @@ internal static class ThemeResolver
     /// True when the window should be dark. <paramref name="systemAppsUseLightTheme"/> is Windows' AppsUseLightTheme
     /// value (null = unknown → light).
     /// </summary>
-    public static bool IsDark(AppThemeMode mode, int? systemAppsUseLightTheme) => mode switch
-    {
-        AppThemeMode.Dark => true,
-        AppThemeMode.Light => false,
-        _ => systemAppsUseLightTheme == 0,
-    };
+    public static bool IsDark(AppThemeMode mode, int? systemAppsUseLightTheme) =>
+        OpenPin.Core.Theme.ThemeLogic.ResolveIsDark(mode, systemAppsUseLightTheme);
 }
 
 /// <summary>Persisted size/position of the settings window, physical pixels.</summary>

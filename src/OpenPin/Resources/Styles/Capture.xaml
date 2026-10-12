@@ -12,7 +12,7 @@
   <SolidColorBrush x:Key="Brush.Capture.InfoText" Color="#FFFFFFFF" />
   <SolidColorBrush x:Key="Brush.Capture.InfoTextSecondary" Color="#B3FFFFFF" />
   <SolidColorBrush x:Key="Brush.Capture.MagnifierGrid" Color="#40FFFFFF" />
-  <SolidColorBrush x:Key="Brush.Capture.MagnifierCross" Color="#5C1677FF" />
+  <!-- Brush.Capture.MagnifierCross (accent dependent) lives in Theme.Light/Dark.xaml. -->
 
   <!-- Dark info panel: magnifier, size label, shortcut hints, history label -->
   <Style x:Key="Style.Capture.InfoPanel" TargetType="Border">

@@ -61,6 +61,7 @@ internal static class SettingsImport
         s.Ocr ??= new();
         s.LongCapture ??= new();
         s.Recording ??= new();
+        SettingsMigrations.Migrate(s);
     }
 
     public static string Serialize(AppSettings s) => JsonSerializer.Serialize(s, SettingsService.JsonOptions);

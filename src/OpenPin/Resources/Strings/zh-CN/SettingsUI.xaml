@@ -88,7 +88,9 @@
 
   <!-- General -->
   <sys:String x:Key="SettingsUI.General.Theme">主题</sys:String>
-  <sys:String x:Key="SettingsUI.General.Theme.Desc">设置窗口的浅色 / 深色外观</sys:String>
+  <sys:String x:Key="SettingsUI.General.Theme.Desc">整个应用（工具栏、贴图菜单、对话框、设置窗口）的浅色 / 深色外观，可跟随 Windows</sys:String>
+  <sys:String x:Key="SettingsUI.General.UseSystemAccent">使用系统强调色</sys:String>
+  <sys:String x:Key="SettingsUI.General.UseSystemAccent.Desc">开启后使用 Windows 的强调色，忽略下面的自定义强调色</sys:String>
   <sys:String x:Key="SettingsUI.General.AccentColor">强调色</sys:String>
   <sys:String x:Key="SettingsUI.General.AccentColor.Desc">选区边框、活动贴图阴影等高亮颜色</sys:String>
   <sys:String x:Key="SettingsUI.General.Language">语言</sys:String>

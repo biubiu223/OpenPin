@@ -37,6 +37,8 @@ public sealed class SettingsService
                     // Make sure newly introduced default hotkeys exist for upgraded configs.
                     foreach (var (k, v) in HotkeySettings.DefaultBindings())
                         loaded.Hotkeys.Bindings.TryAdd(k, v);
+                    if (SettingsMigrations.Migrate(loaded))
+                        Log.Info($"Settings migrated to version {loaded.Version}");
                     Current = loaded;
                 }
             }

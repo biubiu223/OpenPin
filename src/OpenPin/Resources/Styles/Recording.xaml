@@ -6,16 +6,10 @@
   -->
 
   <!-- ===================================================================== derived tokens -->
-  <!-- region frame: blue = ready, red = recording, orange = paused -->
-  <SolidColorBrush x:Key="Brush.Recording.Ready" Color="{DynamicResource Color.Accent}" />
-  <SolidColorBrush x:Key="Brush.Recording.Active" Color="{DynamicResource Color.Danger}" />
-  <SolidColorBrush x:Key="Brush.Recording.Paused" Color="{DynamicResource Color.PinLocked}" />
+  <!-- Theme / accent dependent brushes (Brush.Recording.Ready/Active/Paused/Countdown/PreviewBackground/TrimShade/TrimRange)
+       live in Theme.Light/Dark.xaml. -->
   <!-- almost transparent: makes the frame band clickable without being visible -->
   <SolidColorBrush x:Key="Brush.Recording.HitBand" Color="#01000000" />
-  <SolidColorBrush x:Key="Brush.Recording.Countdown" Color="{DynamicResource Color.Text}" Opacity="0.72" />
-  <SolidColorBrush x:Key="Brush.Recording.PreviewBackground" Color="{DynamicResource Color.Text}" Opacity="0.06" />
-  <SolidColorBrush x:Key="Brush.Recording.TrimShade" Color="{DynamicResource Color.Text}" Opacity="0.18" />
-  <SolidColorBrush x:Key="Brush.Recording.TrimRange" Color="{DynamicResource Color.Accent}" Opacity="0.22" />
 
   <!-- ===================================================================== control bar -->
   <Style x:Key="Style.Recording.Bar" TargetType="Border" BasedOn="{StaticResource Style.ToolbarBorder}">
