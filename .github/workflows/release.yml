@@ -32,11 +32,13 @@ jobs:
       - name: Publish (self-contained, single file)
         run: dotnet publish src/OpenPin/OpenPin.csproj -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:Version=${{ steps.ver.outputs.version }} -o out/sc
 
-      - name: Zip
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress
+
+      - name: Build Installer and Portable Packages
         shell: pwsh
         run: |
-          Compress-Archive -Path out/fd/* -DestinationPath OpenPin-${{ steps.ver.outputs.version }}-win-x64.zip
-          Compress-Archive -Path out/sc/* -DestinationPath OpenPin-${{ steps.ver.outputs.version }}-win-x64-selfcontained.zip
+          ./packaging/build-installer.ps1 -Version ${{ steps.ver.outputs.version }} -OutDir publish/release
 
       # MSIX (self-contained). Configure in the repo settings:
       #   variables: MSIX_IDENTITY_NAME, MSIX_PUBLISHER, MSIX_PUBLISHER_DISPLAY_NAME (from Partner Center → Product identity)
@@ -49,7 +51,7 @@ jobs:
         run: |
           $opts = @{
             Version = '${{ steps.ver.outputs.version }}'
-            OutDir = "$PWD"
+            OutDir = "publish/release"
             IdentityName = '${{ vars.MSIX_IDENTITY_NAME }}'
             Publisher = '${{ vars.MSIX_PUBLISHER }}'
             PublisherDisplayName = '${{ vars.MSIX_PUBLISHER_DISPLAY_NAME }}'
@@ -69,5 +71,5 @@ jobs:
           draft: true
           generate_release_notes: true
           files: |
+            publish/release/*
             OpenPin-*.zip
-            OpenPin-*.msix
