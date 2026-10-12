@@ -31,16 +31,16 @@
 - **长截图**：滚动自动拼接，横向 / 纵向，自动滚动，反向滚动自动裁剪
 - **屏幕录制**：GIF / MP4，回放剪辑，鼠标点击动画、按键显示、麦克风 / 系统声音、摄像头画中画
 - **保存**：PNG / JPG / BMP / TIFF / PDF，实时预览与文件大小估算，文件名模板，快速保存，自动保存
-- Windows 11 风格界面，所有快捷键可自定义，默认快捷键与 PixPin 相同：截图 `Ctrl+1`，贴图 `Ctrl+2`，恢复贴图 `Ctrl+3`
-- **100% 免费**：PixPin 的会员功能在这里全部免费；没有账号、没有广告、没有遥测。除非你自己配置了翻译服务，否则程序不会联网
+- Windows 11 风格界面，所有快捷键均可自定义，默认快捷键：截图 `Ctrl+1`，贴图 `Ctrl+2`，恢复贴图 `Ctrl+3`
+- **100% 免费开源**：全部高级功能永久免费；没有账号、没有广告、没有遥测。除非你自己配置了翻译服务，否则程序不会联网
 
 ## 安装
 
 可在 [Releases](../../releases) 页面下载：
 
-- `OpenPin-x.y.z-win-x64-selfcontained.zip`：解压即用
-- `OpenPin-x.y.z-win-x64.zip`：体积更小，需要 [.NET 10 桌面运行时](https://dotnet.microsoft.com/download/dotnet/10.0)
-- `OpenPin-x.y.z-win-x64.msix`：安装包
+- `OpenPin-x.y.z-Setup-x64.exe`：标准安装包（自带完整运行库，推荐）
+- `OpenPin-x.y.z-win-x64-Portable.zip`：绿色免安装便携版（自带完整运行库，解压即用）
+- `OpenPin-x.y.z-win-x64-framework-dependent.zip`：轻量版（需 [.NET 10 桌面运行时](https://dotnet.microsoft.com/download/dotnet/10.0)）
 
 便携模式：在 `OpenPin.exe` 同目录创建一个名为 `portable` 的空文件，所有数据会保存在程序目录下的 `data` 文件夹。打包与发布说明见 [docs/PACKAGING.md](docs/PACKAGING.md)。
 
@@ -56,8 +56,6 @@ dotnet run --project src/OpenPin
 更多信息见 [CONTRIBUTING.md](CONTRIBUTING.md) 和 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
 
 ## 致谢
-
-功能设计参考了 [PixPin](https://pixpin.cn/)、[Snipaste](https://www.snipaste.com/) 等优秀的截图工具。OpenPin 是独立实现的开源项目，与它们没有任何关联。
 
 第三方组件：
 
