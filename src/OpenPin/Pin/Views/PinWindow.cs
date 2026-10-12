@@ -107,7 +107,7 @@ internal sealed class PinWindow : Window
         Focusable = true;
         Topmost = M.Topmost;
         Title = string.IsNullOrWhiteSpace(M.Title) ? Loc.Get("Pin.WindowTitle") : M.Title;
-        Left = -32000; Top = -32000; Width = 1; Height = 1; // real bounds are set in physical px after the handle exists
+        Left = 0; Top = 0; Width = 1; Height = 1; // real bounds are set in physical px after the handle exists
 
         BuildVisuals();
         AttachBody(body);
@@ -287,16 +287,7 @@ internal sealed class PinWindow : Window
             case PinNative.WM_DPICHANGED:
             {
                 // Keep the physical size: replace the suggested (DPI-scaled) rect with our own before WPF applies it.
-                PinNative.GetWindowRect(hwnd, out var cur);
                 var want = WindowRectPx;
-                // adopt the actual position (the window may have been moved by the system)
-                int dx = cur.Left - want.X, dy = cur.Top - want.Y;
-                if (dx != 0 || dy != 0)
-                {
-                    M.OriginX += dx;
-                    M.OriginY += dy;
-                    want = WindowRectPx;
-                }
                 var r = new PinNative.RECT { Left = want.X, Top = want.Y, Right = want.X + want.Width, Bottom = want.Y + want.Height };
                 Marshal.StructureToPtr(r, lParam, false);
                 break;

@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Microsoft.Win32;
+using OpenPin.Capture;
 using OpenPin.Core;
 using OpenPin.Core.Actions;
 using OpenPin.Core.Imaging;
@@ -290,7 +291,7 @@ public sealed class PinManager : IPinManager, IPinGroupHost
     }
 
     /// <summary>Initial position / scale of a new pin (PIN-01 exact placement, otherwise <see cref="PinSettings.DefaultPosition"/>).</summary>
-    private void Place(PinManifest m, PinBody body, Int32Rect? rect)
+    internal void Place(PinManifest m, PinBody body, Int32Rect? rect)
     {
         var size = body.ContentSize;
         if (rect is { } r)
@@ -304,26 +305,64 @@ public sealed class PinManager : IPinManager, IPinGroupHost
         }
 
         var s = Settings;
+        if (s.DefaultPosition == PinDefaultPosition.CapturePosition)
+        {
+            Int32Rect? captureRect = null;
+            if (body.Kind == PinKind.Image)
+            {
+                var match = CaptureController.History.GetImages().FirstOrDefault(img =>
+                    Math.Abs(size.Width - img.Width) < 2 && Math.Abs(size.Height - img.Height) < 2);
+                if (match != null) captureRect = match.RectPx;
+            }
+            captureRect ??= CaptureController.History.LastRegion;
+
+            if (captureRect is { Width: > 0, Height: > 0 } cap)
+            {
+                var mon = Monitors.FromPointPx(cap.X + cap.Width / 2, cap.Y + cap.Height / 2);
+                m.BaseScale = body.Kind == PinKind.Image ? 1 : mon.Scale;
+                m.Zoom = 1;
+                if (body.Kind == PinKind.Image && Math.Abs(size.Width - cap.Width) < 2 && Math.Abs(size.Height - cap.Height) < 2)
+                {
+                    m.OriginX = cap.X;
+                    m.OriginY = cap.Y;
+                    return;
+                }
+
+                double w = size.Width * m.BaseScale, h = size.Height * m.BaseScale;
+                var workArea = mon.WorkAreaPx;
+                if (s.FitLargeImagesToScreen) m.Zoom = PinGeometry.FitZoom(w, h, workArea);
+                m.Zoom = PinGeometry.ClampZoom(m.Zoom, size.Width, size.Height, m.BaseScale);
+                w *= m.Zoom;
+                h *= m.Zoom;
+                var center = new Point(cap.X + cap.Width / 2.0, cap.Y + cap.Height / 2.0);
+                var tl = PinGeometry.CenterOn(center, w, h);
+                var placed = PinGeometry.ClampInto(new Int32Rect((int)tl.X, (int)tl.Y, (int)Math.Ceiling(w), (int)Math.Ceiling(h)), workArea);
+                m.OriginX = placed.X;
+                m.OriginY = placed.Y;
+                return;
+            }
+        }
+
         var cursor = Monitors.CursorPx;
         MonitorInfo target = s.DefaultPosition == PinDefaultPosition.PrimaryCenter ? Monitors.Primary : Monitors.UnderCursor;
         var work = target.WorkAreaPx;
         m.BaseScale = body.Kind == PinKind.Image ? 1 : target.Scale;
-        double w = size.Width * m.BaseScale, h = size.Height * m.BaseScale;
-        m.Zoom = s.FitLargeImagesToScreen ? PinGeometry.FitZoom(w, h, work) : 1;
+        double cw = size.Width * m.BaseScale, ch = size.Height * m.BaseScale;
+        m.Zoom = s.FitLargeImagesToScreen ? PinGeometry.FitZoom(cw, ch, work) : 1;
         m.Zoom = PinGeometry.ClampZoom(m.Zoom, size.Width, size.Height, m.BaseScale);
-        w *= m.Zoom;
-        h *= m.Zoom;
+        cw *= m.Zoom;
+        ch *= m.Zoom;
 
-        Point center = s.DefaultPosition switch
+        Point fallbackCenter = s.DefaultPosition switch
         {
             PinDefaultPosition.PrimaryCenter or PinDefaultPosition.MouseScreenCenter =>
                 new Point(work.X + work.Width / 2.0, work.Y + work.Height / 2.0),
             _ => cursor,
         };
-        var tl = PinGeometry.CenterOn(center, w, h);
-        var placed = PinGeometry.ClampInto(new Int32Rect((int)tl.X, (int)tl.Y, (int)Math.Ceiling(w), (int)Math.Ceiling(h)), work);
-        m.OriginX = placed.X;
-        m.OriginY = placed.Y;
+        var ctl = PinGeometry.CenterOn(fallbackCenter, cw, ch);
+        var clamped = PinGeometry.ClampInto(new Int32Rect((int)ctl.X, (int)ctl.Y, (int)Math.Ceiling(cw), (int)Math.Ceiling(ch)), work);
+        m.OriginX = clamped.X;
+        m.OriginY = clamped.Y;
     }
 
     private PinWindow NewWindow(PinManifest m, PinBody body)
