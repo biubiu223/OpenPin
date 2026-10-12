@@ -18,7 +18,7 @@
     <DisplayName>OpenPin</DisplayName>
     <PublisherDisplayName>$PUBLISHER_DISPLAY_NAME$</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
-    <Description>免费开源的截图 / 贴图工具 · Free and open-source screenshot and pin tool</Description>
+    <Description>开源免费的 Windows 截图软件 · Free and open-source screenshot tool for Windows</Description>
   </Properties>
 
   <Dependencies>

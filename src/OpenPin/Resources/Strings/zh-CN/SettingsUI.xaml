@@ -434,7 +434,7 @@
 
   <!-- About -->
   <sys:String x:Key="SettingsUI.About.Version">版本 {0}</sys:String>
-  <sys:String x:Key="SettingsUI.About.Free">完全免费、开源 · MIT 许可证</sys:String>
+  <sys:String x:Key="SettingsUI.About.Free">开源免费 · MIT 许可证</sys:String>
   <sys:String x:Key="SettingsUI.About.Source">源代码</sys:String>
   <sys:String x:Key="SettingsUI.About.OpenGitHub">在 GitHub 上查看</sys:String>
   <sys:String x:Key="SettingsUI.About.License">许可证</sys:String>

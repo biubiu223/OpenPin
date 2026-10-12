@@ -5,8 +5,8 @@
 <h1 align="center">OpenPin</h1>
 
 <p align="center">
-  完全免费、开源的 Windows 截图 / 贴图工具<br/>
-  <sub>Free &amp; open-source screenshot and pin-to-screen tool for Windows</sub>
+  开源免费的 Windows 截图软件<br/>
+  <sub>Free &amp; open-source screenshot tool for Windows</sub>
 </p>
 
 <p align="center">
@@ -16,8 +16,6 @@
 </p>
 
 ---
-
-> 🚧 **开发中**（v0.1 尚未发布）。功能路线图见 [docs/SPEC.md](docs/SPEC.md)。
 
 ## 特性
 
@@ -31,8 +29,8 @@
 - **长截图**：滚动自动拼接，横向 / 纵向，自动滚动，反向滚动自动裁剪
 - **屏幕录制**：GIF / MP4，回放剪辑，鼠标点击动画、按键显示、麦克风 / 系统声音、摄像头画中画
 - **保存**：PNG / JPG / BMP / TIFF / PDF，实时预览与文件大小估算，文件名模板，快速保存，自动保存
-- Windows 11 风格界面，所有快捷键均可自定义，默认快捷键：截图 `Ctrl+1`，贴图 `Ctrl+2`，恢复贴图 `Ctrl+3`
-- **100% 免费开源**：全部高级功能永久免费；没有账号、没有广告、没有遥测。除非你自己配置了翻译服务，否则程序不会联网
+- **Windows 11 风格界面**：所有快捷键均可自定义，默认快捷键：截图 `Ctrl+1`，贴图 `Ctrl+2`，恢复贴图 `Ctrl+3`
+- **开源免费**：开源、免费、无广告、无遥测。所有数据本地运行，无账号体系，纯本地离线使用
 
 ## 安装
 
