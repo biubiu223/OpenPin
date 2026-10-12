@@ -141,28 +141,41 @@ public sealed class TranslateResultWindow : Window
         }
 
         _translate.IsEnabled = false;
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         TranslateUi.SetStatus(_status, Loc.Get("Translate.Window.Working"));
+        var timer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+        timer.Tick += (_, _) =>
+        {
+            if (cts.IsCancellationRequested) return;
+            TranslateUi.SetStatus(_status, Loc.Format("Translate.Window.WorkingElapsed", stopwatch.Elapsed.TotalSeconds));
+        };
+        timer.Start();
+
         try
         {
             var outcome = await TranslationService.TranslateAsync(segments, explicitTarget, ct: cts.Token);
+            timer.Stop();
             if (cts.IsCancellationRequested) return;
             _target.Text = string.Join(Environment.NewLine, outcome.Segments);
             _detected.Text = outcome.DetectedSource is { } d && TranslateLanguages.Find(d) is { } dl ? Loc.Format("Translate.Window.Detected", dl.DisplayName) : "";
             SelectLanguage(outcome.TargetLanguage);
             TranslateUi.SetStatus(_status, Loc.Format("Translate.Window.Done", outcome.Segments.Count(s => s.Length > 0), outcome.Elapsed.TotalSeconds));
         }
-        catch (OperationCanceledException) { /* superseded or closed */ }
+        catch (OperationCanceledException) { timer.Stop(); /* superseded or closed */ }
         catch (TranslationException ex)
         {
+            timer.Stop();
             if (!cts.IsCancellationRequested) TranslateUi.SetStatus(_status, Loc.Format("Translate.Failed", ex.Message), error: true);
         }
         catch (Exception ex)
         {
+            timer.Stop();
             Log.Error("Translation failed", ex);
             if (!cts.IsCancellationRequested) TranslateUi.SetStatus(_status, Loc.Format("Translate.Failed", ex.Message), error: true);
         }
         finally
         {
+            timer.Stop();
             if (ReferenceEquals(_cts, cts)) _translate.IsEnabled = true;
         }
     }

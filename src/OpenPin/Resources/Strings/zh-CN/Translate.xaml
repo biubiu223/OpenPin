@@ -64,6 +64,7 @@
   <sys:String x:Key="Translate.Window.Copy">复制</sys:String>
   <sys:String x:Key="Translate.Window.Copied">已复制</sys:String>
   <sys:String x:Key="Translate.Window.Working">正在翻译…</sys:String>
+  <sys:String x:Key="Translate.Window.WorkingElapsed">正在翻译…（{0:0.0} 秒）</sys:String>
   <sys:String x:Key="Translate.Window.Detected">（检测为{0}）</sys:String>
   <sys:String x:Key="Translate.Window.Done">已翻译 {0} 段 · {1:0.0} 秒 · 修改原文后按 Ctrl+Enter 重新翻译</sys:String>
 
@@ -119,4 +120,5 @@
   <sys:String x:Key="Translate.Settings.ModelsTimeout">获取模型列表超时，请检查网络或代理设置</sys:String>
   <sys:String x:Key="Translate.Settings.ModelsHttpError">服务返回 {0}：{1}</sys:String>
   <sys:String x:Key="Translate.Settings.ModelTip">可以直接输入模型名称，也可以点「获取模型」从服务读取可用模型</sys:String>
+  <sys:String x:Key="Translate.Settings.ReasoningModelHint">💡 提示：该模型包含深度思考/推理链（R1/Reasoner），翻译时会耗费时间生成思考。建议选择 deepseek-chat 或 DeepSeek-V3 等极速模型以获得秒级响应。</sys:String>
 </ResourceDictionary>

@@ -56,6 +56,7 @@ public sealed class OpenAiCompatibleProvider : TranslationProviderBase
         var source = sourceLang != null ? LanguageName(sourceLang) : null;
         var content = await ChatAsync(ArraySystemPrompt(target, source, segments.Count), JsonSerializer.Serialize(segments, Json), ct).ConfigureAwait(false);
         if (TryParseArray(content, segments.Count, out var parsed)) return parsed;
+        if (TryParseLines(content, segments.Count, out var lineParsed)) return lineParsed;
 
         Log.Warn($"Translate (openai, {_model}): reply was not a {segments.Count}-element JSON array; translating segment by segment");
         var list = new List<string>(segments.Count);
@@ -74,11 +75,20 @@ public sealed class OpenAiCompatibleProvider : TranslationProviderBase
         (source != null ? " written in " + source : "") + ". Translate every segment into " + target + ". " +
         "Reply with ONLY a JSON array of exactly " + count + " strings, in the same order: element i is the translation of segment i. " +
         "Do not merge, split, skip, explain or add anything. Keep line breaks, numbers, URLs, code, e-mail addresses and placeholders unchanged. " +
-        "If a segment needs no translation (e.g. it is already in " + target + " or is a number), copy it unchanged.";
+        "If a segment needs no translation (e.g. it is already in " + target + " or is a number), copy it unchanged. " +
+        "Do not output any thoughts, reasoning, analysis, or <think> tags. Directly output the JSON array immediately.";
 
     internal static string SingleSystemPrompt(string target, string? source) =>
         "You are a professional translation engine. Translate the user's text" + (source != null ? " from " + source : "") +
-        " into " + target + ". Output only the translation — no quotes, notes or explanations. Keep line breaks, numbers, URLs and code unchanged.";
+        " into " + target + ". Output only the translation — no quotes, notes or explanations. Keep line breaks, numbers, URLs and code unchanged. " +
+        "Do not output any thoughts, reasoning, analysis, or <think> tags. Directly output the translation immediately.";
+
+    public static bool ShouldDisableThinking(string model, Uri endpoint)
+    {
+        if (endpoint.Host.Contains("siliconflow", StringComparison.OrdinalIgnoreCase)) return true;
+        var lower = model.ToLowerInvariant();
+        return lower.Contains("r1") || lower.Contains("reasoner") || lower.Contains("thinking") || lower.Contains("qwq");
+    }
 
     private async Task<string> ChatAsync(string system, string user, CancellationToken ct)
     {
@@ -93,6 +103,10 @@ public sealed class OpenAiCompatibleProvider : TranslationProviderBase
             ["temperature"] = _temperature,
             ["stream"] = false,
         };
+        if (ShouldDisableThinking(_model, _endpoint))
+        {
+            payload["enable_thinking"] = false;
+        }
         using var request = new HttpRequestMessage(HttpMethod.Post, _endpoint)
         {
             Content = new StringContent(JsonSerializer.Serialize(payload, Json), Encoding.UTF8, "application/json"),
@@ -157,6 +171,23 @@ public sealed class OpenAiCompatibleProvider : TranslationProviderBase
             return true;
         }
         catch (JsonException) { return false; }
+    }
+
+    /// <summary>Extract line-by-line translation when the model returns plain lines instead of a JSON array.</summary>
+    internal static bool TryParseLines(string content, int count, out IReadOnlyList<string> result)
+    {
+        result = Array.Empty<string>();
+        if (count <= 1) return false;
+        var clean = StripThinking(content).Trim();
+        var lines = clean.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+            .Where(l => !l.StartsWith("```") && !l.StartsWith("<think>") && !l.EndsWith("</think>"))
+            .ToList();
+        if (lines.Count == count)
+        {
+            result = lines.Select(l => CleanSingle(l)).ToList();
+            return true;
+        }
+        return false;
     }
 
     /// <summary>A single translation: remove code fences and wrapping quotes some models add.</summary>

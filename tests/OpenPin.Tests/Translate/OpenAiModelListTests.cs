@@ -65,6 +65,19 @@ public class OpenAiModelListTests
     }
 
     [Fact]
+    public void PrioritizesFastChatOverReasoningModels()
+    {
+        var raw = new[] { "deepseek-ai/DeepSeek-R1", "deepseek-ai/DeepSeek-V3", "qwen/qwq-32b", "deepseek-chat" };
+        var sorted = OpenAiModelList.SortAndFilter(raw);
+        Assert.Equal("deepseek-ai/DeepSeek-V3", sorted[0]);
+        Assert.Equal("deepseek-chat", sorted[1]);
+        Assert.True(OpenAiModelList.IsReasoningModel("deepseek-ai/DeepSeek-R1"));
+        Assert.True(OpenAiModelList.IsReasoningModel("deepseek-reasoner"));
+        Assert.False(OpenAiModelList.IsReasoningModel("deepseek-chat"));
+        Assert.False(OpenAiModelList.IsReasoningModel("deepseek-ai/DeepSeek-V3"));
+    }
+
+    [Fact]
     public async Task FetchOllamaFallsBackToApiTagsOn404()
     {
         var handler = new StubHandler(req =>

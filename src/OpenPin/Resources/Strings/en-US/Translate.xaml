@@ -64,6 +64,7 @@
   <sys:String x:Key="Translate.Window.Copy">Copy</sys:String>
   <sys:String x:Key="Translate.Window.Copied">Copied</sys:String>
   <sys:String x:Key="Translate.Window.Working">Translating…</sys:String>
+  <sys:String x:Key="Translate.Window.WorkingElapsed">Translating… ({0:0.0}s)</sys:String>
   <sys:String x:Key="Translate.Window.Detected">(Detected as {0})</sys:String>
   <sys:String x:Key="Translate.Window.Done">Translated {0} segments · {1:0.0}s · Press Ctrl+Enter to retranslate after editing source</sys:String>
 
@@ -119,4 +120,5 @@
   <sys:String x:Key="Translate.Settings.ModelsTimeout">Fetching models timed out, please check network or proxy settings</sys:String>
   <sys:String x:Key="Translate.Settings.ModelsHttpError">Service returned {0}: {1}</sys:String>
   <sys:String x:Key="Translate.Settings.ModelTip">You can enter a model name directly or click "Fetch Models" to retrieve available models from the service</sys:String>
+  <sys:String x:Key="Translate.Settings.ReasoningModelHint">💡 Tip: This model uses deep reasoning/thinking (R1/Reasoner) which adds latency. We recommend fast chat models (like deepseek-chat or DeepSeek-V3) for sub-second translations.</sys:String>
 </ResourceDictionary>

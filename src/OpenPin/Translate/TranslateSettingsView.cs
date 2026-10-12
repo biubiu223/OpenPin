@@ -90,13 +90,17 @@ public sealed class TranslateSettingsView : UserControl
                 _s.OpenAi.BaseUrl = p.BaseUrl;
                 _s.OpenAi.Model = p.Model;
                 _loading = true;
-                try { _baseUrl.Text = p.BaseUrl; _model.Items.Clear(); _model.Text = p.Model; SetModelStatus(""); }
+                try { _baseUrl.Text = p.BaseUrl; _model.Items.Clear(); _model.Text = p.Model; UpdateModelReasoningHint(p.Model); }
                 finally { _loading = false; }
             }
         });
         _baseUrl.TextChanged += (_, _) => Edit(() => { _s.OpenAi.BaseUrl = _baseUrl.Text.Trim(); _model.Items.Clear(); });
-        // Editable combo: typed text and picked items both arrive as TextChanged of its inner TextBox.
-        _model.AddHandler(TextBoxBase.TextChangedEvent, new TextChangedEventHandler((_, _) => Edit(() => _s.OpenAi.Model = (_model.Text ?? "").Trim())));
+        _model.AddHandler(TextBoxBase.TextChangedEvent, new TextChangedEventHandler((_, _) => Edit(() =>
+        {
+            var text = (_model.Text ?? "").Trim();
+            _s.OpenAi.Model = text;
+            UpdateModelReasoningHint(text);
+        })));
         _model.DropDownOpened += (_, _) => { if (_model.Items.Count == 0 && !_loading) FetchModels(); };
         _fetchModels = TranslateUi.Button("Translate.Settings.FetchModels", accent: false, FetchModels, "\uE72C");
         _fetchModels.Margin = new Thickness(8, 0, 0, 0);
@@ -226,7 +230,7 @@ public sealed class TranslateSettingsView : UserControl
             _baseUrl.Text = _s.OpenAi.BaseUrl;
             _model.Items.Clear();
             _model.Text = _s.OpenAi.Model;
-            SetModelStatus("");
+            UpdateModelReasoningHint(_s.OpenAi.Model);
             _openAiKey.Value = SecretProtector.Unprotect(_s.OpenAi.ApiKeyProtected);
             _baiduAppId.Text = _s.Baidu.AppId;
             _baiduSecret.Value = SecretProtector.Unprotect(_s.Baidu.SecretProtected);
@@ -334,6 +338,18 @@ public sealed class TranslateSettingsView : UserControl
     {
         TranslateUi.SetStatus(_modelStatus, text, error);
         _modelStatus.Visibility = text.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private void UpdateModelReasoningHint(string model)
+    {
+        if (OpenAiModelList.IsReasoningModel(model))
+        {
+            SetModelStatus(Loc.Get("Translate.Settings.ReasoningModelHint"), error: false);
+        }
+        else if (_modelStatus.Text == Loc.Get("Translate.Settings.ReasoningModelHint"))
+        {
+            SetModelStatus("");
+        }
     }
 
     // ------------------------------------------------------------------ building blocks

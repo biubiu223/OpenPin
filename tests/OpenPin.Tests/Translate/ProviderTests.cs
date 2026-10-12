@@ -133,6 +133,31 @@ public class OpenAiProviderTests
         Assert.Equal("x", OpenAiCompatibleProvider.CleanSingle("```\nx\n```"));
         Assert.Equal("ok", OpenAiCompatibleProvider.StripThinking("<think>\nreasoning\n</think>\nok"));
     }
+
+    [Fact]
+    public async Task DisablesThinking_ForReasoningModelOrSiliconFlow()
+    {
+        var h = new FakeHandler((req, body) => FakeHandler.Json(Completion("[\"结果\"]")));
+        var p = new OpenAiCompatibleProvider(h.Client(), "https://api.siliconflow.cn/v1", "deepseek-ai/DeepSeek-R1", "sk-test");
+        var result = await p.TranslateAsync(new[] { "result" }, null, "zh-Hans", default);
+
+        Assert.Equal(new[] { "结果" }, result);
+        var r = Assert.Single(h.Requests);
+        using var doc = JsonDocument.Parse(r.Body);
+        Assert.True(doc.RootElement.TryGetProperty("enable_thinking", out var et));
+        Assert.False(et.GetBoolean());
+    }
+
+    [Fact]
+    public void TryParseLines_ExtractsExactLineCount()
+    {
+        var input = "第一行\n第二行\n第三行";
+        Assert.True(OpenAiCompatibleProvider.TryParseLines(input, 3, out var lines));
+        Assert.Equal(new[] { "第一行", "第二行", "第三行" }, lines);
+
+        Assert.False(OpenAiCompatibleProvider.TryParseLines(input, 2, out _));
+        Assert.False(OpenAiCompatibleProvider.TryParseLines(input, 4, out _));
+    }
 }
 
 public class BaiduProviderTests

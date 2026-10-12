@@ -82,9 +82,41 @@ public static class OpenAiModelList
         var filtered = list.Where(m => !IsNonChatModel(m)).ToList();
         var effective = filtered.Count > 0 ? filtered : list;
         return effective
-            .OrderBy(m => IsPreferredModel(m) ? 0 : 1)
+            .OrderBy(m => ModelPriority(m))
             .ThenBy(m => m, StringComparer.OrdinalIgnoreCase)
             .ToList();
+    }
+
+    public static int ModelPriority(string id)
+    {
+        var lower = id.ToLowerInvariant();
+        if (IsReasoningModel(lower)) return 3;
+        if (IsFastChatModel(lower)) return 0;
+        if (IsGeneralChatModel(lower)) return 1;
+        return 2;
+    }
+
+    public static bool IsReasoningModel(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id)) return false;
+        var lower = id.ToLowerInvariant();
+        return lower.Contains("reasoner") || lower.Contains("-r1") || lower.Contains("/r1") ||
+               lower.Contains("deepseek-r1") || lower.Contains("qwq") || lower.Contains("o1-") ||
+               lower.Contains("o3-") || lower.Contains("thinking");
+    }
+
+    private static bool IsFastChatModel(string lower)
+    {
+        return (lower.Contains("deepseek-chat") || lower.Contains("deepseek-v3") || lower.Contains("-v3") || lower.Contains("/v3") ||
+                lower.Contains("turbo") || lower.Contains("flash") || lower.Contains("mini") ||
+                lower.Contains("speed") || lower.Contains("plus") || lower.Contains("lite")) && !IsReasoningModel(lower);
+    }
+
+    private static bool IsGeneralChatModel(string lower)
+    {
+        return (lower.Contains("chat") || lower.Contains("instruct") || lower.Contains("deepseek") ||
+                lower.Contains("qwen") || lower.Contains("glm") || lower.Contains("moonshot") ||
+                lower.Contains("doubao") || lower.Contains("claude") || lower.Contains("gpt-4o")) && !IsReasoningModel(lower);
     }
 
     private static bool IsNonChatModel(string id)
@@ -94,14 +126,6 @@ public static class OpenAiModelList
             || lower.Contains("tts") || lower.Contains("audio") || lower.Contains("dall-e")
             || lower.Contains("flux") || lower.Contains("stable-diffusion") || lower.Contains("bge-")
             || lower.Contains("moderation");
-    }
-
-    private static bool IsPreferredModel(string id)
-    {
-        var lower = id.ToLowerInvariant();
-        return lower.Contains("chat") || lower.Contains("deepseek") || lower.Contains("qwen")
-            || lower.Contains("instruct") || lower.Contains("gpt") || lower.Contains("glm")
-            || lower.Contains("moonshot") || lower.Contains("doubao") || lower.Contains("claude");
     }
 
     private static string Shorten(string s)
