@@ -5,10 +5,7 @@
     Everything is derived from Theme.xaml tokens through DynamicResource so a theme switch is picked up automatically.
   -->
 
-  <!-- ===================================================================== derived tokens -->
-  <SolidColorBrush x:Key="Brush.Pin.Badge" Color="{DynamicResource Color.Text}" Opacity="0.78" />
-  <SolidColorBrush x:Key="Brush.Pin.BadgeText" Color="{DynamicResource Color.Surface}" />
-  <SolidColorBrush x:Key="Brush.Pin.Selection" Color="{DynamicResource Color.Accent}" Opacity="0.32" />
+  <!-- Theme / accent dependent brushes (Brush.Pin.Badge, Brush.Pin.BadgeText, Brush.Pin.Selection) live in Theme.Light/Dark.xaml. -->
 
   <!-- ===================================================================== pin overlays -->
   <!-- zoom %, "copied" … shown in the middle of a pin -->
@@ -240,11 +237,10 @@
     </Setter>
   </Style>
 
-  <Style x:Key="Style.Pin.ComboBox" TargetType="ComboBox">
+  <Style x:Key="Style.Pin.ComboBox" TargetType="ComboBox" BasedOn="{StaticResource Style.ComboBox}">
     <Setter Property="FontFamily" Value="{DynamicResource Font.UI}" />
     <Setter Property="FontSize" Value="13" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="Padding" Value="8,0" />
   </Style>
 
   <Style x:Key="Style.Pin.ListBox" TargetType="ListBox">

@@ -17,7 +17,8 @@ namespace OpenPin.Core.Settings;
 /// </summary>
 public sealed class AppSettings
 {
-    public int Version { get; set; } = 1;
+    /// <summary>Schema version; <see cref="SettingsMigrations"/> upgrades older files on load.</summary>
+    public int Version { get; set; } = SettingsMigrations.CurrentVersion;
     public GeneralSettings General { get; set; } = new();
     public HotkeySettings Hotkeys { get; set; } = new();
     public CaptureSettings Capture { get; set; } = new();
@@ -40,7 +41,10 @@ public sealed class GeneralSettings
     /// <summary>UI language (culture name of a folder in Resources/Strings).</summary>
     public string Language { get; set; } = "zh-CN";
     public bool AutoStart { get; set; }
-    public ThemeMode Theme { get; set; } = ThemeMode.Light;
+    /// <summary>App-wide light / dark appearance (UI-03). System follows Windows' app theme.</summary>
+    public ThemeMode Theme { get; set; } = ThemeMode.System;
+    /// <summary>Use the Windows accent color instead of <see cref="AccentColor"/>.</summary>
+    public bool UseSystemAccent { get; set; }
     /// <summary>Accent color (#RRGGBB): selection borders, active pin shadow, highlights.</summary>
     public string AccentColor { get; set; } = "#1677FF";
     public TrayClickAction TrayLeftClick { get; set; } = TrayClickAction.Capture;

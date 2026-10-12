@@ -5,6 +5,7 @@ using OpenPin.Core;
 using OpenPin.Core.Actions;
 using OpenPin.Core.Hotkeys;
 using OpenPin.Core.Settings;
+using OpenPin.Core.Theme;
 using OpenPin.Core.Tray;
 using OpenPin.LongCapture;
 using OpenPin.Pin;
@@ -46,6 +47,9 @@ public partial class App : Application
         AppServices.Settings.Load();
         if (Environment.GetEnvironmentVariable("OPENPIN_DATA_DIR") is not { Length: > 0 }) // don't touch the registry from dev/test runs
             AutoStart.Sync(AppServices.Config.General.AutoStart);
+
+        // Theme (light / dark + accent) before any window opens
+        ThemeManager.Initialize(this, AppServices.Settings);
 
         // Modules
         AppServices.Actions = new ActionRegistry();

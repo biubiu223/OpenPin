@@ -9,6 +9,8 @@
         Strings: Resources/Strings/<culture>/<Module>.xaml   Styles: Resources/Styles/<Module>.xaml
       -->
       <ResourceDictionary.MergedDictionaries>
+        <!-- Index 0: light/dark color tokens, replaced at startup / runtime by Core/Theme/ThemeManager -->
+        <ResourceDictionary Source="Resources/Theme.Light.xaml" />
         <ResourceDictionary Source="Resources/Theme.xaml" />
         <ResourceDictionary Source="Resources/Styles/Annotation.xaml" />
         <ResourceDictionary Source="Resources/Styles/Capture.xaml" />

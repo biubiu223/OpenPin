@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using OpenPin.Core;
 using OpenPin.Core.Native;
 using OpenPin.Core.Screen;
+using OpenPin.Core.Theme;
 using OpenPin.SettingsUI.Logic;
 using OpenPin.SettingsUI.Views;
 
@@ -182,11 +183,11 @@ internal sealed class SettingsWindow : Window
 
         LoadState();
         SourceInitialized += (_, _) => { RestoreSavedBounds(); ApplyDwm(); };
-        SystemEvents.UserPreferenceChanged += OnUserPreferenceChanged;
+        ThemeManager.ThemeChanged += OnThemeChanged;
         Closing += OnClosing;
         Closed += (_, _) =>
         {
-            SystemEvents.UserPreferenceChanged -= OnUserPreferenceChanged;
+            ThemeManager.ThemeChanged -= OnThemeChanged;
             _session.Dispose();
         };
         PreviewKeyDown += (_, e) =>
@@ -378,13 +379,14 @@ internal sealed class SettingsWindow : Window
     // ------------------------------------------------------------------ theme
 
 #pragma warning disable WPF0001 // ThemeMode is experimental in .NET 9/10; scoped to this window on purpose.
+    /// <summary>Follows the app-wide theme (<see cref="ThemeManager.IsDark"/>), so the window and the app never disagree.</summary>
     private void ApplyTheme()
     {
-        bool dark = ThemeResolver.IsDark(AppServices.Config.General.Theme, SettingsNative.AppsUseLightTheme());
+        bool dark = ThemeManager.IsDark;
         if (_dark == dark) return;
         _dark = dark;
         ThemeMode = dark ? System.Windows.ThemeMode.Dark : System.Windows.ThemeMode.Light;
-        if (!SettingsNative.SupportsMica)
+        if (!ThemeManager.SupportsMica)
             SetResourceReference(BackgroundProperty, "SolidBackgroundFillColorBaseBrush"); // Windows 10: no Mica
         ApplyDwm();
     }
@@ -392,15 +394,11 @@ internal sealed class SettingsWindow : Window
 
     private void ApplyDwm()
     {
-        var hwnd = new WindowInteropHelper(this).Handle;
-        if (hwnd != IntPtr.Zero) SettingsNative.Apply(hwnd, _dark == true);
+        ThemeManager.ApplyTitleBar(this);
+        ThemeManager.ApplyMica(this);
     }
 
-    private void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
-    {
-        if (e.Category != UserPreferenceCategory.General) return;
-        Dispatcher.BeginInvoke(ApplyTheme);
-    }
+    private void OnThemeChanged(object? sender, EventArgs e) => ApplyTheme();
 
     // ------------------------------------------------------------------ bounds persistence (physical px)
 

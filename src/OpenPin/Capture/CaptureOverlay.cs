@@ -488,6 +488,8 @@ internal sealed partial class CaptureOverlay : Window, IModalSession
 
     private static Brush AccentBrush()
     {
+        // Effective accent (configured or Windows accent), maintained by Core/Theme/ThemeManager.
+        if (Application.Current?.TryFindResource("Brush.Accent") is Brush themed) return themed;
         var text = AppServices.Settings?.Current.General.AccentColor;
         if (ColorText.TryParse(text, out var c))
         {

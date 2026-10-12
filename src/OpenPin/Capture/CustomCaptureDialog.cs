@@ -46,7 +46,9 @@ internal sealed class CustomCaptureDialog : Window
         Topmost = true;
         ShowInTaskbar = true;
         SetResourceReference(BackgroundProperty, "Brush.Surface");
+        SetResourceReference(ForegroundProperty, "Brush.Text");
         SetResourceReference(FontFamilyProperty, "Font.UI");
+        _direct.SetResourceReference(StyleProperty, "Style.CheckBox");
         FontSize = 13;
 
         var root = new StackPanel { Margin = new Thickness(20, 16, 20, 16), MinWidth = 340 };

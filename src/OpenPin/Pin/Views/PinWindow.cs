@@ -118,6 +118,10 @@ internal sealed class PinWindow : Window
         Deactivated += (_, _) => { UpdateGlow(); HideMagnifier(); };
         DragOver += OnDragOver;
         Drop += OnDrop;
+        // Accent / theme switch: the glow color is read from the theme tokens.
+        EventHandler onTheme = (_, _) => UpdateGlow();
+        Core.Theme.ThemeManager.ThemeChanged += onTheme;
+        Closed += (_, _) => Core.Theme.ThemeManager.ThemeChanged -= onTheme;
     }
 
     /// <summary>The persisted state (kept up to date).</summary>
