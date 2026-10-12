@@ -27,6 +27,7 @@
   <sys:String x:Key="Action.CaptureLastRegionCopy">Capture Last Region to Clipboard</sys:String>
   <sys:String x:Key="Action.CaptureLong">Scrolling Screenshot</sys:String>
   <sys:String x:Key="Action.CaptureRecord">Screen Recording</sys:String>
+  <sys:String x:Key="Action.TranslateMirror">DeskMirror Translation</sys:String>
   <sys:String x:Key="Action.PinClipboard">Pin from Clipboard</sys:String>
   <sys:String x:Key="Action.PinFromFile">Pin from File</sys:String>
   <sys:String x:Key="Action.PinRestore">Restore Last Closed Pin</sys:String>

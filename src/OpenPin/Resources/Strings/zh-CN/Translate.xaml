@@ -121,4 +121,13 @@
   <sys:String x:Key="Translate.Settings.ModelsHttpError">服务返回 {0}：{1}</sys:String>
   <sys:String x:Key="Translate.Settings.ModelTip">可以直接输入模型名称，也可以点「获取模型」从服务读取可用模型</sys:String>
   <sys:String x:Key="Translate.Settings.ReasoningModelHint">💡 提示：该模型包含深度思考/推理链（R1/Reasoner），翻译时会耗费时间生成思考。建议选择 deepseek-chat 或 DeepSeek-V3 等极速模型以获得秒级响应。</sys:String>
+  <!-- DeskMirror -->
+  <sys:String x:Key="Translate.Mirror.Title">透视魔镜</sys:String>
+  <sys:String x:Key="Translate.Mirror.Translating">正在透视翻译…</sys:String>
+  <sys:String x:Key="Translate.Mirror.Peek">透视原文 (Ctrl)</sys:String>
+  <sys:String x:Key="Translate.Mirror.Auto">自动追踪</sys:String>
+  <sys:String x:Key="Translate.Mirror.Refresh">立即重译 (F5 / R)</sys:String>
+  <sys:String x:Key="Translate.Mirror.ClickThrough">鼠标穿透 (Ctrl+P)</sys:String>
+  <sys:String x:Key="Translate.Mirror.Close">关闭魔镜 (Esc)</sys:String>
+  <sys:String x:Key="Translate.Mirror.ClickThroughEnabled">已开启魔镜鼠标穿透模式，按 Ctrl+P 恢复正常交互</sys:String>
 </ResourceDictionary>

@@ -51,6 +51,7 @@ public sealed class TrayIconHost : IDisposable
         items.Add(ActionItem(ActionIds.CaptureCustom));
         items.Add(ActionItem(ActionIds.CaptureLong));
         items.Add(ActionItem(ActionIds.CaptureRecord));
+        items.Add(ActionItem(ActionIds.TranslateMirror));
         items.Add(new Separator());
         items.Add(ActionItem(ActionIds.PinClipboard));
         items.Add(ActionItem(ActionIds.PinFromFile));

@@ -27,6 +27,7 @@
   <sys:String x:Key="Action.CaptureLastRegionCopy">截取上次区域并复制</sys:String>
   <sys:String x:Key="Action.CaptureLong">长截图</sys:String>
   <sys:String x:Key="Action.CaptureRecord">屏幕录制</sys:String>
+  <sys:String x:Key="Action.TranslateMirror">魔镜透视翻译</sys:String>
   <sys:String x:Key="Action.PinClipboard">贴图</sys:String>
   <sys:String x:Key="Action.PinFromFile">从文件贴图</sys:String>
   <sys:String x:Key="Action.PinRestore">恢复上次关闭的贴图</sys:String>

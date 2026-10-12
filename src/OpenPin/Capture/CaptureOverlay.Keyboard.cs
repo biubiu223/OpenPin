@@ -118,6 +118,9 @@ internal sealed partial class CaptureOverlay
             case Key.F when shift && !ctrl && !alt: // PRO-05 LaTeX recognition
                 if (EnsureSelection()) DoLatex();
                 return;
+            case Key.M when shift && !ctrl && !alt: // DeskMirror
+                if (EnsureSelection()) DoMirror();
+                return;
             case Key.Q when plain:
                 ToggleQr();
                 return;

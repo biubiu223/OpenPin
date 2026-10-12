@@ -201,6 +201,16 @@ internal sealed partial class CaptureOverlay
         _ = Translate.TranslateWorkflow.TranslateImageAsync(bmp, img => AppServices.Pins.PinImage(img, rect), Recognition.OcrLanguageChoice.CurrentOrNull);
     }
 
+    /// <summary>DeskMirror (Shift+M): open real-time translucent translation mirror over the selection.</summary>
+    private void DoMirror()
+    {
+        if (!HasSel) return;
+        var rect = SelectionScreenPx;
+        CloseOverlay();
+        CaptureController.RememberRegion(rect);
+        Translate.TranslateWorkflow.OpenMirror(rect, Recognition.OcrLanguageChoice.CurrentOrNull);
+    }
+
     /// <summary>PRO-02 (Shift+Q): recognize a table in the selection.</summary>
     private void DoTable()
     {

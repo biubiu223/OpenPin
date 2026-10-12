@@ -17,6 +17,7 @@ internal sealed class RecognizePanel : Border
     public event Action? OcrRequested;
     public event Action? LatexRequested;
     public event Action? TranslateRequested;
+    public event Action? MirrorRequested;
     public event Action? TableRequested;
     public event Action? QrRequested;
 
@@ -29,6 +30,7 @@ internal sealed class RecognizePanel : Border
         stack.Children.Add(Row("", "Capture.Recognize.Ocr", "Shift+C", () => OcrRequested?.Invoke()));
         stack.Children.Add(Row("", "Capture.Recognize.Latex", "Shift+F", () => LatexRequested?.Invoke()));
         stack.Children.Add(Row("", "Capture.Recognize.Translate", "Ctrl+Q", () => TranslateRequested?.Invoke()));
+        stack.Children.Add(Row("🪞", "Capture.Recognize.Mirror", "Shift+M", () => MirrorRequested?.Invoke()));
         stack.Children.Add(Row("", "Capture.Recognize.Table", "Shift+Q", () => TableRequested?.Invoke()));
         stack.Children.Add(Row("", "Capture.Recognize.Qr", "Q", () => QrRequested?.Invoke()));
         var separator = new Separator { Margin = new Thickness(6, 6, 6, 6) };

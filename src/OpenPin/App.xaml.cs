@@ -102,6 +102,7 @@ public partial class App : Application
         r.Register(ActionIds.CaptureLastRegionCopy, "Action.CaptureLastRegionCopy", () => AppServices.Capture.CaptureLastRegionToClipboard());
         r.Register(ActionIds.CaptureLong, "Action.CaptureLong", () => AppServices.Capture.Start(CaptureMode.LongCapture));
         r.Register(ActionIds.CaptureRecord, "Action.CaptureRecord", () => AppServices.Capture.Start(CaptureMode.Record));
+        r.Register(ActionIds.TranslateMirror, "Action.TranslateMirror", () => Translate.TranslateWorkflow.OpenMirror());
 
         r.Register(ActionIds.PinClipboard, "Action.PinClipboard", () => AppServices.Pins.PinFromClipboard());
         r.Register(ActionIds.PinFromFile, "Action.PinFromFile", () => AppServices.Pins.PinFromFile());

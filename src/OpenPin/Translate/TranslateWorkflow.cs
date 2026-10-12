@@ -69,4 +69,16 @@ public static class TranslateWorkflow
         }
         TranslateResultWindow.Show(TranslationHttp.Lines(text));
     }
+
+    /// <summary>
+    /// Open a DeskMirror (魔镜透视翻译窗口) for the given screen region (or default center region).
+    /// </summary>
+    public static void OpenMirror(System.Windows.Int32Rect? regionPx = null, string? ocrLanguage = null)
+    {
+        MirrorWindow.ShowMirror(regionPx, ocrLanguage: ocrLanguage);
+        if (!TranslationService.IsConfigured(TranslationService.Settings))
+        {
+            TranslationService.EnsureConfigured();
+        }
+    }
 }

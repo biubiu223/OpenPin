@@ -7,6 +7,7 @@
   <sys:String x:Key="Capture.Action.Style">Style (Corner / Shadow / Border / Ratio)</sys:String>
   <sys:String x:Key="Capture.Action.LongCapture">Scrolling Screenshot</sys:String>
   <sys:String x:Key="Capture.Action.Record">Screen Recording</sys:String>
+  <sys:String x:Key="Capture.Action.Mirror">DeskMirror (Shift+M)</sys:String>
   <sys:String x:Key="Capture.Action.Ocr">OCR (Shift+C)</sys:String>
   <sys:String x:Key="Capture.Action.Recognize">Recognize: Text / Translate / Table / QR &amp; Barcode</sys:String>
   <sys:String x:Key="Capture.Action.Translate">Translate (Ctrl+Q)</sys:String>
@@ -68,6 +69,7 @@
   <sys:String x:Key="Capture.Recognize.Ocr">OCR Text</sys:String>
   <sys:String x:Key="Capture.Recognize.Latex">Formula (LaTeX)</sys:String>
   <sys:String x:Key="Capture.Recognize.Translate">Translate</sys:String>
+  <sys:String x:Key="Capture.Recognize.Mirror">DeskMirror</sys:String>
   <sys:String x:Key="Capture.Recognize.Table">Table Recognition</sys:String>
   <sys:String x:Key="Capture.Recognize.Qr">QR / Barcode</sys:String>
   <sys:String x:Key="Capture.Recognize.OcrLanguage">OCR Language</sys:String>

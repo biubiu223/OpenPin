@@ -14,6 +14,7 @@ public static class ActionIds
     public const string CaptureLastRegionCopy = "capture.lastregion.copy"; // 截取上次区域并复制
     public const string CaptureLong = "capture.long";                // 长截图
     public const string CaptureRecord = "capture.record";            // 屏幕录制
+    public const string TranslateMirror = "translate.mirror";        // 透视魔镜
 
     public const string PinClipboard = "pin.clipboard";              // 贴图 (from clipboard)
     public const string PinFromFile = "pin.fromfile";                // 从文件贴图

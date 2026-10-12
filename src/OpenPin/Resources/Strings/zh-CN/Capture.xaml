@@ -7,6 +7,7 @@
   <sys:String x:Key="Capture.Action.Style">样式（圆角 / 阴影 / 边框 / 比例）</sys:String>
   <sys:String x:Key="Capture.Action.LongCapture">长截图</sys:String>
   <sys:String x:Key="Capture.Action.Record">录屏</sys:String>
+  <sys:String x:Key="Capture.Action.Mirror">透视魔镜 (Shift+M)</sys:String>
   <sys:String x:Key="Capture.Action.Ocr">文字识别 (Shift+C)</sys:String>
   <sys:String x:Key="Capture.Action.Recognize">识别：文字 / 翻译 / 表格 / 二维码与条码</sys:String>
   <sys:String x:Key="Capture.Action.Translate">翻译 (Ctrl+Q)</sys:String>
@@ -68,6 +69,7 @@
   <sys:String x:Key="Capture.Recognize.Ocr">文字识别</sys:String>
   <sys:String x:Key="Capture.Recognize.Latex">识别公式 (LaTeX)</sys:String>
   <sys:String x:Key="Capture.Recognize.Translate">翻译</sys:String>
+  <sys:String x:Key="Capture.Recognize.Mirror">透视魔镜</sys:String>
   <sys:String x:Key="Capture.Recognize.Table">表格识别</sys:String>
   <sys:String x:Key="Capture.Recognize.Qr">二维码 / 条码</sys:String>
   <sys:String x:Key="Capture.Recognize.OcrLanguage">文字识别语言</sys:String>

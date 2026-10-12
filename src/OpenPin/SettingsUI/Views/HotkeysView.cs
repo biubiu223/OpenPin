@@ -40,7 +40,8 @@ internal sealed class HotkeysView : StackPanel
     }
 
     private static string GroupKey(string actionId) =>
-        actionId.StartsWith("capture", StringComparison.Ordinal) ? "SettingsUI.Hotkeys.GroupCapture"
+        actionId.StartsWith("capture", StringComparison.Ordinal) || actionId.StartsWith("translate", StringComparison.Ordinal)
+            ? "SettingsUI.Hotkeys.GroupCapture"
         : actionId.StartsWith("pin", StringComparison.Ordinal) ? "SettingsUI.Hotkeys.GroupPin"
         : "SettingsUI.Hotkeys.GroupApp";
 

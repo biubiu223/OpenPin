@@ -234,6 +234,7 @@ internal sealed partial class CaptureOverlay
         Add("capture.record", "", "Capture.Action.Record", DoRecord);
         Add("capture.recognize", "", "Capture.Action.Recognize", ToggleRecognizePanel);
         Add("capture.translate", "", "Capture.Action.Translate", DoTranslate);
+        Add("capture.mirror", "🪞", "Capture.Action.Mirror", DoMirror);
         Add("capture.pin", "", "Capture.Action.Pin", DoPin);
         Add("capture.save", "", "Capture.Action.Save", DoSave);
         Add("capture.copy", "", "Capture.Action.Copy", DoCopy);
@@ -253,6 +254,7 @@ internal sealed partial class CaptureOverlay
             _recognizePanel.OcrRequested += () => Guard(DoOcr);
             _recognizePanel.LatexRequested += () => Guard(DoLatex);
             _recognizePanel.TranslateRequested += () => Guard(DoTranslate);
+            _recognizePanel.MirrorRequested += () => Guard(DoMirror);
             _recognizePanel.TableRequested += () => Guard(DoTable);
             _recognizePanel.QrRequested += () => Guard(() => { _recognizePanel.Visibility = Visibility.Collapsed; ToggleQr(); });
             _recognizePanel.SizeChanged += (_, _) => Guard(PlaceToolbar);
