@@ -239,6 +239,12 @@ public sealed class PinManager : IPinManager, IPinGroupHost
                 var m = NewManifest(PinKind.Color);
                 return (m, new ColorBody(color.Color, color.OriginalText));
             }
+            case LatexPinContent latex:
+            {
+                var m = NewManifest(PinKind.Latex);
+                m.Latex = latex.Latex;
+                return (m, new LatexBody(latex.Latex));
+            }
         }
         return (NewManifest(PinKind.Text), null);
     }
@@ -369,6 +375,8 @@ public sealed class PinManager : IPinManager, IPinGroupHost
                 return m.Files is { Count: > 0 } f ? new FilesBody(f) : null;
             case PinKind.Color:
                 return ColorText.TryParse(m.Color, out var c) ? new ColorBody(c, m.ColorOriginalText) : null;
+            case PinKind.Latex:
+                return new LatexBody(m.Latex ?? "");
         }
         return null;
     }
@@ -478,6 +486,7 @@ public sealed class PinManager : IPinManager, IPinGroupHost
         if (!string.IsNullOrEmpty(text))
         {
             if (ColorText.TryParse(text, out var c)) return new ColorPinContent(c, text.Trim());
+            if (Recognition.LatexHelper.IsLatexFormula(text)) return new LatexPinContent(text.Trim());
             var html = data.GetDataPresent(DataFormats.Html) ? data.GetData(DataFormats.Html) as string : null;
             return new TextPinContent(text, html);
         }
@@ -522,10 +531,11 @@ public sealed class PinManager : IPinManager, IPinGroupHost
             case TextPinContent t: body = new TextBody(t.PlainText, t.Html, false); break;
             case FilePinContent f when f.Paths.Count > 0: body = new FilesBody(f.Paths); break;
             case ColorPinContent c: body = new ColorBody(c.Color, c.OriginalText); break;
+            case LatexPinContent l: body = new LatexBody(l.Latex); break;
             default: return;
         }
         // clear old content fields
-        m.Text = null; m.Html = null; m.IgnoreFormat = false; m.Files = null; m.Color = null; m.ColorOriginalText = null;
+        m.Text = null; m.Html = null; m.IgnoreFormat = false; m.Files = null; m.Color = null; m.ColorOriginalText = null; m.Latex = null;
         m.SourcePath = content is ImagePinContent ic ? ic.SourcePath : null;
         m.HasEditedImage = false;
         body.SaveTo(m);

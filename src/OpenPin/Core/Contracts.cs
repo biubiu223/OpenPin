@@ -138,3 +138,6 @@ public sealed record FilePinContent(IReadOnlyList<string> Paths) : PinContent;
 
 /// <summary>A color parsed from text like "#29B8DB", "rgb(41,184,219)", "41,184,219" or "orange".</summary>
 public sealed record ColorPinContent(Color Color, string OriginalText) : PinContent;
+
+/// <summary>A mathematical formula in LaTeX format (PRO-05).</summary>
+public sealed record LatexPinContent(string Latex) : PinContent;

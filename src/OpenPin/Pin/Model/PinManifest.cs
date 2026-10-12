@@ -4,7 +4,7 @@ using OpenPin.Pin.Logic;
 
 namespace OpenPin.Pin.Model;
 
-public enum PinKind { Image, Text, Files, Color }
+public enum PinKind { Image, Text, Files, Color, Latex }
 
 /// <summary>
 /// Non-destructive image adjustments of an image pin (PIN-10). The displayed image is
@@ -106,6 +106,7 @@ public sealed class PinManifest
     public string? Html { get; set; }
     public bool IgnoreFormat { get; set; }
     public List<string>? Files { get; set; }
+    public string? Latex { get; set; }
     /// <summary>#AARRGGBB for color pins.</summary>
     public string? Color { get; set; }
     public string? ColorOriginalText { get; set; }

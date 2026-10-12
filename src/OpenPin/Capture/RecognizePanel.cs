@@ -15,6 +15,7 @@ internal sealed class RecognizePanel : Border
     private readonly WrapPanel _languages = new();
 
     public event Action? OcrRequested;
+    public event Action? LatexRequested;
     public event Action? TranslateRequested;
     public event Action? TableRequested;
     public event Action? QrRequested;
@@ -26,6 +27,7 @@ internal sealed class RecognizePanel : Border
         Visibility = Visibility.Collapsed;
         var stack = new StackPanel { Width = 268 };
         stack.Children.Add(Row("", "Capture.Recognize.Ocr", "Shift+C", () => OcrRequested?.Invoke()));
+        stack.Children.Add(Row("", "Capture.Recognize.Latex", "Shift+F", () => LatexRequested?.Invoke()));
         stack.Children.Add(Row("", "Capture.Recognize.Translate", "Ctrl+Q", () => TranslateRequested?.Invoke()));
         stack.Children.Add(Row("", "Capture.Recognize.Table", "Shift+Q", () => TableRequested?.Invoke()));
         stack.Children.Add(Row("", "Capture.Recognize.Qr", "Q", () => QrRequested?.Invoke()));

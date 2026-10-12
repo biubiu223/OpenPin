@@ -872,6 +872,13 @@ internal sealed class PinWindow : Window
         if (_body is ImageBody ib) _ = TableRecognition.RecognizeAndShowAsync(ib.Display, OcrLanguageChoice.CurrentOrNull);
     }
 
+    private void RecognizeLatex()
+    {
+        if (_body is ImageBody ib) _ = LatexRecognition.RecognizeAndShowAsync(ib.Display, ocrLanguage: OcrLanguageChoice.CurrentOrNull);
+        else if (_body is LatexBody lb) LatexResultWindow.Show(lb.Latex);
+        else if (_body is TextBody tb) LatexResultWindow.Show(tb.PlainText);
+    }
+
     private async void DecodeCodes()
     {
         if (_body is not ImageBody ib) return;
@@ -900,6 +907,7 @@ internal sealed class PinWindow : Window
     {
         var menu = f.Sub("Pin.Menu.Recognize", "");
         menu.Items.Add(f.Item("Pin.Menu.OcrCopy", "", "Shift+C", OcrCopyAll));
+        menu.Items.Add(f.Item("Pin.Menu.Latex", "", "Shift+F", RecognizeLatex));
         menu.Items.Add(f.Item("Pin.Menu.Table", "", null, RecognizeTable));
         menu.Items.Add(f.Item("Pin.Menu.Qr", "", null, DecodeCodes));
         menu.Items.Add(f.Item("Pin.Menu.Translate", "", "Ctrl+Q", TranslateContent));
@@ -1344,6 +1352,7 @@ internal sealed class PinWindow : Window
                 else Copy();
                 return;
             case Key.C when shift: OcrCopyAll(); return;
+            case Key.F when shift && !ctrl: RecognizeLatex(); return;
             case Key.S when ctrl && shift: QuickSave(); return;
             case Key.S when ctrl: SaveAs(); return;
             case Key.V when ctrl: _mgr.PasteFromClipboardOnto(this); return;

@@ -251,6 +251,7 @@ internal sealed partial class CaptureOverlay
         {
             _recognizePanel = new RecognizePanel();
             _recognizePanel.OcrRequested += () => Guard(DoOcr);
+            _recognizePanel.LatexRequested += () => Guard(DoLatex);
             _recognizePanel.TranslateRequested += () => Guard(DoTranslate);
             _recognizePanel.TableRequested += () => Guard(DoTable);
             _recognizePanel.QrRequested += () => Guard(() => { _recognizePanel.Visibility = Visibility.Collapsed; ToggleQr(); });

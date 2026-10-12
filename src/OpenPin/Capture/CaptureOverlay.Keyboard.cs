@@ -115,6 +115,9 @@ internal sealed partial class CaptureOverlay
             case Key.Q when shift && !ctrl && !alt: // PRO-02 table recognition
                 if (EnsureSelection()) DoTable();
                 return;
+            case Key.F when shift && !ctrl && !alt: // PRO-05 LaTeX recognition
+                if (EnsureSelection()) DoLatex();
+                return;
             case Key.Q when plain:
                 ToggleQr();
                 return;

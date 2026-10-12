@@ -28,6 +28,7 @@
   <sys:String x:Key="Pin.Menu.Annotate">标注</sys:String>
   <sys:String x:Key="Pin.Menu.OcrCopy">识别文字并复制</sys:String>
   <sys:String x:Key="Pin.Menu.Recognize">识别</sys:String>
+  <sys:String x:Key="Pin.Menu.Latex">识别 LaTeX 公式</sys:String>
   <sys:String x:Key="Pin.Menu.Table">表格识别</sys:String>
   <sys:String x:Key="Pin.Menu.Qr">二维码 / 条码</sys:String>
   <sys:String x:Key="Pin.Menu.Translate">翻译</sys:String>
@@ -88,6 +89,10 @@
   <sys:String x:Key="Pin.Files.Missing">（文件不存在）</sys:String>
   <sys:String x:Key="Pin.Files.OpenFailed">无法打开：{0}</sys:String>
   <sys:String x:Key="Pin.Color.CopyAs">复制为 {0}</sys:String>
+  <sys:String x:Key="Pin.Latex.Copy">复制 LaTeX 源码</sys:String>
+  <sys:String x:Key="Pin.Latex.CopyImage">复制为图片</sys:String>
+  <sys:String x:Key="Pin.Latex.Edit">编辑公式</sys:String>
+  <sys:String x:Key="Pin.Latex.EditTitle">编辑 LaTeX 公式</sys:String>
 
   <!-- Close / destroy -->
   <sys:String x:Key="Pin.Close.ConfirmTitle">关闭贴图</sys:String>

@@ -27,4 +27,19 @@
   <!-- OCR language quick switch (PRO-09) -->
   <sys:String x:Key="Recognition.OcrLang.Auto">自动（跟随系统）</sys:String>
   <sys:String x:Key="Recognition.OcrLang.Add">添加语言…</sys:String>
+
+  <!-- LaTeX recognition (PRO-05) -->
+  <sys:String x:Key="Recognition.Latex.Title">LaTeX 公式识别</sys:String>
+  <sys:String x:Key="Recognition.Latex.Copy">复制 LaTeX</sys:String>
+  <sys:String x:Key="Recognition.Latex.CopyImage">复制图片</sys:String>
+  <sys:String x:Key="Recognition.Latex.Pin">一键贴图</sys:String>
+  <sys:String x:Key="Recognition.Latex.ExportSvg">导出 SVG</sys:String>
+  <sys:String x:Key="Recognition.Latex.Copied">已复制 LaTeX 代码</sys:String>
+  <sys:String x:Key="Recognition.Latex.ImageCopied">已复制公式图片</sys:String>
+  <sys:String x:Key="Recognition.Latex.Preview">公式预览</sys:String>
+  <sys:String x:Key="Recognition.Latex.Code">LaTeX 代码</sys:String>
+  <sys:String x:Key="Recognition.Latex.Failed">LaTeX 公式识别失败：{0}</sys:String>
+  <sys:String x:Key="Recognition.Latex.NoFormula">未识别到有效公式</sys:String>
+  <sys:String x:Key="Recognition.Latex.AiSource">AI 识别</sys:String>
+  <sys:String x:Key="Recognition.Latex.OcrSource">OCR 后处理识别</sys:String>
 </ResourceDictionary>

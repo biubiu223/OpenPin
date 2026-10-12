@@ -213,6 +213,18 @@ internal sealed partial class CaptureOverlay
         _ = Recognition.TableRecognition.RecognizeAndShowAsync(bmp);
     }
 
+    /// <summary>PRO-05 (Shift+F): recognize a LaTeX mathematical formula in the selection.</summary>
+    private void DoLatex()
+    {
+        if (!HasSel) return;
+        _surface.CommitPendingEdits();
+        var bmp = _surface.Render(_sel);
+        var rect = SelectionScreenPx;
+        CloseOverlay();
+        CaptureController.RememberRegion(rect);
+        _ = Recognition.LatexRecognition.RecognizeAndShowAsync(bmp, rect);
+    }
+
     private void DoLongCapture()
     {
         if (!HasSel) return;

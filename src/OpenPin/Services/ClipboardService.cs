@@ -1,4 +1,4 @@
-﻿using System.Collections.Specialized;
+using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -146,6 +146,7 @@ public static class ClipboardService
         if (!string.IsNullOrEmpty(text))
         {
             if (ClipboardFormats.TryParseColorText(text, out var color)) return new ColorPinContent(color, text.Trim());
+            if (Recognition.LatexHelper.IsLatexFormula(text)) return new LatexPinContent(text.Trim());
             return new TextPinContent(text, html);
         }
         if (!string.IsNullOrWhiteSpace(html)) return new TextPinContent(ClipboardFormats.HtmlToPlainText(html), html);
@@ -249,7 +250,11 @@ public static class ClipboardService
             string? text = null;
             Retry(() => text = Clipboard.ContainsText() ? Clipboard.GetText() : null);
             if (!string.IsNullOrEmpty(text))
-                return ClipboardFormats.TryParseColorText(text, out var c) ? new ColorPinContent(c, text.Trim()) : new TextPinContent(text);
+            {
+                if (ClipboardFormats.TryParseColorText(text, out var c)) return new ColorPinContent(c, text.Trim());
+                if (Recognition.LatexHelper.IsLatexFormula(text)) return new LatexPinContent(text.Trim());
+                return new TextPinContent(text);
+            }
         }
         catch (Exception ex) { Log.Warn($"WPF clipboard fallback failed: {ex.Message}"); }
         return null;
