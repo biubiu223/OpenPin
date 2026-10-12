@@ -147,7 +147,7 @@
 | UI-03 | P1 | **深色模式**（跟随系统 / 浅色 / 深色）；强调色可跟随系统；已完成（ThemeManager 动态资源热切换、Win11 DWM 标题栏随动）。 |
 | PKG-01 | P0 | 升级到 **.NET 10**（LTS，支持到 2028-11）。 |
 | PKG-02 | P0 | **MSIX** 安装包（可上架微软商店）；打包后开机自启改用 `StartupTask`，数据目录兼容 MSIX 重定向。 |
-| PKG-03 | P0 | 便携版 zip（框架依赖版 + 自包含单文件版），由 GitHub Actions 在打 tag 时自动发布。 |
+| PKG-03 | P0 | 便携版 zip（框架依赖版 + 自包含单文件版）与 Inno Setup 安装包（集成全部依赖），由 GitHub Actions 在打 tag 时自动发布。已完成。 |
 | PKG-04 | P2 | winget 清单。 |
 
 ## 9. PixPin 会员功能（OpenPin 全部免费提供）
