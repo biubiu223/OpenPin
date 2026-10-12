@@ -134,7 +134,7 @@ internal static class SettingsCatalog
                 new SettingBlock(T(G, "UseSystemAccent", Icons.Palette)),
                 new SettingBlock(new SettingDef(G, "AccentColor", SettingKind.Color, Icons.Accent)),
                 new SettingBlock(new SettingDef(G, "Language", SettingKind.Choice, Icons.Language)
-                    { Choices = new[] { new ChoiceOption("zh-CN", "简体中文") } }),
+                    { Choices = new[] { new ChoiceOption("zh-CN", "简体中文"), new ChoiceOption("en-US", "English") } }),
                 new HeaderBlock("SettingsUI.Header.Startup"),
                 new SettingBlock(T(G, "AutoStart", Icons.Power)),
                 new SettingBlock(T(G, "ShowStartupNotification", Icons.Bell)),

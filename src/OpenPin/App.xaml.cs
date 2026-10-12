@@ -48,6 +48,9 @@ public partial class App : Application
         if (Environment.GetEnvironmentVariable("OPENPIN_DATA_DIR") is not { Length: > 0 }) // don't touch the registry from dev/test runs
             AutoStart.Sync(AppServices.Config.General.AutoStart);
 
+        // Language (i18n) before theme and modules
+        LanguageManager.Initialize(this, AppServices.Settings);
+
         // Theme (light / dark + accent) before any window opens
         ThemeManager.Initialize(this, AppServices.Settings);
 

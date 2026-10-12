@@ -1,0 +1,113 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Annotation module strings (keys: Annotation.*). Owned by the Annotation module. -->
+
+  <!-- Tools -->
+  <sys:String x:Key="Annotation.Tool.Rectangle">Rectangle / Ellipse (Shift+1, press again to switch)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Line">Line / Polyline (Shift+2)&#x0a;Drag for straight line, click point-by-point for polyline, double-click or right-click to finish</sys:String>
+  <sys:String x:Key="Annotation.Tool.Arrow">Arrow (Shift+3)&#x0a;Double-click arrow to add text note</sys:String>
+  <sys:String x:Key="Annotation.Tool.Serial">Step Number (Shift+4)&#x0a;Drag to create pointer arrow; +/- to change number, A to add note</sys:String>
+  <sys:String x:Key="Annotation.Tool.Pencil">Pencil (Shift+5)&#x0a;Hold Shift for straight line</sys:String>
+  <sys:String x:Key="Annotation.Tool.Highlighter">Highlighter (Shift+6)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Mosaic">Mosaic / Blur / Smart Erase (Shift+7)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Text">Text (Shift+8)&#x0a;Click existing text to edit again</sys:String>
+  <sys:String x:Key="Annotation.Tool.Eraser">Eraser (Shift+9)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Spotlight">Spotlight (Shift+0)</sys:String>
+  <sys:String x:Key="Annotation.Tool.Watermark">Watermark</sys:String>
+  <sys:String x:Key="Annotation.Tool.Magnifier">Magnifier</sys:String>
+  <sys:String x:Key="Annotation.More">More Tools</sys:String>
+  <sys:String x:Key="Annotation.Less">Collapse</sys:String>
+  <sys:String x:Key="Annotation.Undo">Undo (Ctrl+Z)</sys:String>
+  <sys:String x:Key="Annotation.Redo">Redo (Ctrl+Y)</sys:String>
+
+  <!-- Common options -->
+  <sys:String x:Key="Annotation.Size">Size (Mouse wheel to adjust)</sys:String>
+  <sys:String x:Key="Annotation.Color.Custom">Custom Color (Ctrl+wheel to adjust opacity)</sys:String>
+  <sys:String x:Key="Annotation.Color.Hex">Color Value</sys:String>
+  <sys:String x:Key="Annotation.Color.Alpha">Opacity</sys:String>
+  <sys:String x:Key="Annotation.Color.Hue">Hue</sys:String>
+  <sys:String x:Key="Annotation.Shape.Rectangle">Rectangle</sys:String>
+  <sys:String x:Key="Annotation.Shape.Ellipse">Ellipse</sys:String>
+  <sys:String x:Key="Annotation.Shape.Sector">Sector</sys:String>
+  <sys:String x:Key="Annotation.Shape.Arc">Arc</sys:String>
+  <sys:String x:Key="Annotation.Fill">Fill</sys:String>
+  <sys:String x:Key="Annotation.Dash.Solid">Solid</sys:String>
+  <sys:String x:Key="Annotation.Dash.Dash">Dashed</sys:String>
+  <sys:String x:Key="Annotation.Dash.Dot">Dotted</sys:String>
+  <sys:String x:Key="Annotation.CornerRadius">Corner Radius</sys:String>
+  <sys:String x:Key="Annotation.Rotate">Drag to rotate (Shift for 15° steps)</sys:String>
+
+  <!-- Line / arrow -->
+  <sys:String x:Key="Annotation.Line.Start">Start Cap (Click to switch)</sys:String>
+  <sys:String x:Key="Annotation.Line.End">End Cap (Click to switch)</sys:String>
+  <sys:String x:Key="Annotation.Line.Style">Join / Cap Style</sys:String>
+  <sys:String x:Key="Annotation.Line.Join">Join</sys:String>
+  <sys:String x:Key="Annotation.Line.Cap">Cap</sys:String>
+  <sys:String x:Key="Annotation.Line.JoinRound">Round</sys:String>
+  <sys:String x:Key="Annotation.Line.JoinMiter">Miter</sys:String>
+  <sys:String x:Key="Annotation.Line.JoinBevel">Bevel</sys:String>
+  <sys:String x:Key="Annotation.Line.CapRound">Round</sys:String>
+  <sys:String x:Key="Annotation.Line.CapFlat">Flat</sys:String>
+  <sys:String x:Key="Annotation.Line.CapSquare">Square</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Tapered">Tapered Solid</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Solid">Solid Arrow</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Line">Line Arrow</sys:String>
+  <sys:String x:Key="Annotation.Arrow.Double">Double-ended Arrow</sys:String>
+
+  <!-- Serial -->
+  <sys:String x:Key="Annotation.Serial.Number">Numbers 1, 2, 3</sys:String>
+  <sys:String x:Key="Annotation.Serial.Letter">Letters A, B, C</sys:String>
+  <sys:String x:Key="Annotation.Serial.Roman">Roman I, II, III</sys:String>
+  <sys:String x:Key="Annotation.Serial.Next">Next Number</sys:String>
+  <sys:String x:Key="Annotation.Serial.Renumber">Renumber automatically on delete</sys:String>
+
+  <!-- Highlighter / mosaic / eraser -->
+  <sys:String x:Key="Annotation.Mode.Brush">Brush</sys:String>
+  <sys:String x:Key="Annotation.Mode.Rect">Rectangle</sys:String>
+  <sys:String x:Key="Annotation.Mode.Partial">Partial Erase (erase part of annotation)</sys:String>
+  <sys:String x:Key="Annotation.Blend.Multiply">Multiply</sys:String>
+  <sys:String x:Key="Annotation.Blend.Translucent">Translucent</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.Mosaic">Mosaic</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.Blur">Blur</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.Strength">Intensity</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.SmartErase">Smart Erase</sys:String>
+  <sys:String x:Key="Annotation.Mosaic.SmartEraseTip">Smart Erase: removes painted or boxed areas and fills with background (offline)</sys:String>
+  <sys:String x:Key="Annotation.Eraser.ClearAll">Clear All Annotations</sys:String>
+  <sys:String x:Key="Annotation.Eraser.Clear">Clear</sys:String>
+
+  <!-- Text -->
+  <sys:String x:Key="Annotation.Text.Font">Font</sys:String>
+  <sys:String x:Key="Annotation.Text.Bold">Bold</sys:String>
+  <sys:String x:Key="Annotation.Text.Italic">Italic</sys:String>
+  <sys:String x:Key="Annotation.Text.Outline">Outline</sys:String>
+  <sys:String x:Key="Annotation.Text.OutlineColor">Outline Color</sys:String>
+  <sys:String x:Key="Annotation.Text.Background">Background</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundColor">Background Color</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundSettings">Background Settings</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundOpacity">Opacity</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundRadius">Corner Radius</sys:String>
+  <sys:String x:Key="Annotation.Text.BackgroundPadding">Padding</sys:String>
+
+  <!-- Spotlight / watermark / magnifier -->
+  <sys:String x:Key="Annotation.Spotlight.Opacity">Mask Opacity (Mouse wheel to adjust)</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Text">Watermark text, use $yyyy-MM-dd HH:mm:ss$ to insert timestamp</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Layout">Position</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Tile">Tile</sys:String>
+  <sys:String x:Key="Annotation.Watermark.TopLeft">Top-Left</sys:String>
+  <sys:String x:Key="Annotation.Watermark.TopRight">Top-Right</sys:String>
+  <sys:String x:Key="Annotation.Watermark.BottomLeft">Bottom-Left</sys:String>
+  <sys:String x:Key="Annotation.Watermark.BottomRight">Bottom-Right</sys:String>
+  <sys:String x:Key="Annotation.Watermark.TopCenter">Top-Center</sys:String>
+  <sys:String x:Key="Annotation.Watermark.BottomCenter">Bottom-Center</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Center">Center</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Opacity">Opacity</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Spacing">Spacing</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Remove">Remove Watermark</sys:String>
+  <sys:String x:Key="Annotation.Watermark.Add">Add Watermark</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.Zoom">Zoom Factor (Mouse wheel to adjust)</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.Border">Border Width</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.ConnectorNone">No Connector</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.ConnectorSolid">Solid Connector</sys:String>
+  <sys:String x:Key="Annotation.Magnifier.ConnectorDashed">Dashed Connector</sys:String>
+</ResourceDictionary>

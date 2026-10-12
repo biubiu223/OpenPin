@@ -1,0 +1,96 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Recording module strings (keys: Recording.*). Owned by the Recording module. -->
+
+  <!-- control bar -->
+  <sys:String x:Key="Recording.Start">Start Recording</sys:String>
+  <sys:String x:Key="Recording.StartHint">Start Recording ({0})</sys:String>
+  <sys:String x:Key="Recording.Stop">Stop Recording</sys:String>
+  <sys:String x:Key="Recording.StopHint">Stop Recording ({0})</sys:String>
+  <sys:String x:Key="Recording.Pause">Pause</sys:String>
+  <sys:String x:Key="Recording.Resume">Resume</sys:String>
+  <sys:String x:Key="Recording.Restart">Record Again</sys:String>
+  <sys:String x:Key="Recording.Close">Close (Esc)</sys:String>
+  <sys:String x:Key="Recording.Move">Drag to move toolbar</sys:String>
+  <sys:String x:Key="Recording.Fps">Frame Rate</sys:String>
+  <sys:String x:Key="Recording.FpsValue">{0} FPS</sys:String>
+  <sys:String x:Key="Recording.Delay">Countdown</sys:String>
+  <sys:String x:Key="Recording.DelayNone">No Delay</sys:String>
+  <sys:String x:Key="Recording.DelaySeconds">{0}s</sys:String>
+  <sys:String x:Key="Recording.Paused">Paused</sys:String>
+  <sys:String x:Key="Recording.Starting">Preparing…</sys:String>
+
+  <sys:String x:Key="Recording.Audio">Audio</sys:String>
+  <sys:String x:Key="Recording.Microphone">Microphone</sys:String>
+  <sys:String x:Key="Recording.SystemAudio">System Audio</sys:String>
+  <sys:String x:Key="Recording.AudioMp4Only">Audio is only saved to MP4; GIF does not support audio</sys:String>
+
+  <sys:String x:Key="Recording.Webcam">Webcam</sys:String>
+  <sys:String x:Key="Recording.WebcamOn">Show Webcam Overlay</sys:String>
+  <sys:String x:Key="Recording.WebcamCircle">Circle</sys:String>
+  <sys:String x:Key="Recording.WebcamRoundedRect">Rounded Rectangle</sys:String>
+  <sys:String x:Key="Recording.WebcamSize">Size</sys:String>
+  <sys:String x:Key="Recording.CornerTopLeft">Top-Left</sys:String>
+  <sys:String x:Key="Recording.CornerTopRight">Top-Right</sys:String>
+  <sys:String x:Key="Recording.CornerBottomLeft">Bottom-Left</sys:String>
+  <sys:String x:Key="Recording.CornerBottomRight">Bottom-Right</sys:String>
+  <sys:String x:Key="Recording.NoCamera">No webcam detected</sys:String>
+  <sys:String x:Key="Recording.CameraFailed">Unable to open webcam: {0}</sys:String>
+
+  <sys:String x:Key="Recording.Keys">Keystrokes</sys:String>
+  <sys:String x:Key="Recording.KeysOff">Off</sys:String>
+  <sys:String x:Key="Recording.KeysAll">All Keys</sys:String>
+  <sys:String x:Key="Recording.KeysCombos">Combos Only</sys:String>
+
+  <sys:String x:Key="Recording.Mouse">Mouse</sys:String>
+  <sys:String x:Key="Recording.ShowCursor">Show Cursor</sys:String>
+  <sys:String x:Key="Recording.ClickHighlight">Highlight Clicks</sys:String>
+  <sys:String x:Key="Recording.ShowWheel">Show Scroll Indicator</sys:String>
+  <sys:String x:Key="Recording.ClickSpeed">Animation Speed</sys:String>
+  <sys:String x:Key="Recording.SpeedSlow">Slow</sys:String>
+  <sys:String x:Key="Recording.SpeedNormal">Normal</sys:String>
+  <sys:String x:Key="Recording.SpeedFast">Fast</sys:String>
+
+  <!-- session messages -->
+  <sys:String x:Key="Recording.ConfirmDiscard">Discard recorded content?</sys:String>
+  <sys:String x:Key="Recording.Discard">Discard</sys:String>
+  <sys:String x:Key="Recording.LimitReached">Maximum duration reached ({0} min), recording stopped</sys:String>
+  <sys:String x:Key="Recording.Failed">Recording failed: {0}</sys:String>
+  <sys:String x:Key="Recording.WarnMicrophone">Microphone unavailable, audio will not be recorded</sys:String>
+  <sys:String x:Key="Recording.WarnSystem">System audio unavailable, system audio will not be recorded</sys:String>
+  <sys:String x:Key="Recording.WarnKeyboard">Keystroke recording failed, keys will not be displayed</sys:String>
+  <sys:String x:Key="Recording.AlreadyActive">Recording is already in progress</sys:String>
+  <sys:String x:Key="Recording.TooSmall">Recording area is too small</sys:String>
+  <sys:String x:Key="Recording.NothingRecorded">No frames were recorded</sys:String>
+
+  <!-- playback window -->
+  <sys:String x:Key="Recording.PlaybackTitle">Recording - OpenPin</sys:String>
+  <sys:String x:Key="Recording.Play">Play (Space)</sys:String>
+  <sys:String x:Key="Recording.PausePlayback">Pause (Space)</sys:String>
+  <sys:String x:Key="Recording.TrimHint">Drag timeline handles to trim start and end ([ / ] to set current position)</sys:String>
+  <sys:String x:Key="Recording.Format">Format</sys:String>
+  <sys:String x:Key="Recording.Quality">Quality</sys:String>
+  <sys:String x:Key="Recording.QualityLight">Lightweight</sys:String>
+  <sys:String x:Key="Recording.QualityStandard">Standard</sys:String>
+  <sys:String x:Key="Recording.QualityOriginal">Original</sys:String>
+  <sys:String x:Key="Recording.Show">Show</sys:String>
+  <sys:String x:Key="Recording.Cursor">Cursor</sys:String>
+  <sys:String x:Key="Recording.Clicks">Clicks</sys:String>
+  <sys:String x:Key="Recording.Wheel">Wheel</sys:String>
+  <sys:String x:Key="Recording.KeysShort">Keys</sys:String>
+  <sys:String x:Key="Recording.Save">Save</sys:String>
+  <sys:String x:Key="Recording.QuickSave">Quick Save</sys:String>
+  <sys:String x:Key="Recording.Copy">Copy</sys:String>
+  <sys:String x:Key="Recording.CloseWindow">Close</sys:String>
+  <sys:String x:Key="Recording.Cancel">Cancel</sys:String>
+  <sys:String x:Key="Recording.OutputInfo">{0} × {1} · {2} fps · {3}</sys:String>
+  <sys:String x:Key="Recording.Exporting">Exporting {0}…</sys:String>
+  <sys:String x:Key="Recording.Saved">Recording saved</sys:String>
+  <sys:String x:Key="Recording.Copied">Recording file copied, ready to paste into chat or folders</sys:String>
+  <sys:String x:Key="Recording.ExportFailed">Export failed: {0}</sys:String>
+  <sys:String x:Key="Recording.OpenFolder">Open Folder</sys:String>
+  <sys:String x:Key="Recording.SaveDialogTitle">Save Recording</sys:String>
+  <sys:String x:Key="Recording.ConfirmCloseUnsaved">Recording is not saved. Are you sure you want to close?</sys:String>
+  <sys:String x:Key="Recording.ConfirmRerecord">Discard current recording and record again?</sys:String>
+</ResourceDictionary>

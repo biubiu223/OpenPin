@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- Recognition module strings (keys: Recognition.*). Owned by the Recognition module. -->
+  <sys:String x:Key="Recognition.OcrUnavailable">Table recognition requires OCR: Please install the OCR language pack in Windows Settings</sys:String>
+
+  <!-- Table recognition (PRO-02) -->
+  <sys:String x:Key="Recognition.Table.Title">Table Recognition</sys:String>
+  <sys:String x:Key="Recognition.Table.Copy">Copy</sys:String>
+  <sys:String x:Key="Recognition.Table.CopyTip">Copy as tab-separated values, ready to paste into Excel / Spreadsheets</sys:String>
+  <sys:String x:Key="Recognition.Table.ExportXlsx">Export Excel</sys:String>
+  <sys:String x:Key="Recognition.Table.ExportCsv">Export CSV</sys:String>
+  <sys:String x:Key="Recognition.Table.FilterXlsx">Excel Workbook (*.xlsx)</sys:String>
+  <sys:String x:Key="Recognition.Table.FilterCsv">CSV File (*.csv)</sys:String>
+  <sys:String x:Key="Recognition.Table.FileName">Table</sys:String>
+  <sys:String x:Key="Recognition.Table.Copied">Copied, ready to paste directly into Excel</sys:String>
+  <sys:String x:Key="Recognition.Table.Exported">Exported: {0}</sys:String>
+  <sys:String x:Key="Recognition.Table.ExportFailed">Export failed: {0}</sys:String>
+  <sys:String x:Key="Recognition.Table.Open">Open</sys:String>
+  <sys:String x:Key="Recognition.Table.ShowInFolder">Show in Folder</sys:String>
+  <sys:String x:Key="Recognition.Table.Summary">{0} rows × {1} columns</sys:String>
+  <sys:String x:Key="Recognition.Table.Merged">, including {0} merged cells</sys:String>
+  <sys:String x:Key="Recognition.Table.EditHint">· Double-click cell to edit</sys:String>
+  <sys:String x:Key="Recognition.Table.NoText">No table content detected</sys:String>
+  <sys:String x:Key="Recognition.Table.Failed">Table recognition failed: {0}</sys:String>
+
+  <!-- OCR language quick switch (PRO-09) -->
+  <sys:String x:Key="Recognition.OcrLang.Auto">Auto (System Default)</sys:String>
+  <sys:String x:Key="Recognition.OcrLang.Add">Add Language…</sys:String>
+
+  <!-- LaTeX recognition (PRO-05) -->
+  <sys:String x:Key="Recognition.Latex.Title">LaTeX Formula Recognition</sys:String>
+  <sys:String x:Key="Recognition.Latex.Copy">Copy LaTeX</sys:String>
+  <sys:String x:Key="Recognition.Latex.CopyImage">Copy Image</sys:String>
+  <sys:String x:Key="Recognition.Latex.Pin">Pin Formula</sys:String>
+  <sys:String x:Key="Recognition.Latex.ExportSvg">Export SVG</sys:String>
+  <sys:String x:Key="Recognition.Latex.Copied">LaTeX code copied</sys:String>
+  <sys:String x:Key="Recognition.Latex.ImageCopied">Formula image copied</sys:String>
+  <sys:String x:Key="Recognition.Latex.Preview">Formula Preview</sys:String>
+  <sys:String x:Key="Recognition.Latex.Code">LaTeX Code</sys:String>
+  <sys:String x:Key="Recognition.Latex.Failed">LaTeX formula recognition failed: {0}</sys:String>
+  <sys:String x:Key="Recognition.Latex.NoFormula">No valid formula recognized</sys:String>
+  <sys:String x:Key="Recognition.Latex.AiSource">AI Recognition</sys:String>
+  <sys:String x:Key="Recognition.Latex.OcrSource">OCR Post-processing</sys:String>
+</ResourceDictionary>

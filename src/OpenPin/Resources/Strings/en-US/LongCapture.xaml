@@ -1,0 +1,45 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <!-- LongCapture module strings (keys: LongCapture.*). Owned by the LongCapture module. -->
+
+  <!-- Control bar -->
+  <sys:String x:Key="LongCapture.Start">Start (Capture Hotkey)</sys:String>
+  <sys:String x:Key="LongCapture.Stop">Stop (Capture Hotkey)</sys:String>
+  <sys:String x:Key="LongCapture.DirectionVertical">Direction: Vertical (click to switch to horizontal)</sys:String>
+  <sys:String x:Key="LongCapture.DirectionHorizontal">Direction: Horizontal (click to switch to vertical)</sys:String>
+  <sys:String x:Key="LongCapture.AutoCrop">Auto-crop</sys:String>
+  <sys:String x:Key="LongCapture.AutoCropTip">Automatically crop redundant content when scrolling back, keeping visible content</sys:String>
+  <sys:String x:Key="LongCapture.AutoScroll">Auto-scroll (stops when mouse leaves selection)</sys:String>
+  <sys:String x:Key="LongCapture.Crop">Trim Edges</sys:String>
+  <sys:String x:Key="LongCapture.Pin">Pin</sys:String>
+  <sys:String x:Key="LongCapture.Save">Save</sys:String>
+  <sys:String x:Key="LongCapture.QuickSave">Quick Save</sys:String>
+  <sys:String x:Key="LongCapture.Copy">Copy and Close</sys:String>
+  <sys:String x:Key="LongCapture.Close">Close (Esc)</sys:String>
+
+  <!-- Status text -->
+  <sys:String x:Key="LongCapture.Status.Ready">Drag to adjust selection, click Start then scroll content</sys:String>
+  <sys:String x:Key="LongCapture.Status.Capturing">Please scroll content</sys:String>
+  <sys:String x:Key="LongCapture.Status.Failed">Stitching failed, please scroll back slightly</sys:String>
+  <sys:String x:Key="LongCapture.Status.Limit">Maximum length reached</sys:String>
+  <sys:String x:Key="LongCapture.Status.Stopped">Stopped</sys:String>
+  <sys:String x:Key="LongCapture.Status.Working">Generating image…</sys:String>
+  <!-- {0} × {1}: result size in pixels -->
+  <sys:String x:Key="LongCapture.Size">{0} × {1}</sys:String>
+
+  <!-- Trim (crop) on the preview -->
+  <sys:String x:Key="LongCapture.CropHintVertical">Drag top/bottom handles to trim (Wheel to fine-tune, Shift ×10)</sys:String>
+  <sys:String x:Key="LongCapture.CropHintHorizontal">Drag left/right handles to trim (Wheel to fine-tune, Shift ×10)</sys:String>
+  <!-- {0}: trimmed at the start, {1}: trimmed at the end (pixels) -->
+  <sys:String x:Key="LongCapture.CropInfo">Trimmed {0} / {1} px</sys:String>
+  <sys:String x:Key="LongCapture.CropReset">Reset</sys:String>
+  <sys:String x:Key="LongCapture.CropDone">Done</sys:String>
+
+  <!-- Messages -->
+  <sys:String x:Key="LongCapture.ConfirmClose">Discard stitched long screenshot and close?</sys:String>
+  <sys:String x:Key="LongCapture.TooSmall">Selection is too small for scrolling screenshot</sys:String>
+  <!-- {0}: error message -->
+  <sys:String x:Key="LongCapture.Failed">Scrolling screenshot failed: {0}</sys:String>
+  <sys:String x:Key="LongCapture.Copied">Scrolling screenshot copied to clipboard</sys:String>
+</ResourceDictionary>
