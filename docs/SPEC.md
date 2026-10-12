@@ -144,7 +144,7 @@
 |---|---|---|
 | UI-01 | P0 | **Windows 11 原生外观**（Fluent / WinUI 3 风格）：窗口 / 浮层 / 工具栏 / 菜单 8px 圆角、按钮 4px；Segoe Fluent Icons；Win11 样式的右键菜单、滑块、开关；设置窗口使用 Mica 背景 + 左侧导航（NavigationView 风格）。 |
 | UI-02 | P0 | 所有颜色 / 字体 / 圆角集中在 `Resources/Theme.xaml`，各模块只引用令牌。 |
-| UI-03 | P1 | 深色模式（跟随系统 / 浅色 / 深色）；强调色可跟随系统。 |
+| UI-03 | P1 | **深色模式**（跟随系统 / 浅色 / 深色）；强调色可跟随系统；已完成（ThemeManager 动态资源热切换、Win11 DWM 标题栏随动）。 |
 | PKG-01 | P0 | 升级到 **.NET 10**（LTS，支持到 2028-11）。 |
 | PKG-02 | P0 | **MSIX** 安装包（可上架微软商店）；打包后开机自启改用 `StartupTask`，数据目录兼容 MSIX 重定向。 |
 | PKG-03 | P0 | 便携版 zip（框架依赖版 + 自包含单文件版），由 GitHub Actions 在打 tag 时自动发布。 |
@@ -158,7 +158,7 @@
 | PRO-02 | P0 | **表格识别**：截图时 `Shift+Q`、贴图右键；OCR 单词坐标 + 表格线检测 → 行列结构（含合并单元格的近似）；结果窗口可预览 / 编辑；导出 .xlsx（自写 OOXML，无依赖）、CSV，复制为 TSV（可直接粘贴进 Excel）。 | Recognition/ |
 | PRO-03 | P0 | **录屏增强**：显示鼠标点击动画（左 / 右键、滚轮）及动画速率；显示按键；摄像头画中画；录制麦克风 / 系统声音（MP4）。 | Recording/ |
 | PRO-04 | P0 | **长截图自动裁剪**：反方向滚动时自动裁掉多余部分。 | LongCapture/ |
-| PRO-05 | P1 | **LaTeX 公式识别**（截图 `Shift+F`、贴图右键）：可选下载离线模型（首次使用时下载），输出 LaTeX；**LaTeX 贴图**：剪贴板中的 LaTeX 渲染为公式，复制 LaTeX、导出 PNG / SVG。 | Recognition/ + Pin/ |
+| PRO-05 | P1 | **LaTeX 公式识别**（截图 `Shift+F`、贴图右键）：已完成（自研纯 C# 离线公式渲染引擎、AI 多模态/OCR 公式识别、实时预览窗口）；**LaTeX 贴图**：剪贴板中的 LaTeX 渲染为公式卡片，复制 LaTeX、导出 PNG / SVG。 | Recognition/ + Pin/ |
 | PRO-06 | P0 | **智能擦除**：马赛克工具的第三种模式；基于选区边界的离线图像修复算法（无需模型）：纯色背景完美填充，纹理背景自然过渡。 | Annotation/ |
 | PRO-07 | P0 | 录屏后剪辑（同 REC-03）。 | Recording/ |
 | PRO-08 | P0 | **保存窗口**：导出前实时预览格式 / 质量转换效果和文件大小；PDF：页边距、纸张（原图尺寸 / A4 / Letter）、长图自动分页。 | Services/ |
