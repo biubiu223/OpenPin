@@ -18,9 +18,16 @@ public sealed class TranslateSettingsView : UserControl
     private static readonly (string Id, string Name, string BaseUrl, string Model)[] Presets =
     {
         ("deepseek", "DeepSeek", "https://api.deepseek.com/v1", "deepseek-chat"),
+        ("siliconflow", "硅基流动 (SiliconFlow)", "https://api.siliconflow.cn/v1", "deepseek-ai/DeepSeek-V3"),
         ("qwen", "通义千问 (DashScope)", "https://dashscope.aliyuncs.com/compatible-mode/v1", "qwen-plus"),
         ("kimi", "Kimi (Moonshot)", "https://api.moonshot.cn/v1", "moonshot-v1-8k"),
         ("zhipu", "智谱 GLM", "https://open.bigmodel.cn/api/paas/v4", "glm-4-flash"),
+        ("doubao", "豆包 (火山方舟)", "https://ark.cn-beijing.volces.com/api/v3", "doubao-pro-32k"),
+        ("stepfun", "阶跃星辰 (StepFun)", "https://api.stepfun.com/v1", "step-1-8k"),
+        ("yi", "零一万物 (01.AI)", "https://api.lingyiwanwu.com/v1", "yi-lightning"),
+        ("openai", "OpenAI", "https://api.openai.com/v1", "gpt-4o-mini"),
+        ("openrouter", "OpenRouter", "https://openrouter.ai/api/v1", "deepseek/deepseek-chat"),
+        ("groq", "Groq", "https://api.groq.com/openai/v1", "llama-3.3-70b-versatile"),
         ("ollama", "Ollama", "http://localhost:11434/v1", "qwen2.5:7b"),
         ("lmstudio", "LM Studio", "http://localhost:1234/v1", "local-model"),
         ("custom", "", "", ""),
@@ -36,7 +43,10 @@ public sealed class TranslateSettingsView : UserControl
     private readonly StackPanel _deeplPanel = new();
     private readonly ComboBox _preset = TranslateUi.Combo();
     private readonly TextBox _baseUrl = Input();
-    private readonly TextBox _model = Input();
+    private readonly ComboBox _model = ModelBox();
+    private readonly Button _fetchModels;
+    private readonly TextBlock _modelStatus = TranslateUi.Caption();
+    private CancellationTokenSource? _modelsCts;
     private readonly SecretBox _openAiKey = new();
     private readonly TextBox _baiduAppId = Input();
     private readonly SecretBox _baiduSecret = new();
@@ -80,13 +90,17 @@ public sealed class TranslateSettingsView : UserControl
                 _s.OpenAi.BaseUrl = p.BaseUrl;
                 _s.OpenAi.Model = p.Model;
                 _loading = true;
-                try { _baseUrl.Text = p.BaseUrl; _model.Text = p.Model; }
+                try { _baseUrl.Text = p.BaseUrl; _model.Items.Clear(); _model.Text = p.Model; SetModelStatus(""); }
                 finally { _loading = false; }
             }
         });
-        _baseUrl.TextChanged += (_, _) => Edit(() => _s.OpenAi.BaseUrl = _baseUrl.Text.Trim());
-        _model.TextChanged += (_, _) => Edit(() => _s.OpenAi.Model = _model.Text.Trim());
-        _openAiKey.Changed += v => Edit(() => _s.OpenAi.ApiKeyProtected = SecretProtector.Protect(v.Trim()));
+        _baseUrl.TextChanged += (_, _) => Edit(() => { _s.OpenAi.BaseUrl = _baseUrl.Text.Trim(); _model.Items.Clear(); });
+        // Editable combo: typed text and picked items both arrive as TextChanged of its inner TextBox.
+        _model.AddHandler(TextBoxBase.TextChangedEvent, new TextChangedEventHandler((_, _) => Edit(() => _s.OpenAi.Model = (_model.Text ?? "").Trim())));
+        _model.DropDownOpened += (_, _) => { if (_model.Items.Count == 0 && !_loading) FetchModels(); };
+        _fetchModels = TranslateUi.Button("Translate.Settings.FetchModels", accent: false, FetchModels, "\uE72C");
+        _fetchModels.Margin = new Thickness(8, 0, 0, 0);
+        _openAiKey.Changed += v => Edit(() => { _s.OpenAi.ApiKeyProtected = SecretProtector.Protect(v.Trim()); _model.Items.Clear(); });
         _baiduAppId.TextChanged += (_, _) => Edit(() => _s.Baidu.AppId = _baiduAppId.Text.Trim());
         _baiduSecret.Changed += v => Edit(() => _s.Baidu.SecretProtected = SecretProtector.Protect(v.Trim()));
         _youdaoAppKey.TextChanged += (_, _) => Edit(() => _s.Youdao.AppKey = _youdaoAppKey.Text.Trim());
@@ -95,7 +109,14 @@ public sealed class TranslateSettingsView : UserControl
 
         _openAiPanel.Children.Add(Row("Translate.Settings.Preset", _preset));
         _openAiPanel.Children.Add(Row("Translate.Settings.BaseUrl", _baseUrl));
-        _openAiPanel.Children.Add(Row("Translate.Settings.Model", _model));
+        var modelRow = new DockPanel();
+        DockPanel.SetDock(_fetchModels, Dock.Right);
+        modelRow.Children.Add(_fetchModels);
+        modelRow.Children.Add(_model);
+        _openAiPanel.Children.Add(Row("Translate.Settings.Model", modelRow));
+        _modelStatus.Margin = new Thickness(110, -2, 0, 8);
+        _modelStatus.Visibility = Visibility.Collapsed;
+        _openAiPanel.Children.Add(_modelStatus);
         _openAiPanel.Children.Add(Row("Translate.Settings.ApiKey", _openAiKey));
         _openAiPanel.Children.Add(Hint("Translate.Settings.OpenAiHint"));
         _baiduPanel.Children.Add(Row("Translate.Settings.BaiduAppId", _baiduAppId));
@@ -180,7 +201,7 @@ public sealed class TranslateSettingsView : UserControl
         {
             if (e.NewValue is TranslateSettings ts && !ReferenceEquals(ts, _s)) Settings = ts;
         };
-        Unloaded += (_, _) => _testCts?.Cancel();
+        Unloaded += (_, _) => { _testCts?.Cancel(); _modelsCts?.Cancel(); };
         Settings = settings ?? (DataContext as TranslateSettings) ?? new TranslateSettings();
     }
 
@@ -203,7 +224,9 @@ public sealed class TranslateSettingsView : UserControl
             Select(_provider, _s.Provider);
             Select(_preset, _s.OpenAi.Preset);
             _baseUrl.Text = _s.OpenAi.BaseUrl;
+            _model.Items.Clear();
             _model.Text = _s.OpenAi.Model;
+            SetModelStatus("");
             _openAiKey.Value = SecretProtector.Unprotect(_s.OpenAi.ApiKeyProtected);
             _baiduAppId.Text = _s.Baidu.AppId;
             _baiduSecret.Value = SecretProtector.Unprotect(_s.Baidu.SecretProtected);
@@ -274,7 +297,55 @@ public sealed class TranslateSettingsView : UserControl
         finally { _test.IsEnabled = TranslationService.IsConfigured(_s); }
     }
 
+    /// <summary>Fill the model dropdown from GET {base}/models (only on explicit user action).</summary>
+    private async void FetchModels()
+    {
+        _modelsCts?.Cancel();
+        var cts = _modelsCts = new CancellationTokenSource();
+        _fetchModels.IsEnabled = false;
+        SetModelStatus(Loc.Get("Translate.Settings.FetchingModels"));
+        try
+        {
+            using var http = TranslationHttp.CreateClient(_s);
+            var models = await OpenAiModelList.FetchAsync(http, _s.OpenAi.BaseUrl, SecretProtector.Unprotect(_s.OpenAi.ApiKeyProtected), cts.Token);
+            if (cts.IsCancellationRequested) return;
+            var current = _model.Text;
+            _loading = true;
+            try
+            {
+                _model.Items.Clear();
+                foreach (var m in models) _model.Items.Add(m);
+                _model.Text = current;
+            }
+            finally { _loading = false; }
+            SetModelStatus(models.Count == 0 ? Loc.Get("Translate.Settings.ModelsEmpty") : Loc.Format("Translate.Settings.ModelsFetched", models.Count), error: models.Count == 0);
+            if (models.Count > 0 && _model.IsKeyboardFocusWithin) _model.IsDropDownOpen = true;
+        }
+        catch (OperationCanceledException) { if (!cts.IsCancellationRequested) SetModelStatus(Loc.Get("Translate.Settings.ModelsTimeout"), error: true); }
+        catch (Exception ex)
+        {
+            if (ex is not TranslationException) Log.Warn($"Fetching model list failed: {ex.Message}");
+            if (!cts.IsCancellationRequested) SetModelStatus(Loc.Format("Translate.Settings.ModelsFailed", ex.Message), error: true);
+        }
+        finally { _fetchModels.IsEnabled = true; }
+    }
+
+    private void SetModelStatus(string text, bool error = false)
+    {
+        TranslateUi.SetStatus(_modelStatus, text, error);
+        _modelStatus.Visibility = text.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
     // ------------------------------------------------------------------ building blocks
+
+    private static ComboBox ModelBox()
+    {
+        var c = TranslateUi.Combo();
+        c.IsEditable = true;
+        c.IsTextSearchEnabled = false; // typing must not jump to another model
+        c.ToolTip = Loc.Get("Translate.Settings.ModelTip");
+        return c;
+    }
 
     private static TextBox Input()
     {

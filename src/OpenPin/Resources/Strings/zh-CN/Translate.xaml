@@ -111,4 +111,12 @@
   <sys:String x:Key="Translate.Settings.TestChooseProvider">请先选择翻译服务</sys:String>
   <sys:String x:Key="Translate.Settings.TestOk">连接成功：{0} → {1}（{2:0.0} 秒）</sys:String>
   <sys:String x:Key="Translate.Settings.TestFailed">连接失败：{0}</sys:String>
+  <sys:String x:Key="Translate.Settings.FetchModels">获取模型</sys:String>
+  <sys:String x:Key="Translate.Settings.FetchingModels">正在获取模型列表…</sys:String>
+  <sys:String x:Key="Translate.Settings.ModelsFetched">已获取 {0} 个模型，可在下拉列表中选择</sys:String>
+  <sys:String x:Key="Translate.Settings.ModelsEmpty">服务没有返回任何模型，请手动填写模型名称</sys:String>
+  <sys:String x:Key="Translate.Settings.ModelsFailed">获取模型列表失败：{0}</sys:String>
+  <sys:String x:Key="Translate.Settings.ModelsTimeout">获取模型列表超时，请检查网络或代理设置</sys:String>
+  <sys:String x:Key="Translate.Settings.ModelsHttpError">服务返回 {0}：{1}</sys:String>
+  <sys:String x:Key="Translate.Settings.ModelTip">可以直接输入模型名称，也可以点「获取模型」从服务读取可用模型</sys:String>
 </ResourceDictionary>
