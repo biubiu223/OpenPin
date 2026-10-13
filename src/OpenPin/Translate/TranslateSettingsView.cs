@@ -134,6 +134,7 @@ public sealed class TranslateSettingsView : UserControl
 
         // ---- languages
         AddItem(_target, "", Loc.Get("Translate.Lang.FollowApp"));
+        AddItem(_fallback, "none", Loc.Get("Translate.Lang.None"));
         foreach (var l in TranslateLanguages.All)
         {
             AddItem(_target, l.Tag, l.DisplayName);
@@ -238,7 +239,7 @@ public sealed class TranslateSettingsView : UserControl
             _youdaoSecret.Value = SecretProtector.Unprotect(_s.Youdao.SecretProtected);
             _deeplKey.Value = SecretProtector.Unprotect(_s.DeepL.ApiKeyProtected);
             Select(_target, TranslateLanguages.Find(_s.TargetLanguage)?.Tag ?? "");
-            Select(_fallback, TranslateLanguages.Find(_s.FallbackLanguage)?.Tag ?? "en");
+            Select(_fallback, string.Equals(_s.FallbackLanguage, "none", StringComparison.OrdinalIgnoreCase) ? "none" : (TranslateLanguages.Find(_s.FallbackLanguage)?.Tag ?? "none"));
             _modeText.IsChecked = _s.Mode == TranslateMode.ImageToText;
             _modeImage.IsChecked = _s.Mode == TranslateMode.ImageToImage;
             Select(_proxy, _s.Proxy.ToString());

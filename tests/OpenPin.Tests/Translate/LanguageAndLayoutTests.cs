@@ -65,6 +65,33 @@ public class LanguageTests
             Assert.False(string.IsNullOrEmpty(l.EnglishName));
         });
     }
+
+    [Theory]
+    [InlineData("你好世界", true)]
+    [InlineData("OpenPin 截图工具", true)]
+    [InlineData("下载 .NET 10 运行库", true)]
+    [InlineData("確定", true)]
+    [InlineData("這是一個繁體測試", true)]
+    [InlineData("Hello World", false)]
+    [InlineData("This is an English sentence", false)]
+    [InlineData("これはテストです", false)]
+    [InlineData("한국어 테스트", false)]
+    [InlineData("12345", false)]
+    [InlineData("", false)]
+    public void IsChineseText_Tests(string text, bool expected) =>
+        Assert.Equal(expected, TranslateLanguages.IsChineseText(text));
+
+    [Theory]
+    [InlineData("你好世界", "zh-Hans", false)]
+    [InlineData("OpenPin 截图工具", "zh-Hans", false)]
+    [InlineData("Hello World", "zh-Hans", true)]
+    [InlineData("This is an English sentence", "zh-Hans", true)]
+    [InlineData("これはテストです", "zh-Hans", true)]
+    [InlineData("12345", "zh-Hans", false)]
+    [InlineData("Hello World", "en", false)]
+    [InlineData("你好世界", "en", true)]
+    public void ShouldTranslateSegment_Tests(string text, string target, bool expected) =>
+        Assert.Equal(expected, TranslateLanguages.ShouldTranslateSegment(text, target));
 }
 
 public class SegmenterTests
@@ -238,5 +265,14 @@ public class RendererTests
         var r = new ImageTranslationRenderer();
         Assert.Null(r.Plan(px, 10, 10, new TranslatedBox(new Rect(1, 1, 5, 5), "  ", 5)));
         Assert.Null(r.Plan(px, 10, 10, new TranslatedBox(new Rect(50, 50, 5, 5), "x", 5)));
+    });
+
+    [Fact]
+    public void Plan_SkipsPreservedBoxes() => Sta.Run(() =>
+    {
+        var px = Solid(100, 100, Colors.White);
+        var r = new ImageTranslationRenderer();
+        var box = new TranslatedBox(new Rect(10, 10, 50, 20), "你好世界", 16, OriginalText: "你好世界");
+        Assert.Null(r.Plan(px, 100, 100, box));
     });
 }

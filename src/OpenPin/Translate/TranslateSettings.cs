@@ -19,8 +19,8 @@ public sealed class TranslateSettings
     public string Provider { get; set; } = "";
     /// <summary>Target language tag ("" = follow app language).</summary>
     public string TargetLanguage { get; set; } = "";
-    /// <summary>Used when the source text is already in the target language.</summary>
-    public string FallbackLanguage { get; set; } = "en";
+    /// <summary>Used when the source text is already in the target language ("none" = keep original without fallback).</summary>
+    public string FallbackLanguage { get; set; } = "none";
 
     public TranslateMode Mode { get; set; } = TranslateMode.ImageToText;
 

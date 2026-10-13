@@ -12,6 +12,7 @@
 
   <!-- Languages -->
   <sys:String x:Key="Translate.Lang.FollowApp">Follow App Language</sys:String>
+  <sys:String x:Key="Translate.Lang.None">Keep original (No fallback)</sys:String>
   <sys:String x:Key="Translate.Lang.zh-Hans">Simplified Chinese</sys:String>
   <sys:String x:Key="Translate.Lang.zh-Hant">Traditional Chinese</sys:String>
   <sys:String x:Key="Translate.Lang.en">English</sys:String>

@@ -83,6 +83,90 @@ public static class TranslateLanguages
 
     private static bool IsMalayLike(string t) => t is "id" or "ms";
 
+    /// <summary>True if the language tag represents Chinese ("zh", "zh-Hans", "zh-Hant", "zh-CN"...).</summary>
+    public static bool IsChinese(string? tag) =>
+        tag != null && tag.StartsWith("zh", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Checks whether the text is considered Chinese (Simplified or Traditional).
+    /// Pure Chinese, or Chinese mixed with numbers/Latin technical terms (e.g. "OpenPin 截图工具", "下载 .NET 10").
+    /// Non-Chinese texts (pure English, Japanese with kana, Korean with hangul) return false.
+    /// </summary>
+    public static bool IsChineseText(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return false;
+        int han = 0, kana = 0, hangul = 0, cyr = 0, arabic = 0, thai = 0, latin = 0;
+        foreach (var c in text)
+        {
+            if (c is >= '一' and <= '鿿' or >= '㐀' and <= '䶿' or >= '豈' and <= '﫿') han++;
+            else if (c is >= '぀' and <= 'ヿ' or >= 'ㇰ' and <= 'ㇿ') kana++;
+            else if (c is >= '가' and <= '힯' or >= 'ᄀ' and <= 'ᇿ' or >= '㄰' and <= '㆏') hangul++;
+            else if (c is >= 'Ѐ' and <= 'ӿ') cyr++;
+            else if (c is >= '؀' and <= 'ۿ' or >= 'ݐ' and <= 'ݿ') arabic++;
+            else if (c is >= '฀' and <= '๿') thai++;
+            else if (char.IsLetter(c) && c < 'ɐ' || c is >= 'Ḁ' and <= 'ỿ') latin++;
+        }
+
+        // Distinctly non-Chinese scripts present
+        if (kana > 0 || hangul > 0 || cyr > 0 || arabic > 0 || thai > 0) return false;
+        if (han == 0) return false;
+
+        // Pure Chinese (or Chinese with punctuation, numbers, symbols)
+        if (latin == 0) return true;
+
+        // Chinese with Latin terms: han weighted x3 against latin letters, or detect identifies it as Chinese
+        if (han * 3.0 >= latin) return true;
+
+        var detected = Detect(text);
+        return detected != null && IsChinese(detected);
+    }
+
+    /// <summary>
+    /// True if the text contains at least one translatable character (letter or Han ideograph)
+    /// and is not a pure URL/numeric string.
+    /// </summary>
+    public static bool IsTranslatable(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return false;
+        var trimmed = text.Trim();
+        if (trimmed.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+            trimmed.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ||
+            trimmed.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        foreach (var c in trimmed)
+        {
+            if (char.IsLetter(c) || c is >= '一' and <= '鿿' or >= '㐀' and <= '䶿' or >= '豈' and <= '﫿')
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Decides whether a single segment needs to be translated into <paramref name="targetLang"/>.
+    /// When target is Chinese: existing Chinese text is preserved (not translated), and only non-Chinese text is translated.
+    /// For other target languages: if the text is already in that target language, translation is skipped.
+    /// </summary>
+    public static bool ShouldTranslateSegment(string segment, string targetLang)
+    {
+        if (!IsTranslatable(segment)) return false;
+
+        if (IsChinese(targetLang))
+        {
+            // When target is Chinese, Chinese text is NOT translated (preserved as-is);
+            // only non-Chinese is translated to Chinese.
+            return !IsChineseText(segment);
+        }
+
+        var detected = Detect(segment);
+        if (detected != null && SameLanguage(detected, targetLang))
+            return false;
+
+        return true;
+    }
+
     // ------------------------------------------------------------------ detection
 
     /// <summary>

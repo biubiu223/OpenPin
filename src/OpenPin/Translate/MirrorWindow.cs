@@ -396,7 +396,7 @@ public sealed class MirrorWindow : Window
                 segments.Select(s => s.Text).ToList(),
                 explicitTarget: explicitTarget).ConfigureAwait(true);
 
-            var boxes = segments.Zip(outcome.Segments, (s, t) => new TranslatedBox(s.Bounds, t, s.LineHeight)).ToList();
+            var boxes = segments.Zip(outcome.Segments, (s, t) => new TranslatedBox(s.Bounds, t, s.LineHeight, s.Text)).ToList();
             var renderer = new ImageTranslationRenderer { RightToLeft = outcome.TargetLanguage == "ar" };
             var translated = renderer.Render(screenBmp, boxes);
 

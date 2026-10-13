@@ -334,13 +334,53 @@ public class TranslationServiceTests
     }
 
     [Fact]
-    public async Task FallbackLanguage_IsUsedWhenTextIsAlreadyInTarget()
+    public async Task FallbackLanguage_IsUsedWhenTextIsAlreadyInNonChineseTarget()
     {
         string? requestedTo = null;
         var h = new FakeHandler((_, body) =>
         {
             requestedTo = HttpUtility.ParseQueryString(body)["to"];
-            return FakeHandler.Json("{\"trans_result\":[{\"src\":\"x\",\"dst\":\"Hello world\"}]}");
+            return FakeHandler.Json("{\"trans_result\":[{\"src\":\"x\",\"dst\":\"こんにちは\"}]}");
+        });
+        var s = new TranslateSettings
+        {
+            Provider = "baidu",
+            TargetLanguage = "en",
+            FallbackLanguage = "ja",
+            Baidu = new BaiduTranslateSettings { AppId = "id", SecretProtected = SecretProtector.Protect("k") },
+        };
+        var outcome = await TranslationService.TranslateAsync(new[] { "Hello world, this is a test" }, settings: s, handler: h);
+        Assert.Equal("ja", outcome.TargetLanguage);
+        Assert.Equal("jp", requestedTo); // Baidu's code for ja is jp
+        Assert.Equal("en", outcome.DetectedSource);
+    }
+
+    [Fact]
+    public async Task TargetChinese_PreservesChinese_SkipsNetworkCall()
+    {
+        var h = new FakeHandler((_, _) => FakeHandler.Json("{}"));
+        var s = new TranslateSettings
+        {
+            Provider = "baidu",
+            TargetLanguage = "zh-Hans",
+            FallbackLanguage = "en",
+            Baidu = new BaiduTranslateSettings { AppId = "id", SecretProtected = SecretProtector.Protect("k") },
+        };
+        var input = new[] { "你好世界，这是中文", "保留中文不翻译" };
+        var outcome = await TranslationService.TranslateAsync(input, settings: s, handler: h);
+        Assert.Equal("zh-Hans", outcome.TargetLanguage);
+        Assert.Equal(input, outcome.Segments);
+        Assert.Empty(h.Requests); // 0 network calls!
+    }
+
+    [Fact]
+    public async Task TargetChinese_MixedSegments_OnlyTranslatesNonChinese()
+    {
+        var h = new FakeHandler((_, body) =>
+        {
+            var q = HttpUtility.ParseQueryString(body)["q"];
+            Assert.Equal("Hello world", q); // Only English segment sent to translator!
+            return FakeHandler.Json("{\"trans_result\":[{\"src\":\"Hello world\",\"dst\":\"你好世界\"}]}");
         });
         var s = new TranslateSettings
         {
@@ -349,10 +389,11 @@ public class TranslationServiceTests
             FallbackLanguage = "en",
             Baidu = new BaiduTranslateSettings { AppId = "id", SecretProtected = SecretProtector.Protect("k") },
         };
-        var outcome = await TranslationService.TranslateAsync(new[] { "你好世界，这是中文" }, settings: s, handler: h);
-        Assert.Equal("en", outcome.TargetLanguage);
-        Assert.Equal("en", requestedTo);
-        Assert.Equal("zh-Hans", outcome.DetectedSource);
+        var input = new[] { "欢迎来到 OpenPin", "Hello world", "开源截图工具" };
+        var outcome = await TranslationService.TranslateAsync(input, settings: s, handler: h);
+        Assert.Equal("zh-Hans", outcome.TargetLanguage);
+        Assert.Equal(new[] { "欢迎来到 OpenPin", "你好世界", "开源截图工具" }, outcome.Segments);
+        Assert.Single(h.Requests);
     }
 
     [Fact]

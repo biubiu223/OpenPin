@@ -42,7 +42,7 @@ public static class TranslateWorkflow
 
             Notify.Show(new NotifyOptions { Title = Loc.Get("Translate.Title"), Message = Loc.Get("Translate.Working"), DurationMs = 1500 });
             var outcome = await TranslationService.TranslateAsync(segments.Select(s => s.Text).ToList(), settings: settings);
-            var boxes = segments.Zip(outcome.Segments, (s, t) => new TranslatedBox(s.Bounds, t, s.LineHeight)).ToList();
+            var boxes = segments.Zip(outcome.Segments, (s, t) => new TranslatedBox(s.Bounds, t, s.LineHeight, s.Text)).ToList();
             var renderer = new ImageTranslationRenderer { RightToLeft = outcome.TargetLanguage == "ar" };
             var translated = renderer.Render(image, boxes);
             pinResult(translated);

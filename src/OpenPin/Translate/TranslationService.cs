@@ -49,18 +49,71 @@ public static class TranslationService
     {
         var s = settings ?? Settings;
         if (!IsConfigured(s)) throw new TranslationException(Loc.Get("Translate.NotConfigured"));
+        if (segments.Count == 0) return new TranslationOutcome(Array.Empty<string>(), "zh-Hans", null, s.Provider, TimeSpan.Zero);
+
         var text = string.Join("\n", segments);
         var detected = TranslateLanguages.Detect(text);
-        string target = TranslateLanguages.Find(explicitTarget)?.Tag
-                        ?? TranslateLanguages.EffectiveTarget(text, TranslateLanguages.ResolveTarget(s.TargetLanguage), s.FallbackLanguage);
+
+        string target;
+        if (!string.IsNullOrWhiteSpace(explicitTarget) && TranslateLanguages.Find(explicitTarget) is { } exp)
+        {
+            target = exp.Tag;
+        }
+        else
+        {
+            var baseTarget = TranslateLanguages.ResolveTarget(s.TargetLanguage);
+            if (TranslateLanguages.IsChinese(baseTarget))
+            {
+                // Target is Chinese: retain Chinese as target, never invert to fallback
+                target = baseTarget;
+            }
+            else if (!string.IsNullOrEmpty(s.FallbackLanguage) && !string.Equals(s.FallbackLanguage, "none", StringComparison.OrdinalIgnoreCase))
+            {
+                target = TranslateLanguages.EffectiveTarget(text, baseTarget, s.FallbackLanguage);
+            }
+            else
+            {
+                target = baseTarget;
+            }
+        }
 
         var clock = System.Diagnostics.Stopwatch.StartNew();
+
+        // Selective segment translation:
+        // When target is Chinese, Chinese segments are kept untouched; only foreign language segments are translated.
+        var toTranslateIndices = new List<int>();
+        var toTranslateSegments = new List<string>();
+
+        for (int i = 0; i < segments.Count; i++)
+        {
+            var seg = segments[i];
+            if (TranslateLanguages.ShouldTranslateSegment(seg, target))
+            {
+                toTranslateIndices.Add(i);
+                toTranslateSegments.Add(seg);
+            }
+        }
+
+        // If all segments already match target language or need no translation (e.g. all Chinese):
+        if (toTranslateSegments.Count == 0)
+        {
+            Log.Info($"Translate: all {segments.Count} segment(s) already in target language ({target}) or untranslatable, preserving original text without network call.");
+            return new TranslationOutcome(segments.ToList(), target, detected, s.Provider, clock.Elapsed);
+        }
+
         using var http = handler != null ? new HttpClient(handler, disposeHandler: false) : TranslationHttp.CreateClient(s);
         var provider = CreateProvider(s, http);
-        Log.Info($"Translate: {provider.Id}, {segments.Count} segment(s), {text.Length} chars, detected {detected ?? "?"} → {target}");
+        Log.Info($"Translate: {provider.Id}, translating {toTranslateSegments.Count}/{segments.Count} segment(s), detected {detected ?? "?"} → {target}");
         try
         {
-            var result = await provider.TranslateAsync(segments, null, target, ct).ConfigureAwait(false);
+            var translatedParts = await provider.TranslateAsync(toTranslateSegments, null, target, ct).ConfigureAwait(false);
+
+            var result = segments.ToArray();
+            for (int k = 0; k < toTranslateIndices.Count && k < translatedParts.Count; k++)
+            {
+                result[toTranslateIndices[k]] = translatedParts[k];
+            }
+
             return new TranslationOutcome(result, target, detected, provider.Id, clock.Elapsed);
         }
         catch (TranslationException ex)

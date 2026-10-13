@@ -6,8 +6,8 @@ using OpenPin.Core.Imaging;
 
 namespace OpenPin.Translate;
 
-/// <summary>A translated text box to paint: original bounds (image px), translation, original line height.</summary>
-public sealed record TranslatedBox(Rect Bounds, string Text, double LineHeight);
+/// <summary>A translated text box to paint: original bounds (image px), translation, original line height, optional original text.</summary>
+public sealed record TranslatedBox(Rect Bounds, string Text, double LineHeight, string? OriginalText = null);
 
 /// <summary>How one box is painted (computed by <see cref="ImageTranslationRenderer.Plan"/>).</summary>
 public sealed record BoxPlan(Int32Rect Fill, Rect TextArea, Color Background, Color Foreground, double FontSize, string Text);
@@ -66,6 +66,14 @@ public sealed class ImageTranslationRenderer
     public BoxPlan? Plan(byte[] px, int w, int h, TranslatedBox box)
     {
         if (string.IsNullOrWhiteSpace(box.Text)) return null;
+
+        // If the box was preserved (translation equals original text), keep the original image intact without repainting
+        if (!string.IsNullOrEmpty(box.OriginalText) &&
+            string.Equals(box.Text.Trim(), box.OriginalText.Trim(), StringComparison.Ordinal))
+        {
+            return null;
+        }
+
         var inner = ToInt(box.Bounds, w, h, 0);
         if (inner.Width < 2 || inner.Height < 2) return null;
         var fill = ToInt(box.Bounds, w, h, Padding);
