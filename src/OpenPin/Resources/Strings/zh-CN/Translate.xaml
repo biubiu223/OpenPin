@@ -123,6 +123,7 @@
   <sys:String x:Key="Translate.Settings.ReasoningModelHint">💡 提示：该模型包含深度思考/推理链（R1/Reasoner），翻译时会耗费时间生成思考。建议选择 deepseek-chat 或 DeepSeek-V3 等极速模型以获得秒级响应。</sys:String>
   <!-- DeskMirror -->
   <sys:String x:Key="Translate.Mirror.Title">透视魔镜</sys:String>
+  <sys:String x:Key="Translate.Mirror.AutoDetect">自动互译</sys:String>
   <sys:String x:Key="Translate.Mirror.Translating">正在透视翻译…</sys:String>
   <sys:String x:Key="Translate.Mirror.Peek">透视原文 (Ctrl)</sys:String>
   <sys:String x:Key="Translate.Mirror.Auto">自动追踪</sys:String>

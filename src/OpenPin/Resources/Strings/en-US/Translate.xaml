@@ -123,6 +123,7 @@
   <sys:String x:Key="Translate.Settings.ReasoningModelHint">💡 Tip: This model uses deep reasoning/thinking (R1/Reasoner) which adds latency. We recommend fast chat models (like deepseek-chat or DeepSeek-V3) for sub-second translations.</sys:String>
   <!-- DeskMirror -->
   <sys:String x:Key="Translate.Mirror.Title">DeskMirror</sys:String>
+  <sys:String x:Key="Translate.Mirror.AutoDetect">Auto Detect</sys:String>
   <sys:String x:Key="Translate.Mirror.Translating">Translating…</sys:String>
   <sys:String x:Key="Translate.Mirror.Peek">Peek original (Ctrl)</sys:String>
   <sys:String x:Key="Translate.Mirror.Auto">Auto track</sys:String>

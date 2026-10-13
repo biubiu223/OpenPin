@@ -30,7 +30,7 @@ public sealed class MirrorWindow : Window
 
     private readonly Image _translatedImage = new()
     {
-        Stretch = Stretch.UniformToFill,
+        Stretch = Stretch.Fill,
         HorizontalAlignment = HorizontalAlignment.Stretch,
         VerticalAlignment = VerticalAlignment.Stretch
     };
@@ -115,8 +115,7 @@ public sealed class MirrorWindow : Window
         MinWidth = 200;
         MinHeight = 120;
 
-        _targetLanguage = targetLanguage ?? TranslationService.Settings.TargetLanguage;
-        if (string.IsNullOrWhiteSpace(_targetLanguage)) _targetLanguage = "zh-Hans";
+        _targetLanguage = targetLanguage ?? "";
         _ocrLanguage = ocrLanguage;
 
         BuildUi();
@@ -227,7 +226,8 @@ public sealed class MirrorWindow : Window
             VerticalAlignment = VerticalAlignment.Center
         });
 
-        // Language items
+        // Language items: Auto Detect first, then individual languages
+        _targetLangCombo.Items.Add(new ComboBoxItem { Content = Loc.Get("Translate.Mirror.AutoDetect"), Tag = "" });
         foreach (var lang in TranslateLanguages.All)
         {
             _targetLangCombo.Items.Add(new ComboBoxItem { Content = lang.DisplayName, Tag = lang.Tag });
@@ -351,6 +351,7 @@ public sealed class MirrorWindow : Window
     {
         if (_isTranslating || !TranslationService.IsConfigured(TranslationService.Settings)) return;
         _isTranslating = true;
+        _loadingText.Text = Loc.Get("Translate.Mirror.Translating");
         _loadingCard.Visibility = Visibility.Visible;
 
         try
@@ -367,30 +368,46 @@ public sealed class MirrorWindow : Window
             int h = Math.Max(10, boundsPx.Height - headerPx - (int)Math.Round(2 * dpi));
 
             var captureRectPx = new Int32Rect(x, y, w, h);
+
+            // Hide previous translated overlay momentarily so GDI grabs pure underlying desktop pixels
+            _translatedImage.Visibility = Visibility.Hidden;
             var screenBmp = ScreenCapture.CaptureRegion(captureRectPx, includeCursor: false);
+            _translatedImage.Visibility = Visibility.Visible;
 
             var ocr = await OcrService.RecognizeAsync(screenBmp, _ocrLanguage).ConfigureAwait(true);
-            if (string.IsNullOrEmpty(ocr.Error) && ocr.Lines.Count > 0)
+            if (!string.IsNullOrEmpty(ocr.Error))
             {
-                var segments = TextSegmenter.Paragraphs(ocr.Lines);
-                if (segments.Count > 0)
-                {
-                    var outcome = await TranslationService.TranslateAsync(
-                        segments.Select(s => s.Text).ToList(),
-                        explicitTarget: _targetLanguage).ConfigureAwait(true);
-
-                    var boxes = segments.Zip(outcome.Segments, (s, t) => new TranslatedBox(s.Bounds, t, s.LineHeight)).ToList();
-                    var renderer = new ImageTranslationRenderer { RightToLeft = outcome.TargetLanguage == "ar" };
-                    var translated = renderer.Render(screenBmp, boxes);
-
-                    _translatedImage.Source = translated;
-                    _translatedImage.Opacity = _isPeeking ? 0.0 : _userOpacity;
-                }
+                _loadingText.Text = ocr.Error;
+                await Task.Delay(2000).ConfigureAwait(true);
+                return;
             }
+            if (ocr.Lines.Count == 0)
+            {
+                _loadingText.Text = Loc.Get("Translate.NoText");
+                await Task.Delay(1500).ConfigureAwait(true);
+                return;
+            }
+
+            var segments = TextSegmenter.Paragraphs(ocr.Lines);
+            if (segments.Count == 0) return;
+
+            string? explicitTarget = string.IsNullOrWhiteSpace(_targetLanguage) ? null : _targetLanguage;
+            var outcome = await TranslationService.TranslateAsync(
+                segments.Select(s => s.Text).ToList(),
+                explicitTarget: explicitTarget).ConfigureAwait(true);
+
+            var boxes = segments.Zip(outcome.Segments, (s, t) => new TranslatedBox(s.Bounds, t, s.LineHeight)).ToList();
+            var renderer = new ImageTranslationRenderer { RightToLeft = outcome.TargetLanguage == "ar" };
+            var translated = renderer.Render(screenBmp, boxes);
+
+            _translatedImage.Source = translated;
+            _translatedImage.Opacity = _isPeeking ? 0.0 : _userOpacity;
         }
         catch (Exception ex)
         {
             Log.Warn($"DeskMirror capture/translate failed: {ex.Message}");
+            _loadingText.Text = Loc.Format("Translate.Failed", ex.Message);
+            await Task.Delay(2500).ConfigureAwait(true);
         }
         finally
         {

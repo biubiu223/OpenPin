@@ -86,8 +86,10 @@ public sealed class OpenAiCompatibleProvider : TranslationProviderBase
     public static bool ShouldDisableThinking(string model, Uri endpoint)
     {
         if (endpoint.Host.Contains("siliconflow", StringComparison.OrdinalIgnoreCase)) return true;
+        if (endpoint.Host.Contains("deepseek", StringComparison.OrdinalIgnoreCase)) return true;
         var lower = model.ToLowerInvariant();
-        return lower.Contains("r1") || lower.Contains("reasoner") || lower.Contains("thinking") || lower.Contains("qwq");
+        return lower.Contains("r1") || lower.Contains("reasoner") || lower.Contains("thinking") ||
+               lower.Contains("qwq") || lower.Contains("deepseek") || lower.Contains("flash");
     }
 
     private async Task<string> ChatAsync(string system, string user, CancellationToken ct)
@@ -106,6 +108,8 @@ public sealed class OpenAiCompatibleProvider : TranslationProviderBase
         if (ShouldDisableThinking(_model, _endpoint))
         {
             payload["enable_thinking"] = false;
+            payload["reasoning_effort"] = "none";
+            payload["thinking"] = new Dictionary<string, string> { ["type"] = "disabled" };
         }
         using var request = new HttpRequestMessage(HttpMethod.Post, _endpoint)
         {
