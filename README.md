@@ -200,6 +200,7 @@ dotnet run --project src/OpenPin
 - [docs/SPEC.md](docs/SPEC.md) — 完整功能规格说明书与设计细则
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — 核心事件驱动总线、标注渲染管线与设计模式
 - [docs/PACKAGING.md](docs/PACKAGING.md) — CI/CD 自动化构建、MSIX 打包与发布规范
+- [CHANGELOG.md](CHANGELOG.md) — 版本更新日志与迭代历史记录
 
 ```
 OpenPin/
