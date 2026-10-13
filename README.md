@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/biubiu223/OpenPin/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/Release-v0.1.0-0078D6?style=flat-square&logo=github" alt="Release v0.1.0" /></a>
+  <a href="https://github.com/biubiu223/OpenPin/releases/tag/v0.1.1"><img src="https://img.shields.io/badge/Release-v0.1.1-0078D6?style=flat-square&logo=github" alt="Release v0.1.1" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="MIT License" /></a>
   <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011%20(x64)-0078D6?style=flat-square&logo=windows" alt="Platform: Windows 10 / 11" />
   <img src="https://img.shields.io/badge/.NET-10.0%20LTS-512BD4?style=flat-square&logo=dotnet" alt=".NET 10 LTS" />
@@ -155,10 +155,10 @@
 
 | 下载版本 | 文件名 | 适用场景 |
 |---|---|---|
-| 🌟 **标准安装包（推荐）** | `OpenPin-v0.1.0-Setup-x64.exe` | 完整集成运行环境，安装向导一键配置桌面快捷方式与开机自启 |
-| 🚀 **绿色免安装便携版** | `OpenPin-0.1.0-win-x64-Portable.zip` | 解压即用，配置与贴图保存在自带 `data/` 目录，随身 U 盘首选 |
-| 🪶 **轻量依赖版** | `OpenPin-0.1.0-win-x64-framework-dependent.zip` | 极小体积包，需系统中预装 [.NET 10 桌面运行时](https://dotnet.microsoft.com/download/dotnet/10.0) |
-| 🏬 **MSIX 应用包** | `OpenPin-0.1.0-win-x64.msix` | 支持 Windows App 管理体系与纯净隔离沙箱 |
+| 🌟 **标准安装包（推荐）** | `OpenPin-0.1.1-Setup-x64.exe` | 完整集成运行环境，安装向导一键配置桌面快捷方式与开机自启 |
+| 🚀 **绿色免安装便携版** | `OpenPin-0.1.1-win-x64-Portable.zip` | 解压即用，配置与贴图保存在自带 `data/` 目录，随身 U 盘首选 |
+| 🪶 **轻量依赖版** | `OpenPin-0.1.1-win-x64-framework-dependent.zip` | 极小体积包，需系统中预装 [.NET 10 桌面运行时](https://dotnet.microsoft.com/download/dotnet/10.0) |
+| 🏬 **MSIX 应用包** | `OpenPin-0.1.1-win-x64.msix` | 支持 Windows App 管理体系与纯净隔离沙箱 |
 
 > [!NOTE]
 > **便携模式说明**：在任意解压版 `OpenPin.exe` 同目录下放置名为 `portable` 的空文件，OpenPin 将自动切换为便携模式，不再读写系统 `%AppData%`。详细发布与打包文档见 [docs/PACKAGING.md](docs/PACKAGING.md)。
@@ -179,7 +179,7 @@ OpenPin 基于最新的 **.NET 10** 与 C# 13 构建。
 git clone https://github.com/biubiu223/OpenPin.git
 cd OpenPin
 
-# 2. 运行完整单元测试套件（740+ 项测试用例全部绿灯）
+# 2. 运行完整单元测试套件（770+ 项测试用例全部绿灯）
 dotnet test
 
 # 3. 编译并启动主程序
@@ -189,7 +189,7 @@ dotnet run --project src/OpenPin
 ### 独立发布打包
 ```powershell
 # 编译并生成自包含单文件便携包与 Inno Setup 安装程序
-./packaging/build-installer.ps1 -Version 0.1.0
+./packaging/build-installer.ps1 -Version 0.1.1
 ```
 
 ---

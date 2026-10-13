@@ -7,7 +7,7 @@
   The destination output directory for release artifacts (defaults to publish/release)
 #>
 param(
-    [string]$Version = "0.1.0",
+    [string]$Version = "0.1.1",
     [string]$OutDir = "publish/release"
 )
 

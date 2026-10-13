@@ -17,7 +17,7 @@
     <Product>OpenPin</Product>
     <Description>Free and open-source screenshot &amp; pin tool for Windows</Description>
     <Copyright>Copyright (c) OpenPin contributors</Copyright>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
